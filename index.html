@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro Header</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Story+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Story+Script&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .carousel {
+
+            /* ... */
+            >* {
+                flex: 0 0 100%;
+            }
+        }
+
+        /* Group the cards for better structure. */
+        .group {
+            display: flex;
+            gap: 20px;
+            /* Add padding to the right to create a gap between the last and first card. */
+            padding-right: 20px;
+            will-change: transform;
+            /* We should be nice to the browser - let it know what we're going to animate. */
+            animation: scrolling 10s linear infinite;
+        }
+
+        .country-option {
+            background-color: #523A35;
+            /* Tailwind purple-900 equivalent */
+            color: white;
+            padding: 0.5rem 1rem;
+            border: yellow;
+            /* padding for readability */
+        }
+
+        /* Optional: hover effect (only works in some browsers) */
+        .country-option:hover {
+            background-color: #523A35;
+            /* Tailwind purple-600 equivalent */
+            color: white;
+        }
+
+
+
+        @keyframes scrolling {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+
+        .story-script {
+            font-family: "Story Script", sans-serif;
+        }
+
+        .story-script-regular {
+            font-family: "Story Script", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .vend-sans {
+            font-family: "Vend Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @keyframes purpleBlink {
+            0% {
+                background-color: oklch(43.2% 0.232 292.759);
+            }
+
+            /* purple-900 */
+            50% {
+                background-color: #894fee;
+            }
+
+            /* purple-600 */
+            100% {
+                background-color: oklch(43.2% 0.232 292.759)
+            }
+
+            /* purple-900 */
+        }
+
+        @keyframes bounceRepeat {
+            0% {
+                transform: translateY(0);
+            }
+
+            5% {
+                transform: translateY(-12px);
+            }
+
+            8% {
+                transform: translateY(-12px);
+            }
+
+            10% {
+                transform: translateY(0);
+            }
+
+
+            /* Remaining 90% time = idle (no bounce) */
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <!-- Tailwind CDN (remove if using Vite/Node project) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-green-100 h-screen  overflow-x-hidden ">
+
+    <!-- HEADER -->
+    <div class="bg-[#523A35] border-b-4 border-[#D4A017] px-6 md:px-10  flex items-center justify-between">
+
+        <!-- LEFT -->
+        <div class="flex items-center gap-5">
+            <img src="ganesha.png" alt="Ganesha" class="h-42 w-32">
+
+            <div class="astro-text">
+                <h2 class="text-[#f4d37d] story-script text-3xl font-normal m-0">
+                    Astrologer Suvendu Paul
+                </h2>
+
+                <p class="text-white text-base font-medium my-1">
+                    Director, Founder & Principal of
+                </p>
+
+                <span class="text-[#f4d37d] font-bold text-lg block">
+                    Modern Astrology
+                </span>
+
+                <p class="text-white text-base font-medium mt-1">
+                    A Unit of: Krishnamurti Academy of Modern Astrology & Spiritual Development
+                </p>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="text-center">
+
+
+            <a href="booking.html" class=" animated-gradient text-white font-semibold py-3 px-6 rounded-lg shadow-md">
+                Book Now
+            </a>
+
+            <style>
+                .animated-gradient {
+                    background: linear-gradient(270deg, #34d399, #10b981, #059669, #047857);
+                    /* Tailwind green shades */
+                    background-size: 600% 600%;
+                    animation: gradientAnimation 8s ease infinite;
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    border: none;
+                    cursor: pointer;
+                }
+
+                @keyframes gradientAnimation {
+                    0% {
+                        background-position: 0% 50%;
+                    }
+
+                    50% {
+                        background-position: 100% 50%;
+                    }
+
+                    100% {
+                        background-position: 0% 50%;
+                    }
+                }
+            </style>
+
+
+
+
+            <div class="text-white text-xl font-bold mt-4">
+                +91 9748 5888 62
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="min-h-screen  bg-green-100 flex ">
+        <div class="w-[70%] min-h-screen overflow-y-auto bg-green-100 h-full">
+            <!-- Navigation -->
+            <nav class="w-full bg-[#FDECC2] py-4">
+                <ul class="flex justify-center space-x-16 font-bold text-purple-800 text-lg tracking-wide">
+                    <li><a href="#" class="hover:text-purple-600">HOME</a></li>
+                    <li><a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a></li>
+                    <li style="animation: bounceRepeat 3s infinite;">
+                        <a href="academic.html" class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
+                            style="animation: purpleBlink 1s infinite ease-in-out ">
+                            ACADEMIC / COURSES
+                        </a>
+                    </li>
+
+                    <li><a href="#" class="hover:text-purple-600">STUDENT CORNER</a></li>
+                    <li><a href="#" class="hover:text-purple-600">CONTACT</a></li>
+                </ul>
+            </nav>
+
+
+            <section class="max-w-5xl mx-auto flex  items-center gap-5">
+
+                <!-- Title Box -->
+                <div class="pt-10 w-[65%]">
+
+                    <div class="mr-5 bg-red-100 text-pink-800  text-xl font-bold px-6 py-3 rounded-tr-2xl shadow">
+                        About Me
+                    </div>
+                    <p class="my-4 text-xs ml-4 vend-sans text-gray-600">
+                        I am Suvendu, a devoted KP Astrologer who believes astrology is more than charts and
+                        predictions—it is a
+                        way to guide people toward a practical, purposeful, and fulfilling lifestyle. My faith rests
+                        above all in
+                        the Supreme Lord, whose divine grace is greater than any calculation or forecast.
+                    </p>
+
+                    <p class="mb-4 text-xs ml-4 vend-sans text-gray-600">
+                        Across the world, many astrologers continue to rely on traditional methods. While these ancient
+                        techniques
+                        hold wisdom, I have often felt they can be limited or misunderstood. Too often, society
+                        dismisses astrology,
+                        gossiping or speaking lightly of astrologers. This inspired me to walk a different path—one that
+                        is both
+                        scientific in method and spiritual in essence.
+                    </p>
+
+                    <p class="mb-4 text-xs ml-4 vend-sans text-gray-600">
+                        The KP technique, with its remarkable precision in calculation, became my foundation. Yet I
+                        realized that
+                        prediction alone needed refinement. Out of this realization, I developed Modern Astrology—a
+                        unique blend of
+                        KP methods and my own innovations, designed to meet the realities of today's fast-paced world.
+                        For over 11
+                        years, I have practiced this system, offering guidance that is accurate, practical, and deeply
+                        fulfilling.
+                        My clients often find such clarity and satisfaction that they never feel the need to consult
+                        another
+                        astrologer again.
+                    </p>
+                </div>
+                <div
+                    class="border-green-400 bg-white border-4 rounded-tl-[50px] h-[320px] mt-[30px] mr-[20px]  w-[35%]  ">
+
+                </div>
+            </section>
+
+            <section class="max-w-5xl mx-auto flex flex w-full items-center gap-5">
+
+                <div
+                    class="border-green-400 bg-white border-4 rounded-tr-[50px] h-[290px] mt-[30px] ml-[20px]  w-[40%]  ">
+
+                </div>
+
+                <!-- Title Box -->
+                <div class="pt-10 w-[60%]">
+
+
+                    <p class="my-4 text-xs ml-4 vend-sans text-gray-600">
+                        I am Suvendu, a devoted KP Astrologer who believes astrology is more than charts and
+                        predictions—it is a
+                        way to guide people toward a practical, purposeful, and fulfilling lifestyle. My faith rests
+                        above all in
+                        the Supreme Lord, whose divine grace is greater than any calculation or forecast.
+                    </p>
+
+                    <p class="mb-4 text-xs ml-4 vend-sans text-gray-600">
+                        Across the world, many astrologers continue to rely on traditional methods. While these ancient
+                        techniques
+                        hold wisdom, I have often felt they can be limited or misunderstood. Too often, society
+                        dismisses astrology,
+                        gossiping or speaking lightly of astrologers. This inspired me to walk a different path—one that
+                        is both
+                        scientific in method and spiritual in essence.
+                    </p>
+
+                    <p class="mb-4 text-xs ml-4 vend-sans text-gray-600">
+                        The KP technique, with its remarkable precision in calculation, became my foundation. Yet I
+                        realized that
+                        prediction alone needed refinement. Out of this realization, I developed Modern Astrology—a
+                        unique blend of
+                        KP methods and my own innovations, designed to meet the realities of today's fast-paced world.
+                        For over 11
+                        years, I have practiced this system, offering guidance that is accurate, practical, and deeply
+                        fulfilling.
+                        My clients often find such clarity and satisfaction that they never feel the need to consult
+                        another
+                        astrologer again.
+                    </p>
+                </div>
+
+            </section>
+
+
+
+            <!-- WHY CLIENTS CHOOSE ME + HOW I CONSULT SECTION -->
+
+            <section class="max-w-5xl mx-auto mt-16 px-4 grid md:grid-cols-2 gap-8 bg-green-100">
+
+                <!-- LEFT BOX -->
+                <div class="flex flex-col h-full ">
+                    <div
+                        class="bg-[#3E3A39] text-center text-white text-xl font-bold px-6 py-3 rounded-b-[30px] z-50 shadow">
+                        Why Clients Choose Me
+                    </div>
+
+                    <div
+                        class="bg-[oklch(93.8%_0.127_124.321)] text-right p-6 rounded-b-xl shadow leading-relaxed flex-grow  -translate-y-6 z-10">
+                        <p class="mt-3"><span class="text-[#D94E54] font-bold ">Scientific Accuracy:</span> KP’s
+                            calculative methods form the backbone of my practice.</p>
+
+                        <p class="mt-3"><span class="text-[#FF5391] font-bold">Modern Refinement:</span> My own
+                            techniques make predictions more relevant and precise.</p>
+
+                        <p class="mt-3"><span class="text-[#33A46F] font-bold">Client Satisfaction:</span> Those who
+                            consult me often find lasting clarity and fulfillment.</p>
+
+                        <p class="mt-3"><span class="text-[#F5C742] font-bold">Personalized Sessions:</span> Each
+                            consultation lasts 30+ minutes, with detailed written guidance provided.</p>
+
+                        <p class="mt-3"><span class="text-[#EA6D25] font-bold">Privacy & Trust:</span> I maintain
+                            complete confidentiality with every client.</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT BOX -->
+                <div class="flex flex-col h-full">
+                    <div
+                        class="bg-[#C5A42D] text-white text-center text-xl font-bold px-6 py-3 rounded-b-[30px] shadow z-50">
+                        How I Consult
+                    </div>
+
+                    <div
+                        class="bg-[oklch(95.4%_0.038_75.164)] p-6 rounded-b-xl shadow leading-relaxed flex-grow -translate-y-6 z-10 text-left">
+                        <p class="font-semibold mb-3 mt-3 
+                        ">I provide predictions and guidance through:</p>
+
+                        <ul class="space-y-3 text-gray-800">
+                            <li>📞 <span class="font-medium">Online phone calls</span></li>
+                            <li>🎥 <span class="font-medium">Video calls</span></li>
+                            <li>🏠 <span class="font-medium">Offline sessions at my chamber in Tollygunge,
+                                    Kolkata</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+            <section class=" mt-12 relative max-w-5xl mx-auto">
+
+                <!-- Title Bar -->
+                <div class="bg-[#8D4B6E] text-center text-yellow-200 text-xl  font-bold py-3 rounded-3xl 
+                relative z-40">
+                    Remedies I Offer
+                </div>
+
+                <!-- Content Box -->
+                <div class="bg-[#F7C7D4] p-8 rounded-b-3xl text-sm md:text-base -translate-y-6 
+                relative z-20">
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800 font-medium">
+
+                        <!-- Column 1 -->
+                        <ul class="space-y-3">
+                            <li>💎 <span class="text-[#8D4B6E] font-semibold">Gemstone suggestions</span></li>
+                            <li>📿 <span class="text-[#8D4B6E] font-semibold">Auspicious puja recommendations</span>
+                            </li>
+                        </ul>
+
+                        <!-- Column 2 -->
+                        <ul class="space-y-3">
+                            <li>🌿 <span class="text-[#8D4B6E] font-semibold">Rudraksha guidance</span></li>
+                            <li>🎨 <span class="text-[#8D4B6E] font-semibold">Colour therapy</span></li>
+                            <li>🏠 <span class="text-[#8D4B6E] font-semibold">Vastu corrections</span></li>
+                        </ul>
+
+                        <!-- Column 3 -->
+                        <ul class="space-y-3">
+                            <li>🪬 <span class="text-[#8D4B6E] font-semibold">Tantra and Kavach remedies</span></li>
+                            <li>✨ <span class="text-[#8D4B6E] font-semibold">Reiki healing</span></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="bg-[#EEF9EC] px-6 py-10 rounded-xl text-center mx-4 mt-10">
+
+                <h2 class="text-lg font-semibold text-[#556B2F] mb-3">
+                    My Philosophy
+                </h2>
+
+                <p class="text-sm md:text-base leading-relaxed text-[#4A5A27] max-w-4xl mx-auto text-left">
+                    Astrology, in my practice, is not about fear or superstition—it is about empowerment, healing,
+                    and alignment with divine will. In today’s busy world, human thinking has evolved, and predictions
+                    must reflect modern lifestyles. My mission is to help clients live with clarity, peace, and
+                    confidence—guided
+                    by both the eternal wisdom of the stars and the grace of the Supreme Lord.
+                </p>
+
+                <p class="text-sm md:text-base leading-relaxed text-[#4A5A27] max-w-4xl mx-auto text-right mt-10">
+                    Astrology, in my practice, is not about fear or superstition—it is about empowerment, healing,
+                    and alignment with divine will. In today’s busy world, human thinking has evolved, and predictions
+                    must reflect modern lifestyles. My mission is to help clients live with clarity, peace, and
+                    confidence—guided
+                    by both the eternal wisdom of the stars and the grace of the Supreme Lord.
+                </p>
+
+            </section>
+
+            <!-- 
+            <section
+                class="max-w-7xl mx-auto px-4  bg-gradient-to-r from-yellow-200 via-yellow-100 to-yellow-200 rounded-2xl shadow-lg relative overflow-hidden">
+
+                <div
+                    class="absolute top-0 right-0 w-48 h-48 bg-yellow-300 rounded-full opacity-30 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                </div>
+
+                <div class="relative z-10 max-w-3xl mx-auto text-center">
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-yellow-900 mb-4">
+                        Academic Excellence
+                    </h1>
+                    <p class="text-yellow-800 text-lg sm:text-xl mb-2 leading-relaxed">
+                        Learn Modern Astrology
+                    </p>
+
+                </div>
+            </section>
+ -->
+
+
+
+
+            <div class="w-full flex justify-center px-4 py-10  bg-green-100">
+                <div class="max-w-5xl w-full bg-gradient-to-r from-lime-100 to-lime-50 rounded-2xl shadow p-8 md:p-12">
+
+                    <!-- Title (Left aligned for first card style) -->
+                    <h2 class="font-semibold text-lg text-gray-700">My Blessing</h2>
+
+                    <p class="mt-4 italic text-gray-700 leading-relaxed">
+                        With the grace of the Supreme Lord, I have been blessed with sincere and elegant students
+                        who carry forward this vision. Many have already established themselves as professional
+                        astrologers, opening their own chambers and serving society with confidence.
+                    </p>
+
+                    <p class="mt-6 italic text-gray-700 leading-relaxed">
+                        Modern Astrology is not just another institute—it is a movement to blend science,
+                        spirituality, and practicality, creating astrologers who are ready for the modern world.
+                    </p>
+                </div>
+            </div>
+
+            <section class="py-12 bg-[#f2ffe9]">
+                <h2 class="text-3xl font-bold text-center text-purple-800 mb-10">
+                    Services Offered
+                </h2>
+
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
+
+                    <!-- Card 1 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-1.png" alt="Astrology Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">ASTROLOGY</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            He provides accurate Astrological Reports on various topics, analyzed by best Astrologer in
+                            Kolkata, India Debraj Acharya.
+                            Tap on Read More to see the Services provided by Astrologer Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-2.png" alt="Matchmaking Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">MATCH MAKING</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            He provides accurate Match-Making Report. Most of the people acknowledging astrology
+                            services like remedies made this capability make him at the most affordable fees.
+                            Tap on Read More to see the Services provided by Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-3.png" alt="Vastu Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">VASTU</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            He provides professional Vastu consultancy services directly at our client’s location,
+                            ensuring a personalized space.
+                            Tap on “Read More” to explore all the exclusive features of his Vastu service in detail.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-4.png" alt="Numerology Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">NUMEROLOGY</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            Numerology can be used for various purposes. Tap on Read More to see all the features of
+                            this service provided by Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-5.png" alt="Namology Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">NAMOLOGY</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            Namology can be used for individuals or any corporate purposes. Kindly see the detailed
+                            features of this service provided by Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-6.png" alt="Vedic Rituals Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">VEDIC RITUALS</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            He offers various types of Vedic Rituals. Kindly see the detailed features of this service.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-4.png" alt="Numerology Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">NUMEROLOGY</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            Numerology can be used for various purposes. Tap on Read More to see all the features of
+                            this service provided by Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-5.png" alt="Namology Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">NAMOLOGY</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            Namology can be used for individuals or any corporate purposes. Kindly see the detailed
+                            features of this service provided by Debraj Acharya.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="bg-orange-100 rounded-xl border border-orange-300 p-6 text-center shadow-sm">
+                        <img src="your-icon-6.png" alt="Vedic Rituals Icon" class="mx-auto w-14 h-14 mb-4">
+                        <h3 class="text-xl font-semibold tracking-wide">VEDIC RITUALS</h3>
+                        <p class="text-gray-700 text-sm mt-3 leading-relaxed">
+                            He offers various types of Vedic Rituals. Kindly see the detailed features of this service.
+                        </p>
+                        <a href="#" class="text-red-500 font-semibold mt-4 inline-block">Read More →</a>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+
+        </div>
+
+        <div class="w-[30%]  bg-[#523A35] border-l-[6px] border-yellow-500 text-white  flex flex-col ">
+
+            <!-- Scrollable area -->
+            <div class="p-6  flex-grow">
+
+                <h2 class="text-2xl font-bold mb-6 text-center">Get Consultancy</h2>
+
+                <form id="consultForm" class="space-y-5">
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block mb-1 font-medium">Name</label>
+                        <input id="name" type="text" class="w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 
+        focus:outline-none focus:ring-2 focus:ring-yellow-300" placeholder="Enter your name">
+                    </div>
+
+                    <!-- DOB -->
+                    <div class="relative">
+                        <label class="block mb-1 font-medium flex items-center gap-2">
+                            Date of Birth (DOB)
+                        </label>
+                        <input id="dob" type="date" class="w-full px-3 py-2 rounded-lg bg-white/20 text-white
+        focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    </div>
+
+                    <!-- TOB -->
+                    <div class="relative">
+                        <label class="block mb-1 font-medium flex items-center gap-2">
+                            Time of Birth (TOB)
+                        </label>
+                        <input id="tob" type="time" class="w-full px-3 py-2 rounded-lg bg-white/20 text-white
+        focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    </div>
+
+                    <!-- Country -->
+                    <div>
+                        <label class="block mb-1 font-medium">Country (Place of Birth)</label>
+                        <select id="country"
+                            class="w-full px-3 py-2 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                            <option value="" disabled selected>Select your country</option>
+                            <option class="country-option" value="Afghanistan">Afghanistan</option>
+                            <option class="country-option" value="Albania">Albania</option>
+                            <option class="country-option" value="Algeria">Algeria</option>
+                            <option class="country-option" value="Andorra">Andorra</option>
+                            <option class="country-option" value="Angola">Angola</option>
+                            <option class="country-option" value="Antigua and Barbuda">Antigua and Barbuda</option>
+                            <option class="country-option" value="Argentina">Argentina</option>
+                            <option class="country-option" value="Armenia">Armenia</option>
+                            <option class="country-option" value="Australia">Australia</option>
+                            <option class="country-option" value="Austria">Austria</option>
+                            <option class="country-option" value="Azerbaijan">Azerbaijan</option>
+                            <option class="country-option" value="Bahamas">Bahamas</option>
+                            <option class="country-option" value="Bahrain">Bahrain</option>
+                            <option class="country-option" value="Bangladesh">Bangladesh</option>
+                            <option class="country-option" value="Barbados">Barbados</option>
+                            <option class="country-option" value="Belarus">Belarus</option>
+                            <option class="country-option" value="Belgium">Belgium</option>
+                            <option class="country-option" value="Belize">Belize</option>
+                            <option class="country-option" value="Benin">Benin</option>
+                            <option class="country-option" value="Bhutan">Bhutan</option>
+                            <option class="country-option" value="Bolivia">Bolivia</option>
+                            <option class="country-option" value="Bosnia and Herzegovina">Bosnia and Herzegovina
+                            </option>
+                            <option class="country-option" value="Botswana">Botswana</option>
+                            <option class="country-option" value="Brazil">Brazil</option>
+                            <option class="country-option" value="Brunei">Brunei</option>
+                            <option class="country-option" value="Bulgaria">Bulgaria</option>
+                            <option class="country-option" value="Burkina Faso">Burkina Faso</option>
+                            <option class="country-option" value="Burundi">Burundi</option>
+                            <option class="country-option" value="Cabo Verde">Cabo Verde</option>
+                            <option class="country-option" value="Cambodia">Cambodia</option>
+                            <option class="country-option" value="Cameroon">Cameroon</option>
+                            <option class="country-option" value="Canada">Canada</option>
+                            <option class="country-option" value="Central African Republic">Central African Republic
+                            </option>
+                            <option class="country-option" value="Chad">Chad</option>
+                            <option class="country-option" value="Chile">Chile</option>
+                            <option class="country-option" value="China">China</option>
+                            <option class="country-option" value="Colombia">Colombia</option>
+                            <option class="country-option" value="Comoros">Comoros</option>
+                            <option class="country-option" value="Congo (Congo-Brazzaville)">Congo (Congo-Brazzaville)
+                            </option>
+                            <option class="country-option" value="Costa Rica">Costa Rica</option>
+                            <option class="country-option" value="Croatia">Croatia</option>
+                            <option class="country-option" value="Cuba">Cuba</option>
+                            <option class="country-option" value="Cyprus">Cyprus</option>
+                            <option class="country-option" value="Czechia (Czech Republic)">Czechia (Czech Republic)
+                            </option>
+                            <option class="country-option" value="Democratic Republic of the Congo">Democratic Republic
+                                of the Congo</option>
+                            <option class="country-option" value="Denmark">Denmark</option>
+                            <option class="country-option" value="Djibouti">Djibouti</option>
+                            <option class="country-option" value="Dominica">Dominica</option>
+                            <option class="country-option" value="Dominican Republic">Dominican Republic</option>
+                            <option class="country-option" value="Ecuador">Ecuador</option>
+                            <option class="country-option" value="Egypt">Egypt</option>
+                            <option class="country-option" value="El Salvador">El Salvador</option>
+                            <option class="country-option" value="Equatorial Guinea">Equatorial Guinea</option>
+                            <option class="country-option" value="Eritrea">Eritrea</option>
+                            <option class="country-option" value="Estonia">Estonia</option>
+                            <option class="country-option" value="Eswatini">Eswatini</option>
+                            <option class="country-option" value="Ethiopia">Ethiopia</option>
+                            <option class="country-option" value="Fiji">Fiji</option>
+                            <option class="country-option" value="Finland">Finland</option>
+                            <option class="country-option" value="France">France</option>
+                            <option class="country-option" value="Gabon">Gabon</option>
+                            <option class="country-option" value="Gambia">Gambia</option>
+                            <option class="country-option" value="Georgia">Georgia</option>
+                            <option class="country-option" value="Germany">Germany</option>
+                            <option class="country-option" value="Ghana">Ghana</option>
+                            <option class="country-option" value="Greece">Greece</option>
+                            <option class="country-option" value="Grenada">Grenada</option>
+                            <option class="country-option" value="Guatemala">Guatemala</option>
+                            <option class="country-option" value="Guinea">Guinea</option>
+                            <option class="country-option" value="Guinea-Bissau">Guinea-Bissau</option>
+                            <option class="country-option" value="Guyana">Guyana</option>
+                            <option class="country-option" value="Haiti">Haiti</option>
+                            <option class="country-option" value="Holy See">Holy See</option>
+                            <option class="country-option" value="Honduras">Honduras</option>
+                            <option class="country-option" value="Hungary">Hungary</option>
+                            <option class="country-option" value="Iceland">Iceland</option>
+                            <option class="country-option" value="India">India</option>
+                            <option class="country-option" value="Indonesia">Indonesia</option>
+                            <option class="country-option" value="Iran">Iran</option>
+                            <option class="country-option" value="Iraq">Iraq</option>
+                            <option class="country-option" value="Ireland">Ireland</option>
+                            <option class="country-option" value="Israel">Israel</option>
+                            <option class="country-option" value="Italy">Italy</option>
+                            <option class="country-option" value="Jamaica">Jamaica</option>
+                            <option class="country-option" value="Japan">Japan</option>
+                            <option class="country-option" value="Jordan">Jordan</option>
+                            <option class="country-option" value="Kazakhstan">Kazakhstan</option>
+                            <option class="country-option" value="Kenya">Kenya</option>
+                            <option class="country-option" value="Kiribati">Kiribati</option>
+                            <option class="country-option" value="Kuwait">Kuwait</option>
+                            <option class="country-option" value="Kyrgyzstan">Kyrgyzstan</option>
+                            <option class="country-option" value="Laos">Laos</option>
+                            <option class="country-option" value="Latvia">Latvia</option>
+                            <option class="country-option" value="Lebanon">Lebanon</option>
+                            <option class="country-option" value="Lesotho">Lesotho</option>
+                            <option class="country-option" value="Liberia">Liberia</option>
+                            <option class="country-option" value="Libya">Libya</option>
+                            <option class="country-option" value="Liechtenstein">Liechtenstein</option>
+                            <option class="country-option" value="Lithuania">Lithuania</option>
+                            <option class="country-option" value="Luxembourg">Luxembourg</option>
+                            <option class="country-option" value="Madagascar">Madagascar</option>
+                            <option class="country-option" value="Malawi">Malawi</option>
+                            <option class="country-option" value="Malaysia">Malaysia</option>
+                            <option class="country-option" value="Maldives">Maldives</option>
+                            <option class="country-option" value="Mali">Mali</option>
+                            <option class="country-option" value="Malta">Malta</option>
+                            <option class="country-option" value="Marshall Islands">Marshall Islands</option>
+                            <option class="country-option" value="Mauritania">Mauritania</option>
+                            <option class="country-option" value="Mauritius">Mauritius</option>
+                            <option class="country-option" value="Mexico">Mexico</option>
+                            <option class="country-option" value="Micronesia">Micronesia</option>
+                            <option class="country-option" value="Moldova">Moldova</option>
+                            <option class="country-option" value="Monaco">Monaco</option>
+                            <option class="country-option" value="Mongolia">Mongolia</option>
+                            <option class="country-option" value="Montenegro">Montenegro</option>
+                            <option class="country-option" value="Morocco">Morocco</option>
+                            <option class="country-option" value="Mozambique">Mozambique</option>
+                            <option class="country-option" value="Myanmar">Myanmar</option>
+                            <option class="country-option" value="Namibia">Namibia</option>
+                            <option class="country-option" value="Nauru">Nauru</option>
+                            <option class="country-option" value="Nepal">Nepal</option>
+                            <option class="country-option" value="Netherlands">Netherlands</option>
+                            <option class="country-option" value="New Zealand">New Zealand</option>
+                            <option class="country-option" value="Nicaragua">Nicaragua</option>
+                            <option class="country-option" value="Niger">Niger</option>
+                            <option class="country-option" value="Nigeria">Nigeria</option>
+                            <option class="country-option" value="North Korea">North Korea</option>
+                            <option class="country-option" value="North Macedonia">North Macedonia</option>
+                            <option class="country-option" value="Norway">Norway</option>
+                            <option class="country-option" value="Oman">Oman</option>
+                            <option class="country-option" value="Pakistan">Pakistan</option>
+                            <option class="country-option" value="Palau">Palau</option>
+                            <option class="country-option" value="Palestine State">Palestine State</option>
+                            <option class="country-option" value="Panama">Panama</option>
+                            <option class="country-option" value="Papua New Guinea">Papua New Guinea</option>
+                            <option class="country-option" value="Paraguay">Paraguay</option>
+                            <option class="country-option" value="Peru">Peru</option>
+                            <option class="country-option" value="Philippines">Philippines</option>
+                            <option class="country-option" value="Poland">Poland</option>
+                            <option class="country-option" value="Portugal">Portugal</option>
+                            <option class="country-option" value="Qatar">Qatar</option>
+                            <option class="country-option" value="Romania">Romania</option>
+                            <option class="country-option" value="Russia">Russia</option>
+                            <option class="country-option" value="Rwanda">Rwanda</option>
+                            <option class="country-option" value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                            <option class="country-option" value="Saint Lucia">Saint Lucia</option>
+                            <option class="country-option" value="Saint Vincent and the Grenadines">Saint Vincent and
+                                the Grenadines</option>
+                            <option class="country-option" value="Samoa">Samoa</option>
+                            <option class="country-option" value="San Marino">San Marino</option>
+                            <option class="country-option" value="Sao Tome and Principe">Sao Tome and Principe</option>
+                            <option class="country-option" value="Saudi Arabia">Saudi Arabia</option>
+                            <option class="country-option" value="Senegal">Senegal</option>
+                            <option class="country-option" value="Serbia">Serbia</option>
+                            <option class="country-option" value="Seychelles">Seychelles</option>
+                            <option class="country-option" value="Sierra Leone">Sierra Leone</option>
+                            <option class="country-option" value="Singapore">Singapore</option>
+                            <option class="country-option" value="Slovakia">Slovakia</option>
+                            <option class="country-option" value="Slovenia">Slovenia</option>
+                            <option class="country-option" value="Solomon Islands">Solomon Islands</option>
+                            <option class="country-option" value="Somalia">Somalia</option>
+                            <option class="country-option" value="South Africa">South Africa</option>
+                            <option class="country-option" value="South Korea">South Korea</option>
+                            <option class="country-option" value="South Sudan">South Sudan</option>
+                            <option class="country-option" value="Spain">Spain</option>
+                            <option class="country-option" value="Sri Lanka">Sri Lanka</option>
+                            <option class="country-option" value="Sudan">Sudan</option>
+                            <option class="country-option" value="Suriname">Suriname</option>
+                            <option class="country-option" value="Sweden">Sweden</option>
+                            <option class="country-option" value="Switzerland">Switzerland</option>
+                            <option class="country-option" value="Syria">Syria</option>
+                            <option class="country-option" value="Tajikistan">Tajikistan</option>
+                            <option class="country-option" value="Tanzania">Tanzania</option>
+                            <option class="country-option" value="Thailand">Thailand</option>
+                            <option class="country-option" value="Timor-Leste">Timor-Leste</option>
+                            <option class="country-option" value="Togo">Togo</option>
+                            <option class="country-option" value="Tonga">Tonga</option>
+                            <option class="country-option" value="Trinidad and Tobago">Trinidad and Tobago</option>
+                            <option class="country-option" value="Tunisia">Tunisia</option>
+                            <option class="country-option" value="Turkey">Turkey</option>
+                            <option class="country-option" value="Turkmenistan">Turkmenistan</option>
+                            <option class="country-option" value="Tuvalu">Tuvalu</option>
+                            <option class="country-option" value="Uganda">Uganda</option>
+                            <option class="country-option" value="Ukraine">Ukraine</option>
+                            <option class="country-option" value="United Arab Emirates">United Arab Emirates</option>
+                            <option class="country-option" value="United Kingdom">United Kingdom</option>
+                            <option class="country-option" value="United States">United States</option>
+                            <option class="country-option" value="Uruguay">Uruguay</option>
+                            <option class="country-option" value="Uzbekistan">Uzbekistan</option>
+                            <option class="country-option" value="Vanuatu">Vanuatu</option>
+                            <option class="country-option" value="Venezuela">Venezuela</option>
+                            <option class="country-option" value="Vietnam">Vietnam</option>
+                            <option class="country-option" value="Yemen">Yemen</option>
+                            <option class="country-option" value="Zambia">Zambia</option>
+                            <option class="country-option" value="Zimbabwe">Zimbabwe</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button type="button" onclick="booking()" class="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg  
+        hover:bg-yellow-300 transition">
+                        Submit
+                    </button>
+
+                </form>
+
+                <script>
+                    function booking() {
+                        const data = {
+                            name: document.getElementById("name").value,
+                            dob: document.getElementById("dob").value,
+                            tob: document.getElementById("tob").value,
+                            country: document.getElementById("country").value
+                        };
+
+                        // save in sessionStorage
+                        sessionStorage.setItem("consultData", JSON.stringify(data));
+
+                        // redirect user
+                        window.location.href = "booking.html";
+                    }
+                </script>
+
+
+
+
+                <!-- Review Section -->
+                <section class="w-full mt-16 p-6 bg-white rounded-3xl shadow-md border border-gray-200">
+
+                    <h2 class="text-center text-sm md:text-xl font-bold mb-6 vend-sans
+           bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 
+           text-white px-4 py-2 rounded-lg 
+           animate-fadeIn hover:scale-105 transition-transform duration-500">
+                        Write a Review After Consultancy
+                    </h2>
+
+
+                    <form class="space-y-5">
+
+                        <!-- Name -->
+                        <div>
+                            <label class="block mb-1 font-medium text-[#523A35]">Name</label>
+                            <input type="text"
+                                class="w-full border-b-2 border-gray-400 focus:border-[#523A35] px-1 py-1 outline-none"
+                                placeholder="Enter your name">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label class="block mb-1 font-medium text-[#523A35]">
+                                Phone <span class="text-gray-500">(optional)</span>
+                            </label>
+                            <input type="text"
+                                class="w-full border-b-2 border-gray-400 focus:border-[#523A35] px-1 py-1 outline-none"
+                                placeholder="Enter phone number">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block mb-1 font-medium text-[#523A35]">
+                                Email <span class="text-gray-500">(optional)</span>
+                            </label>
+                            <input type="email"
+                                class="w-full border-b-2 border-gray-400 focus:border-[#523A35] px-1 py-1 outline-none"
+                                placeholder="Enter email address">
+                        </div>
+
+                        <!-- Photo -->
+                        <div>
+                            <label class="block mb-1 font-medium text-[#523A35]">
+                                Photo <span class="text-gray-500">(optional)</span>
+                            </label>
+
+                            <label for="photo"
+                                class="px-4 py-2 bg-[#523A35] text-white rounded-lg cursor-pointer hover:bg-[#6a514c] transition">
+                                Upload
+                            </label>
+                            <input type="file" id="photo" class="hidden">
+                        </div>
+
+                        <!-- Review Text -->
+                        <div>
+                            <label class="block mb-1 font-medium text-[#523A35]">Write a Review</label>
+                            <textarea rows="6"
+                                class="w-full border-2 border-gray-300 rounded-xl p-3 focus:outline-none focus:border-[#523A35]"
+                                placeholder="Write your experience..."></textarea>
+                        </div>
+
+                        <!-- Submit -->
+                        <button class="w-full bg-[#523A35] text-white py-3 rounded-xl font-semibold 
+                               hover:bg-[#6a514c] transition">
+                            Submit Review
+                        </button>
+
+                    </form>
+
+                </section>
+
+
+                <div class="w-full px-4 py-10 bg-purple-50 rounded-xl mt-10">
+                    <h2 class="text-center text-xl font-bold mb-6 text-purple-700">
+                        ✨ Daily Horoscope
+                    </h2>
+
+                    <div class="bg-white p-6 rounded-xl shadow-md max-w-md mx-auto">
+
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Select Your Zodiac Sign
+                        </label>
+
+                        <select id="zodiac"
+                            class="w-full p-3 border border-gray-300 rounded-lg mb-4 text-gray-700 focus:ring-2 focus:ring-purple-400 focus:outline-none">
+                            <option value="">Choose your sign</option>
+                            <option value="aries">Aries</option>
+                            <option value="taurus">Taurus</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="cancer">Cancer</option>
+                            <option value="leo">Leo</option>
+                            <option value="virgo">Virgo</option>
+                            <option value="libra">Libra</option>
+                            <option value="scorpio">Scorpio</option>
+                            <option value="sagittarius">Sagittarius</option>
+                            <option value="capricorn">Capricorn</option>
+                            <option value="aquarius">Aquarius</option>
+                            <option value="pisces">Pisces</option>
+                        </select>
+
+                        <!-- Dynamic Horoscope Output -->
+                        <div id="horoscopeBox"
+                            class="bg-gray-50 p-4 h-[800px] rounded-lg border-l-4 border-purple-500 mb-5">
+                            <p class="text-gray-600" id="horoscopeText">
+                                Select your sign to view today’s horoscope.
+                            </p>
+                        </div>
+
+                        <button onclick="generateHoroscope()"
+                            class="w-full py-3 bg-purple-600 text-white rounded-lg text-sm px-4 font-semibold hover:bg-purple-700 transition">
+                            Click for your personalised horoscope
+                        </button>
+                    </div>
+
+                    <script>
+                        const horoscopeData = {
+                            aries: "Today brings high energy and fresh motivation. Take initiative and don’t hesitate to lead.",
+                            taurus: "A calm, steady day awaits. Focus on stability and comfort — your efforts will pay off.",
+                            gemini: "Conversations open new opportunities. Stay curious and flexible!",
+                            cancer: "Emotional clarity comes your way. Nurture your relationships and trust your intuition.",
+                            leo: "Your charm shines brighter today. Take the spotlight — success follows confidence.",
+                            virgo: "Productivity flows smoothly. Organize your thoughts and take one step at a time.",
+                            libra: "Balance returns to your life. A perfect day for harmony in relationships.",
+                            scorpio: "Deep insights surface. Trust your instincts and embrace transformation.",
+                            sagittarius: "Adventure calls! Even small changes bring joy and inspiration today.",
+                            capricorn: "Your discipline pays off. Stay focused — long-term goals are within reach.",
+                            aquarius: "Creativity flows today. Think differently and embrace fresh ideas.",
+                            pisces: "Your intuition is strong. A peaceful and emotionally balanced day lies ahead."
+                        };
+
+                        function generateHoroscope() {
+                            const zodiac = document.getElementById("zodiac").value;
+                            const output = document.getElementById("horoscopeText");
+
+                            if (!zodiac) {
+                                output.innerText = "Please select a zodiac sign to view your horoscope.";
+                                return;
+                            }
+
+                            output.innerText = horoscopeData[zodiac];
+                        }
+                    </script>
+
+
+                    <div class="w-full px-4 py-10 bg-purple-50 rounded-xl mt-8">
+                        <h2 class="text-center text-xl font-bold mb-6 mt-20 text-purple-700">
+                            📰 Latest Updates
+                        </h2>
+
+                        <div class="bg-white p-4 md:p-6 rounded-xl shadow-md max-w-md mx-auto space-y-4">
+
+                            <!-- Update 1 -->
+                            <div class="p-3 rounded-lg border-l-4 border-purple-500 bg-gray-50">
+                                <h3 class="font-semibold text-purple-700 text-sm mb-1">
+                                    Update 1: New Astro Insights
+                                </h3>
+                                <p class="text-gray-600 text-xs leading-relaxed">
+                                    Check out today’s planetary movements and their effects on your zodiac sign.
+                                </p>
+                                <span class="text-xs text-gray-400 block mt-1">Admin • 2 hours ago</span>
+                            </div>
+
+                            <!-- Update 2 -->
+                            <div class="p-3 rounded-lg border-l-4 border-purple-500 bg-gray-50">
+                                <h3 class="font-semibold text-purple-700 text-sm mb-1">
+                                    Update 2: Weekly Horoscope Release
+                                </h3>
+                                <p class="text-gray-600 text-xs leading-relaxed">
+                                    The weekly horoscopes are out! Don’t miss insights tailored for your zodiac.
+                                </p>
+                                <span class="text-xs text-gray-400 block mt-1">Admin • 1 day ago</span>
+                            </div>
+
+                            <!-- Update 3 -->
+                            <div class="p-3 rounded-lg border-l-4 border-purple-500 bg-gray-50">
+                                <h3 class="font-semibold text-purple-700 text-sm mb-1">
+                                    Update 3: Lunar Transit Alerts
+                                </h3>
+                                <p class="text-gray-600 text-xs leading-relaxed">
+                                    Today’s moon transit may bring emotional clarity—check what it means for you.
+                                </p>
+                                <span class="text-xs text-gray-400 block mt-1">Admin • 3 days ago</span>
+                            </div>
+
+
+
+                            <!-- Button -->
+                            <button
+                                class="w-full py-2.5 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition">
+                                View All Updates
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+
+    <div class="bg-gradient-to-b from-purple-900 to-indigo-900 py-16 text-white">
+
+
+
+
+
+        <h2 class="text-center text-3xl font-bold mb-10 tracking-wide">
+            What Our Astrology Clients Say
+        </h2>
+
+        <!-- Horizontal scroll container -->
+        <div class=" py-4 px-4  flex carousel">
+            <div class=" group">
+
+                <!-- Testimonial Card -->
+                <div
+                    class="testimonial-card bg-white text-gray-900  max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Priya Sharma"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Priya Sharma</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The astrologer gave me deep clarity about my career and relationship.
+                        Everything he predicted came true. I feel more confident and aligned
+                        with my life purpose now.”
+                    </p>
+                </div>
+
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Rohit Verma"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Rohit Verma</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “I was confused about marriage decisions. The kundali reading helped
+                        me understand compatibility clearly. Truly amazing guidance!”
+                    </p>
+                </div>
+
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Ankita Patel"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Ankita Patel</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The horoscope reading was incredibly accurate. I got remedies that
+                        actually worked and brought peace and positivity to my home.”
+                    </p>
+                </div>
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Ankita Patel"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Ankita Patel</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The horoscope reading was incredibly accurate. I got remedies that
+                        actually worked and brought peace and positivity to my home.”
+                    </p>
+                </div>
+
+
+
+            </div>
+
+            <div aria-hidden="true" class="group">
+
+                <!-- Testimonial Card -->
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Priya Sharma"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Priya Sharma</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The astrologer gave me deep clarity about my career and relationship.
+                        Everything he predicted came true. I feel more confident and aligned
+                        with my life purpose now.”
+                    </p>
+                </div>
+
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Rohit Verma"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Rohit Verma</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “I was confused about marriage decisions. The kundali reading helped
+                        me understand compatibility clearly. Truly amazing guidance!”
+                    </p>
+                </div>
+
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Ankita Patel"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Ankita Patel</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The horoscope reading was incredibly accurate. I got remedies that
+                        actually worked and brought peace and positivity to my home.”
+                    </p>
+                </div>
+                <div
+                    class="testimonial-card bg-white text-gray-900 min-w-[20rem] max-w-sm flex-shrink-0 p-6 rounded-lg shadow-lg break-words">
+                    <div class="flex items-center gap-4">
+                        <img src="https://via.placeholder.com/80" alt="Ankita Patel"
+                            class="w-16 h-16 rounded-full object-cover">
+                        <div>
+                            <h3 class="font-bold text-lg">Ankita Patel</h3>
+                            <div class="flex text-yellow-400" aria-label="5 out of 5 stars">
+                                ⭐⭐⭐⭐⭐
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700 leading-relaxed break-words">
+                        “The horoscope reading was incredibly accurate. I got remedies that
+                        actually worked and brought peace and positivity to my home.”
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- footer  -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+
+                <!-- Logo & About -->
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-4">AstroKama</h2>
+                    <p class="text-gray-400">
+                        Your trusted partner for accurate astrology predictions,
+                        horoscope readings, and personalized guidance.
+                    </p>
+
+                    <!-- Social Icons -->
+                    <div class="flex gap-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">🌙</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">⭐</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">🔮</a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <!-- <div>
+        <h3 class="text-xl font-semibold text-white mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="hover:text-white">About Us</a></li>
+          <li><a href="#" class="hover:text-white">Services</a></li>
+          <li><a href="#" class="hover:text-white">Horoscope</a></li>
+          <li><a href="#" class="hover:text-white">Blog</a></li>
+          <li><a href="#" class="hover:text-white">Contact</a></li>
+        </ul>
+      </div> -->
+
+                <!-- Services -->
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4 bg-greeem-300 text-center">&nbsp;</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Kundli Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Tarot Card Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Vastu Consultation</a></li>
+                        <li><a href="#" class="hover:text-white">Love Compatibility</a></li>
+                        <li><a href="#" class="hover:text-white">Career Prediction</a></li>
+                    </ul>
+
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-4 bg-greeem-300 ">Our Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Kundli Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Tarot Card Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Vastu Consultation</a></li>
+                        <li><a href="#" class="hover:text-white">Love Compatibility</a></li>
+                        <li><a href="#" class="hover:text-white">Career Prediction</a></li>
+                    </ul>
+
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4 bg-greeem-300 text-center">
+                        &nbsp;
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Kundli Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Tarot Card Reading</a></li>
+                        <li><a href="#" class="hover:text-white">Vastu Consultation</a></li>
+                        <li><a href="#" class="hover:text-white">Love Compatibility</a></li>
+                        <li><a href="#" class="hover:text-white">Career Prediction</a></li>
+                    </ul>
+
+                </div>
+
+
+                <!-- Contact Section -->
+                <div>
+                    <h3 class="text-xl font-semibold text-white mb-4">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <span class="text-gray-400">📍</span>
+                            <span>Tollygunge, India</span>
+                        </li>
+                        <li>
+                            <span class="text-gray-400">📞</span>
+                            <a href="tel:+918013688641" class="hover:text-white ml-2">
+                                +91 8013688641
+                            </a>
+                        </li>
+                        <li>
+                            <span class="text-gray-400">✉️</span>
+                            <a href="mailto:info@astroguide.com" class="hover:text-white ml-2">
+                                info@AstroKama.com
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom -->
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-400 text-sm">
+                © 2025 AstroKama. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

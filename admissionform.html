@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admission Form</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Story+Script&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .lotus-title {
+            background: linear-gradient(135deg, #8A1538, #F28C28, #E3C72F, #3CA66B);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+            }
+        }
+
+        .violet-gradient {
+            background: linear-gradient(135deg,
+                    #F2F1FF 0%,
+                    #E9FFEF 100%);
+        }
+
+        body {
+            background: linear-gradient(135deg,
+                    #F2F1FF 0%,
+                    #E9FFEF 100%);
+        }
+
+        .story-script-regular {
+            font-family: "Story Script", sans-serif;
+        }
+
+        .vend-sans {
+            font-family: "Vend Sans", sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-green-100">
+    <header class="bg-gradient-to-t from-green-200 via-green-50 to-violet-100 
+               flex items-center justify-between px-6 py-6 shadow-md border-b">
+
+        <!-- LOGO + TITLE CENTERED PROPERLY -->
+        <div class="flex justify-center w-full items-center space-x-4">
+
+            <!-- LOGO -->
+            <img  src="academiclogo.png" alt="Logo" class="h-20 w-auto drop-shadow-md">
+
+            <!-- TITLE -->
+            <div class="flex flex-col leading-tight text-center">
+                <h1 class="text-4xl font-extrabold text-purple-700 tracking-wide drop-shadow">
+                    MODERN ASTROLOGY
+                </h1>
+
+                <p class="text-orange-500 font-semibold text-sm tracking-wide">
+                    KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
+                </p>
+            </div>
+        </div>
+
+        <!-- EMPTY DIV FOR SYMMETRY -->
+        <div class="w-20"></div>
+
+    </header>
+
+
+
+    <div class="max-w-3xl mx-auto bg-white shadow-xl p-8 my-10 rounded-xl">
+
+
+
+        <!-- FORM START -->
+        <form class="space-y-6">
+            <h1
+                class="w-full story-script-regular text-4xl text-center story-script-regular rounded-md bg-violet-100  py-4 violet-gradient border border-2 border-violet-400">
+                Admission Form</h1>
+
+
+            <!-- Name -->
+            <div>
+                <label class="font-semibold">1. Name of the Student</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter full name" required>
+            </div>
+
+            <!-- Father's Name -->
+            <div>
+                <label class="font-semibold">2. Father's / Husband Name</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1" placeholder="Enter name"
+                    required>
+            </div>
+
+            <!-- Communication Address -->
+            <div>
+                <label class="font-semibold">3. Communication Address</label>
+                <textarea class="w-full border border-gray-400 px-3 py-2 rounded mt-1" rows="2"
+                    placeholder="Enter full address" required></textarea>
+            </div>
+
+            <!-- Permanent Address -->
+            <div>
+                <label class="font-semibold">4. Permanent Address</label>
+                <textarea class="w-full border border-gray-400 px-3 py-2 rounded mt-1" rows="2"
+                    placeholder="Enter full address" required></textarea>
+            </div>
+
+            <!-- Phone -->
+            <div>
+                <label class="font-semibold">5. Mobile No. & WhatsApp</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter phone number" required>
+            </div>
+
+            <!-- DOB & Time -->
+            <div>
+                <label class="font-semibold">6. Date, Time & Place of Birth</label>
+
+                <div class="grid grid-cols-3 gap-3 mt-1">
+                    <input type="date" class="border border-gray-400 px-3 py-2 rounded" required>
+
+                    <input type="time" class="border border-gray-400 px-3 py-2 rounded" required>
+
+                    <input type="text" class="border border-gray-400 px-3 py-2 rounded" placeholder="Place of Birth"
+                        required>
+                </div>
+            </div>
+
+            <!-- Qualification -->
+            <div>
+                <label class="font-semibold">7. Educational Qualification</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter qualification" required>
+            </div>
+
+            <!-- Extra Experience -->
+            <div>
+                <label class="font-semibold">8. Extra Experience</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter experience">
+            </div>
+
+            <!-- Astro Experience -->
+            <div>
+                <label class="font-semibold">9. Astrological Experience (If Any)</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter astrological experience">
+            </div>
+
+            <!-- Occupation -->
+            <div>
+                <label class="font-semibold">10. Occupation</label>
+                <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter occupation">
+            </div>
+
+            <!-- Declaration -->
+            <div class="mt-8">
+                <h2 class="font-bold text-white bg-violet-500 py-2 px-3 rounded">DECLARATION</h2>
+
+                <p class="text-sm mt-3">
+                    I hereby declare that the above information is true.
+                    I shall abide by the Rules & Regulations of this College/Society during my course of study.
+                </p>
+
+                <div class="grid grid-cols-3 gap-6 mt-6">
+                    <!-- Photo Upload -->
+                    <div class="text-center">
+                        <label class="font-semibold block mb-2">Upload Photo</label>
+                        <input type="file" class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    </div>
+                    <div class="text-center relative group">
+                        <label class="font-semibold block mb-2">
+                            Upload Certificate
+                            <!-- Tooltip icon -->
+                            <span class="ml-1 cursor-pointer text-yellow-400">ⓘ
+                                <span
+                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 text-xs bg-gray-800 text-white rounded-md p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                                    Upload your last qualification certificate (highest degree/mark sheet)
+                                </span>
+                            </span>
+                        </label>
+                        <input type="file"
+                            class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div class="text-center">
+                        <label class="font-semibold block mb-2">Upload Id proof</label>
+                        <input type="file" class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-8">
+                <button type="submit"
+                    class="bg-violet-500 text-white px-10 py-3 text-lg rounded-lg shadow-lg hover:bg-[#70112e] no-print">
+                    Submit Form
+                </button>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>

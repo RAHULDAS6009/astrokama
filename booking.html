@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astrology Consultancy Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Story+Script&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+     
+
+            body {
+                background: white !important;
+            }
+
+            input,
+            select,
+            textarea {
+                border: 1px solid #000 !important;
+                background: white !important;
+                box-shadow: none !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent !important;
+            }
+        }
+
+        .story-script-regular {
+            font-family: "Story Script", sans-serif;
+        }
+
+        .vend-sans {
+            font-family: "Vend Sans", sans-serif;
+        }
+
+        .caveat {
+            font-family: "Caveat", cursive;
+        }
+    </style>
+</head>
+
+<body class="bg-[#4A2F2B]    font-sans">
+    <!-- Header -->
+    <div class="bg-[#523A35] border-b-4 border-[#D4A017] px-6 md:px-10 flex items-center justify-between">
+
+        <!-- LEFT -->
+        <div class="flex items-center gap-5">
+            <img src="ganesha.png" alt="Ganesha" class="h-42 w-32">
+
+            <div class="astro-text">
+                <h2 class="text-[#f4d37d] story-script text-3xl font-normal m-0">
+                    Astrologer Suvendu Paul
+                </h2>
+
+                <p class="text-white text-base font-medium my-1">
+                    Director, Founder & Principal of
+                </p>
+
+                <span class="text-[#f4d37d] font-bold text-lg block">
+                    Modern Astrology
+                </span>
+
+                <p class="text-white text-base font-medium mt-1">
+                    A Unit of: Krishnamurti Academy of Modern Astrology & Spiritual Development
+                </p>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-xl p-8">
+
+        <h1 class="text-3xl font-bold text-center text-[#4A2F2B] mb-1 story-script-regular">
+            Astrology Consultancy Form
+        </h1>
+        <p class="text-center text-gray-600 mb-6 caveat">
+            Please fill out this form to book your consultation.
+        </p>
+
+        <form id="consultForm" class="space-y-6">
+
+            <!-- Step 1: Consultation Type -->
+            <div>
+                <label class="block mb-1 font-medium">Select Consultation Type</label>
+                <select id="consultType" class="w-full p-3 border rounded-md focus:ring-2 focus:ring-[#523A35]">
+                    <option value="">-- Select --</option>
+                    <option value="first">1st Consultant</option>
+                    <option value="follow">Follow-up Consultant</option>
+                </select>
+            </div>
+
+            <!-- Step 2: Area -->
+            <div id="areaSection">
+                <label class="block mb-2 font-medium">Select Area</label>
+
+                <div class="space-y-2">
+
+                    <!-- Tollygunge -->
+                    <label class="flex items-center gap-2 cursor-pointer border p-2 rounded-md">
+                        <input type="radio" name="area" value="Tollygunge" id="areaSelect_Tollygunge"
+                            class="text-[#523A35] focus:ring-[#523A35]">
+                        <span class="text-sm">Tollygunge</span>
+                    </label>
+
+                    <!-- Park Street -->
+                    <label class="flex items-center gap-2 cursor-pointer border p-2 rounded-md">
+                        <input type="radio" name="area" value="Park Street" id="areaSelect_ParkStreet"
+                            class="text-[#523A35] focus:ring-[#523A35]">
+                        <span class="text-sm">Park Street</span>
+                    </label>
+
+                </div>
+            </div>
+
+
+            <!-- Step 3: Schedule -->
+            <div id="scheduleSection">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 border rounded-lg bg-white text-sm">
+
+                    <!-- ================= LEFT: CALENDAR ================= -->
+                    <div class="flex flex-col items-center">
+
+                        <!-- Header with navigation -->
+                        <div
+                            class="w-64 flex justify-between items-center bg-orange-500 text-white px-3 py-2 rounded-lg text-sm">
+                            <button id="prevMonth" class="font-bold">&lt;</button>
+                            <span id="monthLabel" class="font-semibold">December 2025</span>
+                            <button id="nextMonth" class="font-bold">&gt;</button>
+                        </div>
+
+                        <!-- Calendar -->
+                        <div class="w-64 border p-3 mt-2 rounded-md">
+                            <div class="grid grid-cols-7 text-center font-medium text-gray-700 mb-2 text-xs">
+                                <div>M</div>
+                                <div>T</div>
+                                <div>W</div>
+                                <div>T</div>
+                                <div>F</div>
+                                <div>S</div>
+                                <div>S</div>
+                            </div>
+
+                            <div id="calendarDays" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+
+                            <!-- Selected Date -->
+                            <input type="text" id="selectedDate"
+                                class="w-full mt-3 p-2 border rounded bg-gray-100 text-center text-xs"
+                                placeholder="Select a date" readonly>
+                        </div>
+                    </div>
+
+                    <!-- ================= RIGHT: TIME SLOTS ================= -->
+                    <div class="text-sm">
+                        <!-- Legend -->
+                        <div class="flex items-center gap-6 mb-3">
+                            <div class="flex items-center gap-1">
+                                <span class="w-2 h-2 bg-red-500 inline-block rounded"></span>
+                                <span class="text-xs">Booked</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-2 h-2 bg-green-600 inline-block rounded"></span>
+                                <span class="text-xs">Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Afternoon -->
+                        <h3 class="font-semibold mb-1 text-xs">Afternoon</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>12:00 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>12:30 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>01:00 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>01:30 PM</span>
+                            </label>
+                        </div>
+
+                        <!-- Evening -->
+                        <h3 class="font-semibold mb-1 text-sm">Evening</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>04:00 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>04:30 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>05:00 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>06:00 PM</span>
+                            </label>
+                            <label class="border rounded p-2 flex items-center gap-1 cursor-pointer">
+                                <input type="radio" name="time"> <span>06:30 PM</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- ================= JAVASCRIPT FOR CALENDAR ================= -->
+            <script>
+                const monthLabel = document.getElementById("monthLabel");
+                const calendarDays = document.getElementById("calendarDays");
+                const selectedDateInput = document.getElementById("selectedDate");
+
+                let currentDate = new Date(2025, 11); // December 2025
+
+                function renderCalendar() {
+                    const year = currentDate.getFullYear();
+                    const month = currentDate.getMonth();
+
+                    monthLabel.textContent = currentDate.toLocaleString("default", {
+                        month: "long",
+                        year: "numeric",
+                    });
+
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    calendarDays.innerHTML = "";
+
+                    // Adjust starting day (Make Monday = first)
+                    const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+                    for (let i = 0; i < startOffset; i++) {
+                        calendarDays.innerHTML += `<div class="text-gray-300 py-1"></div>`;
+                    }
+
+                    // Add days
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const dateStr = `${day}-${month + 1}-${year}`;
+
+                        calendarDays.innerHTML += `
+      <div 
+        class="py-1 hover:bg-orange-200 cursor-pointer rounded"
+        onclick="selectDate('${dateStr}')"
+      >
+        ${day}
+      </div>
+    `;
+                    }
+                }
+
+                function selectDate(dateStr) {
+                    selectedDateInput.value = dateStr;
+                }
+
+                document.getElementById("prevMonth").addEventListener("click", (event) => {
+                    event.preventDefault();
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    renderCalendar();
+                });
+
+                document.getElementById("nextMonth").addEventListener("click", (event) => {
+                    event.preventDefault();
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    renderCalendar();
+                });
+
+                renderCalendar();
+            </script>
+
+
+            <!-- Step 4: Personal Info & Other Sections -->
+            <div id="personalSections" class=" space-y-6 mt-6">
+
+                <!-- PERSONAL INFORMATION -->
+                <div id="personalInfo"
+                    class="bg-gradient-to-r from-[#4A2F2B] to-[#9C6F63] text-white px-4 py-2 rounded-md mb-6">
+                    <h2 class="text-lg font-semibold vend-sans">PERSONAL INFORMATION</h2>
+                </div>
+
+                <form id="personalInfo2" class="space-y-6">
+
+
+
+                    <!-- DOB + Time -->
+                    <!-- DOB + Time -->
+                    <div class="space-y-3">
+
+                        <!-- Full Name -->
+                        <div>
+                            <label class="font-medium cave">Full Name</label>
+                            <input id="fullName" type="text"
+                                class="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#4A2F2B]" />
+                        </div>
+
+                        <!-- DOB -->
+                        <div>
+                            <label class="font-medium caveat">Date of Birth</label>
+                            <input id="dob" placeholder="DD / MM / YYYY" class="w-full px-3 py-2 border rounded-md">
+                        </div>
+
+                        <!-- TOB -->
+                        <div>
+                            <label class="font-medium caveat">Time of Birth</label>
+                            <input id="tob" placeholder="HH : MM AM/PM" class="w-full px-3 py-2 border rounded-md">
+                        </div>
+                    </div>
+
+
+                    <!-- Place of Birth -->
+                    <div class="space-y-3">
+                        <label class="font-medium text-center caveat">Place of Birth</label>
+
+                        <!-- Country -->
+                        <div>
+                            <label class="text-sm">Country</label>
+                            <input id="country" list="countries" placeholder="India / USA / etc."
+                                class="w-full px-3 py-2 border rounded-md print:border-black">
+
+                            <datalist id="countries">
+                                <option value="India">
+                                <option value="USA">
+                                <option value="Canada">
+                                <option value="UK">
+                                <option value="Australia">
+                            </datalist>
+                        </div>
+
+                        <!-- State -->
+                        <div>
+                            <label class="text-sm">State (Select or Write)</label>
+                            <input id="state" list="states" placeholder="State Name"
+                                class="w-full px-3 py-2 border rounded-md">
+                            <datalist id="states">
+                                <option value="West Bengal">
+                                <option value="California">
+                                <option value="Texas">
+                                <option value="New York">
+                            </datalist>
+                        </div>
+
+                        <!-- Pin + City -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-sm">Pin Code</label>
+                                <input id="pincode" class="w-full px-3 py-2 border rounded-md">
+                            </div>
+
+                            <div>
+                                <label class="text-sm">Place / City</label>
+                                <input id="city" class="w-full px-3 py-2 border rounded-md">
+                            </div>
+                        </div>
+
+                    </div>
+                    <script>
+                        const data = JSON.parse(sessionStorage.getItem("consultData"));
+
+                        if (data) {
+                            document.getElementById("fullName").value = data.name || "";
+                            document.getElementById("dob").value = data.dob || "";
+                            document.getElementById("tob").value = data.tob || "";
+                            document.getElementById("country").value = data.country || "";
+
+                            // These are blank because you removed them in previous form
+                            document.getElementById("state").value = "";
+                            document.getElementById("city").value = "";
+                            document.getElementById("pincode").value = "";
+                        }
+                    </script>
+
+
+                    <!-- Gender -->
+                    <div>
+                        <label class="font-medium block caveat">Gender</label>
+                        <div class="flex gap-6 mt-1">
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" />
+                                Male
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" />
+                                Female
+                            </label>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" name="gender" />
+                                Other
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT DETAILS -->
+                    <div class="bg-gradient-to-r from-[#4A2F2B] to-[#9C6F63] text-white px-4 py-2 rounded-md">
+                        <h2 class="text-lg font-semibold vend-sans">Contact Details</h2>
+                    </div>
+
+                    <div>
+                        <label class="font-medium caveat">Phone Number</label>
+                        <div class="flex gap-2 mt-1">
+                            <span class="px-4 py-2 border rounded-md bg-gray-50">+91</span>
+                            <input type="text"
+                                class="flex-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#4A2F2B]" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="font-medium caveat">Email Address</label>
+                        <input type="email"
+                            class="w-full mt-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-red-400" />
+                    </div>
+
+                    <!-- Consultation Mode -->
+                    <div>
+                        <label class="font-medium block caveat">Preferred Mode of Consultation</label>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox"> Chamber Visit
+                            </label>
+
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox"> Phone Call
+                            </label>
+
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox"> Video Call (Zoom)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Consultation Preferences -->
+                    <div class="bg-gradient-to-r from-[#4A2F2B] to-[#9C6F63] text-white px-4 py-2 rounded-md">
+                        <h2 class="text-lg font-semibold vend-sans">Consultation Preferences</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label><input type="checkbox" class="mr-2"> Career Guidance</label>
+                        <label><input type="checkbox" class="mr-2"> Love Life</label>
+                        <label><input type="checkbox" class="mr-2"> Marriage Life</label>
+                        <label><input type="checkbox" class="mr-2"> Health & Wellbeing</label>
+                        <label><input type="checkbox" class="mr-2"> Financial Condition</label>
+                        <label><input type="checkbox" class="mr-2"> Business</label>
+                        <label><input type="checkbox" class="mr-2"> Education</label>
+                        <label><input type="checkbox" class="mr-2"> Spiritual Growth</label>
+                    </div>
+
+                    <!-- Others -->
+                    <div>
+                        <label class="font-medium caveat">Others (Please Specify)</label>
+                        <textarea class="w-full mt-1 px-3 py-2 border rounded-md h-20"></textarea>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="bg-gradient-to-r from-[#4A2F2B] to-[#9C6F63] text-white px-4 py-2 rounded-md">
+                        <h2 class="text-lg font-semibold vend-sans">Additional Information</h2>
+                    </div>
+
+                    <div>
+                        <label class="font-medium caveat">Have you consulted an Astrologer before?</label>
+                        <div class="flex gap-6 mt-1">
+                            <label><input type="radio" name="consulted" /> Yes</label>
+                            <label><input type="radio" name="consulted" /> No</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="font-medium caveat">Specific Questions / Concerns</label>
+                        <textarea class="w-full mt-1 px-3 py-2 border rounded-md h-24"></textarea>
+                    </div>
+
+                    <!-- Remedies & Guidance -->
+                    <div class="bg-gradient-to-r from-[#4A2F2B] to-[#9C6F63] text-white px-4 py-2 rounded-md">
+                        <h2 class="text-lg font-semibold vend-sans">Remedies & Guidance</h2>
+                    </div>
+
+                    <div>
+                        <p class="font-medium caveat">
+                            Are you open to remedial suggestions (gemstones, rudraksha, color therapy, mantras, puja,
+                            vastu)?
+                        </p>
+
+                        <div class="flex gap-8 mt-2">
+                            <label><input type="radio" name="remedies" /> Yes</label>
+                            <label><input type="radio" name="remedies" /> No</label>
+                            <label><input type="radio" name="remedies" /> Maybe</label>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="flex  gap-3 mt-6">
+
+                        <!-- Submit -->
+                        <!-- <button
+                            class="no-print w-full bg-yellow-400 text-white py-3 rounded-md font-semibold text-lg hover:bg-[#3d2623] transition vend-sans">
+                            Submit Form
+                        </button> -->
+
+                        <!-- Print -->
+
+
+                    </div>
+
+
+
+
+            </div>
+
+            <section class="mt-10 bg-white p-6 rounded-lg shadow-md border border-gray-200">
+
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">Declaration</h2>
+
+                <p class="text-gray-700 leading-relaxed mb-3">
+                    I hereby confirm that the information provided above is true to the best of my knowledge.
+                </p>
+
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    I understand that astrological guidance is advisory in nature and not a substitute for professional
+                    medical, financial, or legal services.
+                </p>
+
+                <!-- Signature + Date -->
+                <!-- Declaration Inputs -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+                    <!-- Signature -->
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">Signature:</label>
+                        <div id="signatureInput" type="text"
+                            class="w-full border border-gray-300 rounded-md px-3 py-5 focus:ring-2 focus:ring-orange-400 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <!-- Date Autocomplete -->
+                    <div>
+                        <label class="block text-gray-600 font-medium mb-1">Date:</label>
+                        <input id="dateInput" type="date"
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none">
+                    </div>
+
+                </div>
+
+                <!-- Agree Section -->
+                <div class="mb-6 flex items-center space-x-3">
+                    <input id="agreeCheckbox" type="checkbox" class="h-5 w-5 text-orange-500">
+                    <label class="text-gray-700 font-medium">I agree to the declaration terms.</label>
+                </div>
+
+                <!-- PAY Button -->
+
+
+
+
+
+
+                <!-- Fees Section -->
+                <div class="space-y-6 text-gray-700 no-print">
+
+                    <!-- Offline -->
+                    <div class="border p-4 rounded-lg">
+                        <p class="text-gray-800 font-semibold mb-1">
+                            For Offline Visit Fees : ₹1500
+                        </p>
+                        <p class="text-gray-600">
+                            Booking Amount ₹500 — after visiting the chamber, remaining ₹1000
+                        </p>
+
+                        <button id="payButton"
+                            class="mt-3 px-4 py-2 bg-purple-700 text-white font-semibold rounded-md shadow hover:bg-purple-800"
+                            disabled>
+                            PAY ₹500
+                        </button>
+                    </div>
+
+                    <!-- Online -->
+                    <div class="border p-4 rounded-lg">
+                        <p class="text-gray-800 font-semibold mb-1">
+                            For Online Fees : ₹1800
+                        </p>
+
+                        <button id="payButton1"
+                            class="mt-3 px-4 py-2 bg-purple-700 text-white font-semibold rounded-md shadow hover:bg-purple-800"
+                            disabled>
+                            PAY ₹1800
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <button type="button" onclick="window.print()"
+                class="no-print w-full bg-blue-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-blue-600 transition vend-sans">
+                Print Form
+            </button>
+            <script>
+                // Auto-fill today's date
+                document.getElementById("dateInput").value = new Date().toISOString().split("T")[0];
+
+                const agree = document.getElementById("agreeCheckbox");
+                const payBtn = document.getElementById("payButton");
+                const payBtn1 = document.getElementById("payButton1");
+
+                function togglePay() {
+                    if (agree.checked) {
+                        // Enable buttons
+                        payBtn.disabled = false;
+                        payBtn.classList.remove("opacity-50", "cursor-not-allowed", "bg-purple-400");
+                        payBtn.classList.add("bg-purple-700", "hover:bg-purple-800");
+
+                        payBtn1.disabled = false;
+                        payBtn1.classList.remove("opacity-50", "cursor-not-allowed", "bg-purple-400");
+                        payBtn1.classList.add("bg-purple-700", "hover:bg-purple-800");
+                    } else {
+                        // Disable buttons
+                        payBtn.disabled = true;
+                        payBtn.classList.add("opacity-50", "cursor-not-allowed", "bg-purple-400");
+                        payBtn.classList.remove("bg-purple-700", "hover:bg-purple-800");
+
+                        payBtn1.disabled = true;
+                        payBtn1.classList.add("opacity-50", "cursor-not-allowed", "bg-purple-400");
+                        payBtn1.classList.remove("bg-purple-700", "hover:bg-purple-800");
+                    }
+                }
+
+                agree.addEventListener("change", togglePay);
+
+                // Run once on page load to apply correct state
+                togglePay();
+            </script>
+
+
+            <p class="text-center text-sm text-gray-500 mt-4 stardos-stencil-bold">
+                ⭐ All information is kept confidential.
+            </p>
+        </form>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
