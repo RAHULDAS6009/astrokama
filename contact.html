@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact – Modern Astrology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes purpleBlink {
+            0% {
+                background-color: oklch(43.2% 0.232 292.759);
+            }
+
+            /* purple-900 */
+            50% {
+                background-color: #894fee;
+            }
+
+            /* purple-600 */
+            100% {
+                background-color: oklch(43.2% 0.232 292.759)
+            }
+
+            /* purple-900 */
+        }
+
+        @keyframes bounceRepeat {
+            0% {
+                transform: translateY(0);
+            }
+
+            5% {
+                transform: translateY(-12px);
+            }
+
+            8% {
+                transform: translateY(-12px);
+            }
+
+            10% {
+                transform: translateY(0);
+            }
+
+
+            /* Remaining 90% time = idle (no bounce) */
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- HEADER -->
+    <header class="bg-[#523A35] border-b-4 border-[#D4A017] flex flex-col items-center px-6 py-4 shadow-md">
+
+        <div class="flex justify-center items-center space-x-4">
+            <img src="academiclogo.png" alt="Logo" class="h-20 w-auto drop-shadow-md">
+            <div class="flex flex-col leading-tight text-center">
+                <h1 class="text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow">
+                    MODERN ASTROLOGY
+                </h1>
+
+                <p class="text-white font-semibold text-sm tracking-wide">
+                    KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
+                </p>
+            </div>
+        </div>
+
+        <p class="mt-3 text-white text-xs md:text-sm font-semibold tracking-wide text-center px-4">
+            Registered Under <span class="underline">Government of West Bengal</span> &
+            <span class="underline">Government of India</span> • ISO Certified Institute •
+            <span class="text-yellow-300 font-bold">Registration Number Provided After Course Completion</span> •
+            Official Certificate Every Semester
+        </p>
+
+    </header>
+
+    <!-- NAV -->
+    <nav class="w-full bg-[#FDECC2] py-4">
+        <ul class="flex flex-wrap justify-center gap-6 md:space-x-16 font-bold text-purple-800 text-lg tracking-wide">
+            <li><a href="index.html" class="hover:text-purple-600">HOME</a></li>
+            <li><a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a></li>
+
+            <li style="animation: bounceRepeat 3s infinite;">
+                <a href="academic.html" class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
+                    style="animation: purpleBlink 1s infinite ease-in-out;">
+                    ACADEMIC / COURSES
+                </a>
+            </li>
+
+            <li><a href="studentcorner.html" class="hover:text-purple-600">STUDENT CORNER</a></li>
+            <li><a href="#" class="hover:text-purple-600">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTACT SECTION -->
+    <section class="max-w-5xl mx-auto p-6 mt-10">
+
+        <h2 class="text-3xl font-bold text-purple-800 text-center mb-6">Contact Us</h2>
+
+        <!-- TWO COLUMN LAYOUT -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- LEFT: Contact Options -->
+            <div class="space-y-5 bg-white p-6 rounded-lg shadow-md border">
+
+                <h3 class="text-xl font-bold text-[#523A35]">Get in Touch</h3>
+
+                <p class="text-gray-700">For consultation, course enquiries, or any guidance – connect with us:</p>
+
+                <!-- Call Button -->
+                <a href="tel:+918000000000"
+                    class="block w-full bg-purple-800 text-white py-3 rounded-md font-bold text-center hover:bg-purple-900 transition">
+                    📞 Call Now
+                </a>
+
+                <!-- WhatsApp Button -->
+                <a href="https://wa.me/918000000000"
+                    class="block w-full bg-green-600 text-white py-3 rounded-md font-bold text-center hover:bg-green-700 transition">
+                    💬 Chat on WhatsApp
+                </a>
+
+                <!-- Email Button -->
+                <a href="mailto:astro@example.com"
+                    class="block w-full bg-blue-600 text-white py-3 rounded-md font-bold text-center hover:bg-blue-700 transition">
+                    ✉️ Send Email
+                </a>
+
+                <div class="mt-4">
+                    <h4 class="font-bold text-lg">Office Address</h4>
+                    <p class="text-gray-700">
+                        Modern Astrology
+                        2nd Floor,
+                        85 NSC Bose Road,
+                        Malancha Tollygunge,
+                        Above Tollygunge UCO Bank,
+                        Kolkata 700040
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: Contact Form -->
+            <div class="bg-white p-6 rounded-lg shadow-md border">
+
+                <h3 class="text-xl font-bold text-[#523A35] mb-4">Send Us a Message</h3>
+
+                <form class="space-y-4">
+
+                    <div>
+                        <label class="font-semibold">Your Name</label>
+                        <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                            placeholder="Enter your name">
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">Phone Number</label>
+                        <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                            placeholder="Enter your number">
+                    </div>
+
+                    <div>
+                        <label class="font-semibold">Message</label>
+                        <textarea class="w-full border border-gray-400 px-3 py-2 rounded mt-1" rows="4"
+                            placeholder="Write your message..."></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-[#523A35] text-white py-2 rounded-md font-bold hover:bg-[#6a4c46] transition">
+                        Submit
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <!-- MAP SECTION -->
+        <div class="w-full h-64 md:h-96 mt-10">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14734.20807823825!2d88.3513403!3d22.4862212!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDI5JzEwLjQiTiA4OMKwMjEnMDQuOCJF!5e0!3m2!1sen!2sin!4v1735660000000"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+
+
+    </section>
+
+    <br><br>
+
+</body>
+
+</html>

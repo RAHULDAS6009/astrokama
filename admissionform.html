@@ -50,31 +50,51 @@
 </head>
 
 <body class="bg-green-100">
-    <header class="bg-gradient-to-t from-green-200 via-green-50 to-violet-100 
-               flex items-center justify-between px-6 py-6 shadow-md border-b">
+    <header class="bg-[#523A35] border-b-4 border-[#D4A017]
+               flex flex-col items-center px-6 py-4 shadow-md">
 
-        <!-- LOGO + TITLE CENTERED PROPERLY -->
-        <div class="flex justify-center w-full items-center space-x-4">
+        <!-- LOGO + TITLE -->
+        <div class="flex justify-center items-center space-x-4">
 
             <!-- LOGO -->
-            <img  src="academiclogo.png" alt="Logo" class="h-20 w-auto drop-shadow-md">
+            <img src="academiclogo.png" alt="Logo" class="h-20 w-auto drop-shadow-md">
 
             <!-- TITLE -->
             <div class="flex flex-col leading-tight text-center">
-                <h1 class="text-4xl font-extrabold text-purple-700 tracking-wide drop-shadow">
+                <h1 class="text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow">
                     MODERN ASTROLOGY
                 </h1>
 
-                <p class="text-orange-500 font-semibold text-sm tracking-wide">
+                <p class="text-white font-semibold text-sm tracking-wide">
                     KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
                 </p>
             </div>
         </div>
 
-        <!-- EMPTY DIV FOR SYMMETRY -->
-        <div class="w-20"></div>
+        <!-- ONE-LINE REGISTRATION INFO -->
+        <p class="mt-3 text-white text-xs md:text-sm font-semibold tracking-wide text-center px-4">
+            Registered Under <span class="underline">Government of West Bengal</span> &
+            <span class="underline">Government of India</span> • ISO Certified Institute •
+            <span class="text-yellow-300 font-bold">Registration Number Provided After Course Completion</span> •
+            Official Certificate Every Semester
+        </p>
 
     </header>
+      <nav class="w-full bg-[#FDECC2] py-4">
+                <ul class="flex justify-center space-x-16 font-bold text-purple-800 text-lg tracking-wide">
+                    <li><a href="#" class="hover:text-purple-600">HOME</a></li>
+                    <li><a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a></li>
+                    <li style="animation: bounceRepeat 3s infinite;">
+                        <a href="academic.html" class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
+                            style="animation: purpleBlink 1s infinite ease-in-out ">
+                            ACADEMIC / COURSES
+                        </a>
+                    </li>
+
+                    <li><a href="#" class="hover:text-purple-600">STUDENT CORNER</a></li>
+                    <li><a href="#" class="hover:text-purple-600">CONTACT</a></li>
+                </ul>
+            </nav>
 
 
 
@@ -84,8 +104,25 @@
 
         <!-- FORM START -->
         <form class="space-y-6">
+            <button class="px-5 py-2 bg-green-600 text-white font-semibold rounded-lg 
+           hover:bg-green-700 active:scale-95 transition-all shadow-md no-print" onclick="prevPage()">
+                <div class="flex gap-2">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061A1.125 1.125 0 0 1 21 8.689v8.122ZM11.25 16.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 1 0-1.954l7.108-4.061a1.125 1.125 0 0 1 1.683.977v8.122Z" />
+                    </svg>
+                    Back
+                </div>
+            </button>
+            <script>
+                function prevPage() {
+                    window.history.back();   // ⬅️ goes to previous page
+                }
+            </script>
             <h1
-                class="w-full story-script-regular text-4xl text-center story-script-regular rounded-md bg-violet-100  py-4 violet-gradient border border-2 border-violet-400">
+                class="w-full font-extrabold  text-4xl text-center  rounded-md bg-violet-100  py-4 violet-gradient border border-2 border-violet-400">
                 Admission Form</h1>
 
 
@@ -102,6 +139,35 @@
                 <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded mt-1" placeholder="Enter name"
                     required>
             </div>
+
+            <!-- MODE OF COURSE -->
+            <div>
+                <label class="font-semibold">Mode of Course</label>
+                <div class="flex items-center gap-6 mt-2">
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="mode" value="online" class="w-4 h-4">
+                        <span>Online</span>
+                    </label>
+
+                    <label class="flex items-center gap-2">
+                        <input type="radio" name="mode" value="offline" class="w-4 h-4">
+                        <span>Offline</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- COURSE DETAILS -->
+            <div class="mt-4">
+                <label class="font-semibold">Course Details</label>
+                <select class="w-full border border-gray-400 px-3 py-2 rounded mt-1" required>
+                    <option value="">-- Select Course --</option>
+                    <option value="short">Short Duration – online</option>
+                    <option value="long">Long Duration – online </option>
+                    <option value="offline_tolly">Offline Batch – Tollygunge</option>
+                    <option value="offline_medinipur">Offline Batch – Medinipur</option>
+                </select>
+            </div>
+
 
             <!-- Communication Address -->
             <div>
@@ -179,7 +245,8 @@
                     <!-- Photo Upload -->
                     <div class="text-center">
                         <label class="font-semibold block mb-2">Upload Photo</label>
-                        <input type="file" class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                        <input type="file"
+                            class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
                     </div>
                     <div class="text-center relative group">
                         <label class="font-semibold block mb-2">
@@ -199,7 +266,8 @@
                     <!-- Photo Upload -->
                     <div class="text-center">
                         <label class="font-semibold block mb-2">Upload Id proof</label>
-                        <input type="file" class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                        <input type="file"
+                            class="w-full text-sm rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-yellow-300">
                     </div>
                 </div>
             </div>

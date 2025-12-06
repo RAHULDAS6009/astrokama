@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Payment & Alumni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Button Blink Animation */
+        @keyframes purpleBlink {
+            0% { background-color: #6b21a8; }
+            50% { background-color: #9333ea; }
+            100% { background-color: #6b21a8; }
+        }
+
+        /* Bounce Animation */
+        @keyframes bounceRepeat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- HEADER -->
+    <header class="bg-[#523A35] border-b-4 border-[#D4A017]
+               flex flex-col items-center px-6 py-4 shadow-md">
+
+        <div class="flex justify-center items-center space-x-4">
+            <img src="academiclogo.png" alt="Logo" class="h-20 w-auto drop-shadow-md">
+            <div class="flex flex-col leading-tight text-center">
+                <h1 class="text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow">
+                    MODERN ASTROLOGY
+                </h1>
+                <p class="text-white font-semibold text-sm tracking-wide">
+                    KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
+                </p>
+            </div>
+        </div>
+
+        <p class="mt-3 text-white text-xs md:text-sm font-semibold tracking-wide text-center px-4">
+            Registered Under <span class="underline">Government of West Bengal</span> &
+            <span class="underline">Government of India</span> • ISO Certified Institute •
+            <span class="text-yellow-300 font-bold">Registration Number Provided After Course Completion</span> •
+            Official Certificate Every Semester
+        </p>
+
+    </header>
+
+    <!-- NAVBAR -->
+    <nav class="w-full bg-[#FDECC2] py-4">
+        <ul class="flex flex-wrap justify-center gap-6 md:space-x-16 font-bold text-purple-800 text-lg tracking-wide">
+            <li><a href="index.html" class="hover:text-purple-600">HOME</a></li>
+            <li><a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a></li>
+
+            <li style="animation: bounceRepeat 3s infinite;">
+                <a href="academic.html" class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
+                    style="animation: purpleBlink 1s infinite ease-in-out;">
+                    ACADEMIC / COURSES
+                </a>
+            </li>
+
+            <li><a href="studentcorner.html" class="hover:text-purple-600">STUDENT CORNER</a></li>
+            <li><a href="contact.html" class="hover:text-purple-600">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- FEES PAYMENT SECTION -->
+    <section class="max-w-xl mx-auto bg-white shadow-lg p-6 mt-8 rounded-lg border">
+        <h2 class="text-2xl font-bold text-center text-purple-800 mb-4">Fees Payment Login</h2>
+
+        <div class="space-y-4">
+
+            <div>
+                <label class="font-semibold">User ID</label>
+                <input type="text"
+                    class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter User ID">
+            </div>
+
+            <div>
+                <label class="font-semibold">Password</label>
+                <input type="password"
+                    class="w-full border border-gray-400 px-3 py-2 rounded mt-1"
+                    placeholder="Enter Password">
+            </div>
+
+            <div class="flex justify-between text-sm">
+                <a href="#" class="text-purple-700 font-semibold hover:underline">Forgot Password?</a>
+            </div>
+
+            <button class="w-full bg-purple-800 text-white py-2 rounded-md font-bold
+                           hover:bg-purple-900 transition">
+                Login & Proceed to Payment
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- ALUMNI SECTION -->
+    <section class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border">
+
+        <h2 class="text-3xl font-bold text-purple-800 text-center mb-6">Search Alumni</h2>
+
+        <!-- SEARCH BAR -->
+        <div class="mb-6">
+            <input type="text"
+                class="w-full border border-gray-400 px-4 py-2 rounded"
+                placeholder="Search alumni by name or registration number">
+        </div>
+
+        <!-- ALUMNI GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+            <!-- ALUMNI CARD -->
+            <div class="bg-[#FDECC2] p-4 rounded-lg shadow flex flex-col items-center text-center flex-grow">
+                <img src="alumni1.jpg" class="h-28 w-28 rounded-full object-cover shadow">
+                <h3 class="font-bold mt-3">Rahul Sharma</h3>
+                <p class="text-sm text-gray-700">Reg No: MA-2023-001</p>
+            </div>
+
+            <div class="bg-[#FDECC2] p-4 rounded-lg shadow flex flex-col items-center text-center flex-grow">
+                <img src="alumni2.jpg" class="h-28 w-28 rounded-full object-cover shadow">
+                <h3 class="font-bold mt-3">Priya Singh</h3>
+                <p class="text-sm text-gray-700">Reg No: MA-2022-014</p>
+            </div>
+
+            <div class="bg-[#FDECC2] p-4 rounded-lg shadow flex flex-col items-center text-center flex-grow">
+                <img src="alumni3.jpg" class="h-28 w-28 rounded-full object-cover shadow">
+                <h3 class="font-bold mt-3">Amit Das</h3>
+                <p class="text-sm text-gray-700">Reg No: MA-2021-021</p>
+            </div>
+
+            <div class="bg-[#FDECC2] p-4 rounded-lg shadow flex flex-col items-center text-center flex-grow">
+                <img src="alumni4.jpg" class="h-28 w-28 rounded-full object-cover shadow">
+                <h3 class="font-bold mt-3">Sneha Roy</h3>
+                <p class="text-sm text-gray-700">Reg No: MA-2020-033</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <br><br>
+
+</body>
+
+</html>
