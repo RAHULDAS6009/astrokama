@@ -17,45 +17,75 @@
         0% {
           background-position: 0% 50%;
         }
-
         50% {
           background-position: 100% 50%;
         }
-
         100% {
           background-position: 0% 50%;
+        }
+      }
+
+      @keyframes bounceRepeat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes purpleBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
         }
       }
 
       body {
         background: linear-gradient(135deg, #f2f1ff 0%, #e9ffef 100%);
       }
+
+      /* Hide scrollbar for course grid if needed */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
     </style>
   </head>
 
-  <body class="">
+  <body>
     <!-- HEADER -->
     <header
-      class="bg-[#523A35] border-b-4 border-[#D4A017] flex flex-col items-center px-6 py-4 shadow-md"
+      class="bg-[#523A35] border-b-4 border-[#D4A017] flex flex-col items-center px-4 sm:px-6 py-4 shadow-md"
     >
       <!-- LOGO + TITLE -->
-      <div class="flex justify-center items-center space-x-4">
+      <div
+        class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4"
+      >
         <!-- LOGO -->
         <img
           src="academiclogo.png"
           alt="Logo"
-          class="h-20 w-auto drop-shadow-md"
+          class="h-16 sm:h-20 w-auto drop-shadow-md"
         />
 
         <!-- TITLE -->
         <div class="flex flex-col leading-tight text-center">
           <h1
-            class="text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow"
+            class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow"
           >
             MODERN ASTROLOGY
           </h1>
-
-          <p class="text-white font-semibold text-sm tracking-wide">
+          <p
+            class="text-white font-semibold text-xs sm:text-sm tracking-wide px-2"
+          >
             KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
           </p>
         </div>
@@ -63,7 +93,7 @@
 
       <!-- ONE-LINE REGISTRATION INFO -->
       <p
-        class="mt-3 text-white text-xs md:text-sm font-semibold tracking-wide text-center px-4"
+        class="mt-3 text-white text-xs sm:text-sm font-semibold tracking-wide text-center px-2 sm:px-4"
       >
         Registered Under
         <span class="underline">Government of West Bengal</span> &
@@ -75,30 +105,34 @@
         • Official Certificate Every Semester
       </p>
     </header>
+
     <!-- Nav Bar -->
-    <nav class="w-full bg-[#FDECC2] py-4">
+    <nav class="w-full bg-[#FDECC2] py-3 sm:py-4">
       <ul
-        class="flex flex-wrap justify-center gap-6 md:space-x-16 font-bold text-purple-800 text-lg tracking-wide"
+        class="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 lg:space-x-16 font-bold text-purple-800 text-sm sm:text-base md:text-lg tracking-wide px-2"
       >
         <li><a href="index.html" class="hover:text-purple-600">HOME</a></li>
         <li>
           <a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a>
         </li>
-
         <li style="animation: bounceRepeat 3s infinite">
           <a
             href="academic.html"
-            class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
+            class="bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-full shadow-lg text-xs sm:text-base"
             style="animation: purpleBlink 1s infinite ease-in-out"
           >
             ACADEMIC / COURSES
           </a>
         </li>
-
         <li>
-          <a href="studentcorner.html" class="hover:text-purple-600"
+          <a
+            href="studentcorner.html"
+            class="hover:text-purple-600 hidden sm:inline"
             >STUDENT CORNER</a
           >
+        </li>
+        <li class="sm:hidden">
+          <a href="studentcorner.html" class="hover:text-purple-600">STUDENT</a>
         </li>
         <li>
           <a href="contact.html" class="hover:text-purple-600">CONTACT</a>
@@ -106,20 +140,20 @@
       </ul>
     </nav>
 
-    +
-
     <!-- SECTION 1 -->
     <section
-      class="max-w-7xl mx-auto flex flex flex-col md:flex-row w-full items-start gap-5 px-6 md:px-10 py-10"
+      class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 py-6 sm:py-10"
     >
-      <div class="md:w-[65%]">
+      <div class="w-full md:w-[65%]">
         <div
-          class="bg-red-100 text-pink-800 text-xl font-bold px-6 py-3 rounded-tr-2xl shadow w-fit"
+          class="bg-red-100 text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-tr-2xl shadow w-fit"
         >
           Modern Astrology Institute
         </div>
 
-        <p class="my-4 text-sm text-gray-600">
+        <p
+          class="my-3 sm:my-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           I am Suvendu, a devoted KP Astrologer who believes astrology is more
           than charts and predictions—it is a way to guide people toward a
           practical, purposeful, and fulfilling lifestyle. My faith rests above
@@ -127,7 +161,9 @@
           calculation or forecast.
         </p>
 
-        <p class="mb-4 text-sm text-gray-600">
+        <p
+          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           Across the world, many astrologers continue to rely on traditional
           methods. While these ancient techniques hold wisdom, I have often felt
           they can be limited or misunderstood. Too often, society dismisses
@@ -136,7 +172,9 @@
           spiritual in essence.
         </p>
 
-        <p class="mb-4 text-sm text-gray-600">
+        <p
+          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           The KP technique, with its remarkable precision in calculation, became
           my foundation. Yet I realized that prediction alone needed refinement.
           Out of this realization, I developed Modern Astrology—a unique blend
@@ -148,24 +186,28 @@
       </div>
 
       <div
-        class="border-green-400 bg-white border-4 rounded-tl-[50px] h-[300px] md:h-[360px] w-full md:w-[35%]"
+        class="border-green-400 bg-white border-4 rounded-tl-[30px] sm:rounded-tl-[50px] h-[200px] sm:h-[300px] md:h-[360px] w-full md:w-[35%]"
       ></div>
     </section>
 
     <!-- SECTION 2 -->
     <section
-      class="max-w-7xl mx-auto flex flex flex-col md:flex-row w-full items-start gap-5 px-6 md:px-10 pb-14"
+      class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 pb-8 sm:pb-14"
     >
       <div
-        class="border-green-400 bg-white border-4 rounded-tr-[50px] h-[260px] md:h-[290px] w-full md:w-[40%]"
+        class="border-green-400 bg-white border-4 rounded-tr-[30px] sm:rounded-tr-[50px] h-[200px] sm:h-[260px] md:h-[290px] w-full md:w-[40%] order-2 md:order-1"
       ></div>
 
-      <div class="md:w-[60%]">
-        <div class="text-pink-800 text-xl font-bold px-6 py-3 w-fit">
+      <div class="w-full md:w-[60%] order-1 md:order-2">
+        <div
+          class="text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 w-fit"
+        >
           A Different Kind of Learning
         </div>
 
-        <p class="my-4 text-sm text-gray-600">
+        <p
+          class="my-3 sm:my-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           I am Suvendu, a devoted KP Astrologer who believes astrology is more
           than charts and predictions—it is a way to guide people toward a
           practical, purposeful, and fulfilling lifestyle. My faith rests above
@@ -173,7 +215,9 @@
           calculation or forecast.
         </p>
 
-        <p class="mb-4 text-sm text-gray-600">
+        <p
+          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           Across the world, many astrologers continue to rely on traditional
           methods. While these ancient techniques hold wisdom, I have often felt
           they can be limited or misunderstood. Too often, society dismisses
@@ -182,7 +226,9 @@
           spiritual in essence.
         </p>
 
-        <p class="mb-4 text-sm text-gray-600">
+        <p
+          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
+        >
           The KP technique, with its remarkable precision in calculation, became
           my foundation. Yet I realized that prediction alone needed refinement.
           Out of this realization, I developed Modern Astrology—a unique blend
@@ -192,173 +238,38 @@
       </div>
     </section>
 
+    <!-- COURSE STRUCTURE GRID -->
     <section
-      class="w-full max-w-6xl mx-auto bg-violet-100 rounded-2xl shadow-lg relative overflow-hidden"
+      class="w-full max-w-6xl mx-auto bg-violet-100 rounded-2xl shadow-lg relative overflow-hidden p-4 sm:p-6 mb-8 sm:mb-10"
     >
-      <!-- Gradient Overlay -->
       <div
         class="absolute inset-0 bg-gradient-to-br from-purple-300 via-indigo-200 to-pink-200 opacity-50"
       ></div>
 
-      <!-- Title -->
-      <div class="text-center mb-10 relative">
+      <div class="text-center mb-6 sm:mb-10 relative">
         <h2
-          class="text-3xl font-bold border-2 border-purple-400 rounded-xl px-6 py-3 inline-block text-purple-900 mt-6"
+          class="text-2xl sm:text-3xl font-bold border-2 border-purple-400 rounded-xl px-4 sm:px-6 py-2 sm:py-3 inline-block text-purple-900 mt-4 sm:mt-6"
         >
           Course Structure
         </h2>
       </div>
 
-      <!-- Carousel -->
       <div
-        id="courseCarousel"
-        class="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar pb-4 relative"
-      >
-        <!-- 1. Online Astrology Full Course -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3
-            class="font-bold mb-3 flex flex-col text-lg text-purple-900 text-center"
-          >
-            <span> Online Astrology </span>
-            <span> Full Course </span>
-          </h3>
-          <img
-            src="course.png"
-            alt="Online Astrology Full Course"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Complete Astrology Program</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-
-        <!-- 2. Online Astrology Short Duration Full Course -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3
-            class="font-bold mb-3 flex flex-col text-center text-lg text-purple-900"
-          >
-            <span> Online Astrology </span>
-            <span> Short Duration Full Course </span>
-          </h3>
-          <img
-            src="course.png"
-            alt="Online Astrology Short Course"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Short Duration Astrology Course</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-
-        <!-- 3. Online Astrology Long Duration Full Course -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3
-            class="font-bold flex-col text-center mb-3 text-lg text-purple-900"
-          >
-            <span> Online Astrology </span>
-            <span> Long Duration Full Course </span>
-          </h3>
-          <img
-            src="course.png"
-            alt="Online Long Course"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Long Duration Astrology Course</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-
-        <!-- 4. Vastu Full Course -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3 class="font-bold mb-3 text-lg text-center text-purple-900">
-            Vastu Full Course
-          </h3>
-          <img
-            src="course.png"
-            alt="Vastu Full Course"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Complete Vastu Shastra Course</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-
-        <!-- 5. Reiki Course -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3 class="font-bold mb-3 text-lg text-purple-900 text-center">
-            Reiki Course
-          </h3>
-          <img
-            src="course.png"
-            alt="Reiki Course"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Reiki Healing Training</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-
-        <!-- 6. Kavach -->
-        <div
-          class="min-w-[260px] bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300"
-        >
-          <h3 class="font-bold mb-3 text-lg text-purple-900 text-center">
-            Kavach
-          </h3>
-          <img
-            src="course.png"
-            alt="Kavach"
-            class="rounded-xl mb-3 h-48 w-full object-cover"
-          />
-          <p class="text-purple-800 mb-4">Spiritual Protection Course</p>
-          <button
-            class="viewPdfBtn px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold"
-            data-pdf="Course Details 12 Months.pdf"
-          >
-            View PDF
-          </button>
-        </div>
-      </div>
+        id="courseGrid"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 relative pb-4"
+      ></div>
 
       <!-- PDF Modal -->
       <div
         id="pdfModal"
-        class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden"
+        class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 p-4"
       >
-        <div class="bg-white rounded-2xl w-11/12 md:w-3/4 h-3/4 p-4 relative">
+        <div
+          class="bg-white rounded-2xl w-full sm:w-11/12 md:w-3/4 h-[90vh] sm:h-3/4 p-3 sm:p-4 relative"
+        >
           <button
             id="closePdf"
-            class="absolute top-3 right-3 text-black font-bold text-xl"
+            class="absolute top-2 right-2 sm:top-3 sm:right-3 text-black font-bold text-2xl sm:text-xl hover:text-gray-700 z-10"
           >
             &times;
           </button>
@@ -372,275 +283,19 @@
       </div>
     </section>
 
-    <script>
-      const modal = document.getElementById("pdfModal");
-      const closeBtn = document.getElementById("closePdf");
-      const pdfFrame = document.getElementById("pdfFrame");
-
-      document.querySelectorAll(".viewPdfBtn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const pdfUrl = btn.getAttribute("data-pdf");
-          pdfFrame.src = pdfUrl;
-          modal.classList.remove("hidden");
-        });
-      });
-
-      closeBtn.addEventListener("click", () => {
-        pdfFrame.src = ""; // clear PDF when closed
-        modal.classList.add("hidden");
-      });
-    </script>
-
-    <div class="pt-10 max-w-7xl mx-auto">
-      <div class="max-w-7xl mx-auto bg-white p-6 shadow-lg rounded-xl">
-        <!-- MAIN TABS -->
-        <div class="flex border-b">
-          <button
-            id="offlineTab"
-            class="tab-btn px-6 py-3 text-purple-700 font-semibold border-b-4 border-purple-700"
-          >
-            Offline Course
-          </button>
-
-          <button
-            id="onlineTab"
-            class="tab-btn px-6 py-3 text-gray-600 font-semibold border-b-4 border-transparent hover:text-purple-700"
-          >
-            Online Course
-          </button>
-
-          <button
-            id="reikiTab"
-            class="tab-btn px-6 py-3 text-gray-600 font-semibold border-b-4 border-transparent hover:text-purple-700"
-          >
-            Online Course
-          </button>
-        </div>
-
-        <!-- ===================== OFFLINE SECTION ===================== -->
-        <div id="offlineSection" class="mt-6">
-          <!-- Offline Centers -->
-          <label class="font-semibold text-gray-700 block mb-2"
-            >Offline Centers:</label
-          >
-
-          <div class="flex flex-wrap gap-4 mb-4">
-            <button
-              id="tollyBtn"
-              class="px-5 py-2 bg-purple-700 text-white rounded-lg shadow"
-            >
-              Tollygunge
-            </button>
-
-            <button
-              id="midnaBtn"
-              class="px-5 py-2 bg-orange-600 text-white rounded-lg shadow"
-            >
-              Midnapore
-            </button>
-          </div>
-
-          <!-- ===================== TOLLYGUNGE DETAILS ===================== -->
-          <div id="tollySection" class="border rounded-lg p-5 bg-purple-50">
-            <h2 class="text-xl font-bold text-purple-700 mb-3">
-              Tollygunge (Offline Full Course)
-            </h2>
-
-            <ul class="text-gray-800 space-y-1">
-              <li>• <strong>Duration:</strong> 1 Year</li>
-              <li>• <strong>Module:</strong> Basic to Advance</li>
-              <li>• <strong>Class:</strong> Weekly 1 Day</li>
-              <li>• <strong>Time:</strong> 4 Hours</li>
-            </ul>
-
-            <hr class="my-4" />
-
-            <h3 class="font-semibold text-gray-700 mb-2">Available Day:</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="p-3 border rounded-lg bg-white">
-                Sun - 1:00 pm to 5:00 pm
-              </div>
-              <div class="p-3 border rounded-lg bg-white">
-                Sun - 1:00 pm to 5:00 pm
-              </div>
-            </div>
-
-            <h3 class="font-bold text-purple-700 mt-6 mb-2">Fees Structure:</h3>
-            <div class="bg-white border rounded-lg p-4">
-              <div class="flex justify-between mb-1">
-                <span>4 Semester Admission</span>
-                <span>1000 × 4 = 4000</span>
-              </div>
-              <div class="flex justify-between mb-1">
-                <span>12 Month Fees</span>
-                <span>2000 × 12 = 24000</span>
-              </div>
-              <hr class="my-2" />
-              <div class="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>₹28,000</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===================== MIDNAPORE DETAILS (SAME DETAILS) ===================== -->
-          <div
-            id="midnaSection"
-            class="hidden border rounded-lg p-5 bg-orange-50"
-          >
-            <h2 class="text-xl font-bold text-orange-700 mb-3">
-              Midnapore (Offline Full Course)
-            </h2>
-
-            <ul class="text-gray-800 space-y-1">
-              <li>• <strong>Duration:</strong> 1 Year</li>
-              <li>• <strong>Module:</strong> Basic to Advance</li>
-              <li>• <strong>Class:</strong> Weekly 1 Day</li>
-              <li>• <strong>Time:</strong> 4 Hour/day</li>
-            </ul>
-
-            <hr class="my-4" />
-
-            <h3 class="font-semibold text-gray-700 mb-2">Available Day:</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="p-3 border rounded-lg bg-white">
-                Sun - 1:00 pm to 5:00 pm
-              </div>
-              <div class="p-3 border rounded-lg bg-white">
-                Sun - 1:00 pm to 5:00 pm
-              </div>
-            </div>
-
-            <h3 class="font-bold text-orange-700 mt-6 mb-2">Fees Structure:</h3>
-            <div class="bg-white border rounded-lg p-4">
-              <div class="flex justify-between mb-1">
-                <span>4 Semester Admission</span>
-                <span>1000 × 4 = 4000</span>
-              </div>
-              <div class="flex justify-between mb-1">
-                <span>12 Month Fees</span>
-                <span>2000 × 12 = 24000</span>
-              </div>
-              <hr class="my-2" />
-              <div class="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>₹28,000</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ===================== ONLINE SECTION ===================== -->
-        <div id="onlineSection" class="hidden mt-6">
-          <label class="font-semibold text-gray-700 block mb-3"
-            >Online Course Type:</label
-          >
-
-          <!-- Online Sub Tabs -->
-          <div class="flex gap-3 mb-4">
-            <button
-              id="longBtn"
-              class="px-5 py-2 bg-blue-600 text-white rounded-lg shadow"
-            >
-              Long Duration
-            </button>
-
-            <button
-              id="shortBtn"
-              class="px-5 py-2 bg-green-600 text-white rounded-lg shadow"
-            >
-              Short Duration
-            </button>
-          </div>
-
-          <!-- ===================== SAME DETAILS: LONG DURATION ===================== -->
-          <div id="longSection" class="border rounded-lg p-5 bg-blue-50">
-            <h2 class="text-xl font-bold text-blue-700 mb-3">
-              Online – Long Duration Course
-            </h2>
-
-            <ul class="space-y-1 text-gray-800">
-              <li>• <strong>Duration:</strong> 2 Year</li>
-              <li>• <strong>Module:</strong> Basic to Advance</li>
-              <li>• <strong>Class:</strong> Weekly 1 Day</li>
-              <li>• <strong>Time:</strong> 2 Hour/day</li>
-            </ul>
-
-            <hr class="my-4" />
-
-            <h3 class="font-semibold text-gray-700 mb-2">Available Days:</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="p-3 border rounded-lg bg-white">
-                Fri - 6:00 pm to 10:00 pm
-              </div>
-            </div>
-
-            <h3 class="font-bold text-blue-700 mt-6 mb-2">Fees Structure:</h3>
-            <div class="bg-white border rounded-lg p-4">
-              <div class="flex justify-between mb-1">
-                <span>4 Semester Admission</span>
-                <span>1000 × 4 = 4000</span>
-              </div>
-              <div class="flex justify-between mb-1">
-                <span>12 Month Fees</span>
-                <span>1000 × 24 = 24000</span>
-              </div>
-              <hr class="my-2" />
-              <div class="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>₹28,000</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===================== SAME DETAILS: SHORT DURATION ===================== -->
-          <div
-            id="shortSection"
-            class="hidden border rounded-lg p-5 bg-green-50"
-          >
-            <h2 class="text-xl font-bold text-green-700 mb-3">
-              Online – Short Duration Course
-            </h2>
-
-            <ul class="space-y-1 text-gray-800">
-              <li>• <strong>Duration:</strong> 6 Months</li>
-              <li>• <strong>Module:</strong> Basic to Advance</li>
-              <li>• <strong>Class:</strong> Weekly 3 Days</li>
-              <li>• <strong>Time:</strong> 2 Hour/day</li>
-            </ul>
-
-            <hr class="my-4" />
-
-            <h3 class="font-semibold text-gray-700 mb-2">Available Days:</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="p-3 border rounded-lg bg-white">
-                Fri - 6:00 pm to 10:00 pm
-              </div>
-            </div>
-
-            <h3 class="font-bold text-green-700 mt-6 mb-2">Fees Structure:</h3>
-            <div class="bg-white border rounded-lg p-4">
-              <div class="flex justify-between mb-1">
-                <span>4 Semester Admission</span>
-                <span>No fees</span>
-              </div>
-              <div class="flex justify-between mb-1">
-                <span>5 Month Fees</span>
-                <span>5000 × 6 = 30000</span>
-              </div>
-              <hr class="my-2" />
-              <div class="flex justify-between font-bold text-lg">
-                <span>Total</span>
-                <span>₹30,000</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- COURSE DETAILS SECTION -->
+    <div class="pt-6 sm:pt-10 max-w-7xl mx-auto px-4 sm:px-6 pb-10">
+      <div class="max-w-7xl mx-auto bg-white p-4 sm:p-6 shadow-lg rounded-xl">
+        <div
+          class="flex flex-wrap border-b overflow-x-auto no-scrollbar"
+          id="mainTabs"
+        ></div>
+        <div id="contentArea" class="mt-4 sm:mt-6"></div>
 
         <div class="w-full flex justify-center">
           <button
-            class="mt-4 px-2 bg-purple-700 hover:bg-purple-800 text-white py-3 rounded-lg font-semibold transition"
-            onclick="takeAdmission()"
+            class="mt-4 px-4 sm:px-6 bg-purple-700 hover:bg-purple-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition text-sm sm:text-base"
+            onclick="window.location.href='admissionform.html'"
           >
             Take Admission
           </button>
@@ -648,63 +303,394 @@
       </div>
     </div>
 
-    <!-- ===================== JAVASCRIPT ===================== -->
     <script>
-      function takeAdmission() {
-        window.location.href = "admissionform.html";
+      const coursesData = [
+        {
+          id: "offline",
+          name: "Offline Course",
+          type: "OFFLINE",
+          gridTitle: ["Online Astrology", "Full Course"],
+          description: "Complete Astrology Program",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+          subCourses: [
+            {
+              name: "Tollygunge",
+              color: "purple",
+              duration: "1 Year",
+              module: "Basic to Advance",
+              classFreq: "Weekly 1 Day",
+              time: "4 Hours",
+              days: ["Sun - 1:00 pm to 5:00 pm", "Sun - 1:00 pm to 5:00 pm"],
+              fees: {
+                admissionLabel: "4 Semester Admission",
+                admission: "1000 × 4 = 4000",
+                monthlyLabel: "12 Month Fees",
+                monthly: "2000 × 12 = 24000",
+                total: "₹28,000",
+              },
+            },
+            {
+              name: "Midnapore",
+              color: "orange",
+              duration: "1 Year",
+              module: "Basic to Advance",
+              classFreq: "Weekly 1 Day",
+              time: "4 Hour/day",
+              days: ["Sun - 1:00 pm to 5:00 pm", "Sun - 1:00 pm to 5:00 pm"],
+              fees: {
+                admissionLabel: "4 Semester Admission",
+                admission: "1000 × 4 = 4000",
+                monthlyLabel: "12 Month Fees",
+                monthly: "2000 × 12 = 24000",
+                total: "₹28,000",
+              },
+            },
+          ],
+        },
+        {
+          id: "online",
+          name: "Online Course",
+          type: "ONLINE",
+          gridTitle: ["Online Astrology", "Short Duration Full Course"],
+          description: "Short Duration Astrology Course",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+          subCourses: [
+            {
+              name: "Long Duration",
+              color: "blue",
+              duration: "2 Year",
+              module: "Basic to Advance",
+              classFreq: "Weekly 1 Day",
+              time: "2 Hour/day",
+              days: ["Fri - 6:00 pm to 10:00 pm"],
+              fees: {
+                admissionLabel: "4 Semester Admission",
+                admission: "1000 × 4 = 4000",
+                monthlyLabel: "24 Month Fees",
+                monthly: "1000 × 24 = 24000",
+                total: "₹28,000",
+              },
+            },
+            {
+              name: "Short Duration",
+              color: "green",
+              duration: "6 Months",
+              module: "Basic to Advance",
+              classFreq: "Weekly 3 Days",
+              time: "2 Hour/day",
+              days: ["Fri - 6:00 pm to 10:00 pm"],
+              fees: {
+                admissionLabel: "4 Semester Admission",
+                admission: "No fees",
+                monthlyLabel: "6 Month Fees",
+                monthly: "5000 × 6 = 30000",
+                total: "₹30,000",
+              },
+            },
+          ],
+        },
+        {
+          id: "kavach",
+          name: "Kavach Course",
+          type: "KAVACH",
+          gridTitle: ["Kavach"],
+          description: "Spiritual Protection Course",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+          subCourses: [
+            {
+              name: "Tollygunge - Offline Only",
+              color: "yellow",
+              duration: "3 Months",
+              module: "Vedic Paddhati",
+              classFreq: "Weekly 1 Day",
+              time: "4 Hour/day",
+              days: ["Fri - 6:00 pm to 10:00 pm"],
+              fees: {
+                admissionLabel: "Admission",
+                admission: "No fees",
+                monthlyLabel: "3 Month Fees",
+                monthly: "5000 × 3 = 15000",
+                total: "₹15,000",
+              },
+            },
+          ],
+        },
+        {
+          id: "vastu",
+          name: "Vastu Course",
+          type: "VASTU",
+          gridTitle: ["Vastu Full Course"],
+          description: "Complete Vastu Shastra Course",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+          subCourses: [
+            {
+              name: "Tollygunge - Offline Only",
+              color: "blue",
+              duration: "3 Months",
+              module: "Basic To Advanced",
+              classFreq: "Weekly 1 Day",
+              time: "2 Hour/day",
+              days: ["Fri - 6:00 pm to 10:00 pm"],
+              fees: {
+                admissionLabel: "Admission",
+                admission: "No fees",
+                monthlyLabel: "3 Month Fees",
+                monthly: "6333 × 3 = 19000",
+                total: "₹19,000",
+              },
+            },
+          ],
+        },
+        {
+          id: "reiki",
+          name: "Reiki Course",
+          type: "REIKI",
+          gridTitle: ["Reiki Course"],
+          description: "Reiki Healing Training",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+          sessions: [
+            { degree: "1st Degree", day: "12 Dec 2025", fees: 6500 },
+            { degree: "2nd Degree", day: "15 Jan 2026", fees: 4500 },
+            { degree: "Grand Master", day: "20 Mar 2026", fees: 50000 },
+          ],
+        },
+        {
+          id: "online-long",
+          name: "Online Long Course",
+          type: "GRID_ONLY",
+          gridTitle: ["Online Astrology", "Long Duration Full Course"],
+          description: "Long Duration Astrology Course",
+          pdf: "Course Details 12 Months.pdf",
+          image: "course.png",
+        },
+      ];
+
+      let currentTabId = coursesData[0].id;
+      let currentSubIndex = 0;
+
+      function renderCourseCard(course) {
+        const titleHtml = course.gridTitle
+          .map((line) => `<span>${line}</span>`)
+          .join("");
+        return `
+            <div class="bg-violet-200/70 rounded-3xl p-4 hover:scale-105 transition duration-300 shadow-md border border-purple-300 flex flex-col">
+              <h3 class="font-bold mb-3 flex flex-col text-base sm:text-lg text-purple-900 text-center min-h-[56px] items-center justify-center">
+                ${titleHtml}
+              </h3>
+              <img src="${course.image}" alt="${course.gridTitle.join(
+          " "
+        )}" class="rounded-xl mb-3 h-40 sm:h-48 w-full object-cover" />
+              <p class="text-purple-800 mb-4 flex-grow text-sm sm:text-base">${
+                course.description
+              }</p>
+              <button class="viewPdfBtn px-3 sm:px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white rounded-lg font-semibold w-full transition text-sm sm:text-base" data-pdf="${
+                course.pdf
+              }">
+                View PDF
+              </button>
+            </div>
+          `;
       }
 
-      // Main Tabs
-      const offlineTab = document.getElementById("offlineTab");
-      const onlineTab = document.getElementById("onlineTab");
-      const offlineSection = document.getElementById("offlineSection");
-      const onlineSection = document.getElementById("onlineSection");
+      function initGrid() {
+        const grid = document.getElementById("courseGrid");
+        grid.innerHTML = coursesData
+          .filter((c) => c.gridTitle && c.description)
+          .map((course) => renderCourseCard(course))
+          .join("");
+      }
 
-      offlineTab.onclick = () => {
-        offlineSection.classList.remove("hidden");
-        onlineSection.classList.add("hidden");
-        offlineTab.classList.add("text-purple-700", "border-purple-700");
-        onlineTab.classList.remove("text-purple-700", "border-purple-700");
-      };
+      function renderMainTabs() {
+        const container = document.getElementById("mainTabs");
+        container.innerHTML = coursesData
+          .filter((c) => c.type !== "GRID_ONLY")
+          .map((course) => {
+            const isActive = course.id === currentTabId;
+            return `
+              <button class="tab-btn px-3 sm:px-6 py-2 sm:py-3 font-semibold border-b-4 text-sm sm:text-base whitespace-nowrap ${
+                isActive
+                  ? "text-purple-700 border-purple-700"
+                  : "text-gray-600 border-transparent hover:text-purple-700"
+              }" onclick="switchTab('${course.id}')">
+                ${course.name}
+              </button>
+            `;
+          })
+          .join("");
+      }
 
-      onlineTab.onclick = () => {
-        onlineSection.classList.remove("hidden");
-        offlineSection.classList.add("hidden");
-        onlineTab.classList.add("text-purple-700", "border-purple-700");
-        offlineTab.classList.remove("text-purple-700", "border-purple-700");
-      };
+      function renderCourseDetail(subCourse, courseType) {
+        if (!subCourse)
+          return `<p class="text-gray-600">Content coming soon...</p>`;
+        const titleSuffix =
+          courseType === "OFFLINE"
+            ? "(Offline Full Course)"
+            : courseType === "ONLINE"
+            ? `– ${subCourse.name} Course`
+            : "";
+        return `
+            <div class="border rounded-lg p-4 sm:p-5 bg-${subCourse.color}-50">
+              <h2 class="text-lg sm:text-xl font-bold text-${
+                subCourse.color
+              }-700 mb-3">
+                ${subCourse.name} ${titleSuffix}
+              </h2>
+              <ul class="text-gray-800 space-y-1 text-sm sm:text-base">
+                <li>• <strong>Duration:</strong> ${subCourse.duration}</li>
+                <li>• <strong>Module:</strong> ${subCourse.module}</li>
+                <li>• <strong>Class:</strong> ${subCourse.classFreq}</li>
+                <li>• <strong>Time:</strong> ${subCourse.time}</li>
+              </ul>
+              <hr class="my-4" />
+              <h3 class="font-semibold text-gray-700 mb-2 text-sm sm:text-base">Available Day${
+                subCourse.days.length > 1 ? "s" : ""
+              }:</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${subCourse.days
+                  .map(
+                    (day) =>
+                      `<div class="p-2 sm:p-3 border rounded-lg bg-white text-sm sm:text-base">${day}</div>`
+                  )
+                  .join("")}
+              </div>
+              <h3 class="font-bold text-${
+                subCourse.color
+              }-700 mt-6 mb-2 text-sm sm:text-base">Fees Structure:</h3>
+              <div class="bg-white border rounded-lg p-3 sm:p-4">
+                <div class="flex justify-between mb-1 text-sm sm:text-base">
+                  <span>${subCourse.fees.admissionLabel}</span>
+                  <span>${subCourse.fees.admission}</span>
+                </div>
+                <div class="flex justify-between mb-1 text-sm sm:text-base">
+                  <span>${subCourse.fees.monthlyLabel}</span>
+                  <span>${subCourse.fees.monthly}</span>
+                </div>
+                <hr class="my-2" />
+                <div class="flex justify-between font-bold text-base sm:text-lg">
+                  <span>Total</span>
+                  <span>${subCourse.fees.total}</span>
+                </div>
+              </div>
+            </div>
+          `;
+      }
 
-      // Offline Center Switch
-      const tollyBtn = document.getElementById("tollyBtn");
-      const midnaBtn = document.getElementById("midnaBtn");
-      const tollySection = document.getElementById("tollySection");
-      const midnaSection = document.getElementById("midnaSection");
+      function renderReiki(course) {
+        return `
+            <div class="space-y-4">
+              ${course.sessions
+                .map(
+                  (session) => `
+                <div class="border rounded-xl p-4 sm:p-5 bg-gradient-to-r from-indigo-50 to-indigo-100 shadow-lg hover:scale-105 transition transform">
+                  <h2 class="text-xl sm:text-2xl font-bold text-indigo-700 mb-2">${
+                    session.degree
+                  }</h2>
+                  <p class="text-sm sm:text-base"><strong>Date:</strong> ${
+                    session.day
+                  }</p>
+                  <p class="text-sm sm:text-base"><strong>Fees:</strong> ₹${session.fees.toLocaleString()}</p>
+                  <button class="mt-3 px-4 sm:px-5 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-semibold text-sm sm:text-base" onclick="alert('Pay ₹${session.fees.toLocaleString()} for ${
+                    session.degree
+                  }')">
+                    Pay
+                  </button>
+                </div>
+              `
+                )
+                .join("")}
+            </div>
+          `;
+      }
 
-      tollyBtn.onclick = () => {
-        tollySection.classList.remove("hidden");
-        midnaSection.classList.add("hidden");
-      };
+      function renderContent() {
+        const container = document.getElementById("contentArea");
+        const course = coursesData.find((c) => c.id === currentTabId);
+        if (!course) return;
 
-      midnaBtn.onclick = () => {
-        midnaSection.classList.remove("hidden");
-        tollySection.classList.add("hidden");
-      };
+        if (course.type === "REIKI") {
+          container.innerHTML = renderReiki(course);
+          return;
+        }
 
-      // Online Sub Tabs
-      const longBtn = document.getElementById("longBtn");
-      const shortBtn = document.getElementById("shortBtn");
-      const longSection = document.getElementById("longSection");
-      const shortSection = document.getElementById("shortSection");
+        if (!course.subCourses || !course.subCourses.length) {
+          container.innerHTML = `<p class="text-gray-600">Content coming soon...</p>`;
+          return;
+        }
 
-      longBtn.onclick = () => {
-        longSection.classList.remove("hidden");
-        shortSection.classList.add("hidden");
-      };
+        const label =
+          course.type === "OFFLINE"
+            ? "Offline Centers:"
+            : "Online Course Type:";
+        const buttons = course.subCourses
+          .map(
+            (sub, index) => `
+            <button class="px-4 sm:px-5 py-2 bg-${sub.color}-${
+              index === currentSubIndex ? "700" : "600"
+            } text-white rounded-lg shadow text-sm sm:text-base" onclick="switchSub(${index})">
+              ${sub.name}
+            </button>
+          `
+          )
+          .join("");
 
-      shortBtn.onclick = () => {
-        shortSection.classList.remove("hidden");
-        longSection.classList.add("hidden");
-      };
+        const details = renderCourseDetail(
+          course.subCourses[currentSubIndex],
+          course.type
+        );
+        container.innerHTML = `
+            <label class="font-semibold text-gray-700 block mb-2 text-sm sm:text-base">${label}</label>
+            <div class="flex flex-wrap gap-3 sm:gap-4 mb-4">${buttons}</div>
+            ${details}
+          `;
+      }
+
+      function switchTab(tabId) {
+        currentTabId = tabId;
+        currentSubIndex = 0;
+        renderMainTabs();
+        renderContent();
+      }
+
+      function switchSub(index) {
+        currentSubIndex = index;
+        renderContent();
+      }
+
+      function initModal() {
+        const modal = document.getElementById("pdfModal");
+        const closeBtn = document.getElementById("closePdf");
+        const pdfFrame = document.getElementById("pdfFrame");
+
+        document.addEventListener("click", (e) => {
+          if (e.target.classList.contains("viewPdfBtn")) {
+            const pdfUrl = e.target.getAttribute("data-pdf");
+            pdfFrame.src = pdfUrl;
+            modal.classList.remove("hidden");
+          }
+        });
+
+        closeBtn.addEventListener("click", () => {
+          pdfFrame.src = "";
+          modal.classList.add("hidden");
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            pdfFrame.src = "";
+            modal.classList.add("hidden");
+          }
+        });
+      }
+
+      initGrid();
+      renderMainTabs();
+      renderContent();
+      initModal();
     </script>
   </body>
 </html>
