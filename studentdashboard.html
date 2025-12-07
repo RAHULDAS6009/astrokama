@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON-Driven Student Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style type="text/tailwindcss">
+    @layer components {
+      .card {@apply bg-white text-[#523A35] p-5 rounded-xl shadow-sm border border-white/20;}
+      .section-title {@apply text-xl font-semibold mb-4 text-white;}
+      .btn {@apply px-4 py-2 rounded-lg font-medium transition;}
+      .btn-primary {@apply bg-white text-[#523A35] hover:bg-[#e7dcd8];}
+      .btn-outline {@apply border border-white text-white hover:bg-white hover:text-[#523A35];}
+      .pill-paid {@apply bg-green-600 text-white px-3 py-1 rounded-full text-sm;}
+      .pill-pending {@apply bg-red-600 text-white px-3 py-1 rounded-full text-sm;}
+    }
+  </style>
+</head>
+
+<body class="bg-[#523A35] min-h-screen text-white">
+
+     <header
+      class="bg-[#523A35] border-b-4 border-[#D4A017] flex flex-col items-center px-4 sm:px-6 py-4 shadow-md"
+    >
+      <!-- LOGO + TITLE -->
+      <div
+        class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4"
+      >
+        <!-- LOGO -->
+        <img
+          src="academiclogo.png"
+          alt="Logo"
+          class="h-16 sm:h-20 w-auto drop-shadow-md"
+        />
+
+        <!-- TITLE -->
+        <div class="flex flex-col leading-tight text-center">
+          <h1
+            class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow"
+          >
+            MODERN ASTROLOGY
+          </h1>
+          <p
+            class="text-white font-semibold text-xs sm:text-sm tracking-wide px-2"
+          >
+            KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
+          </p>
+        </div>
+      </div>
+
+      <!-- ONE-LINE REGISTRATION INFO -->
+      <p
+        class="mt-3 text-white text-xs sm:text-sm font-semibold tracking-wide text-center px-2 sm:px-4"
+      >
+        Registered Under
+        <span class="underline">Government of West Bengal</span> &
+        <span class="underline">Government of India</span> • ISO Certified
+        Institute •
+        <span class="text-yellow-300 font-bold"
+          >Registration Number Provided After Course Completion</span
+        >
+        • Official Certificate Every Semester
+      </p>
+    </header>
+
+  <!-- NAVBAR -->
+  <nav class="w-full border-b border-white/20 bg-[#523A35]/80 backdrop-blur-lg sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto p-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Student Dashboard</h1>
+      <button onclick="navigateStudentCorner()" class="btn btn-outline">Logout</button>
+    </div>
+  </nav>
+
+  <div class="max-w-6xl mx-auto p-4 space-y-10">
+
+    <!-- BATCH DETAILS -->
+    <section class="card">
+      <h2 class="section-title">Your Batch</h2>
+      <div id="batchDetails" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+    </section>
+
+    <!-- PAYMENTS -->
+    <section class="card">
+      <h2 class="section-title">Monthly Fee Payments</h2>
+      <div class="overflow-x-auto text-[#523A35]">
+        <table class="w-full border-collapse text-left">
+          <thead>
+            <tr class="bg-[#523A35]/10">
+              <th class="py-3 px-4">Month</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4">Amount</th>
+              <th class="py-3 px-4">Action</th>
+            </tr>
+          </thead>
+          <tbody id="paymentTable" class="divide-y divide-[#523A35]/10"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STUDY MATERIALS -->
+    <section class="card">
+      <h2 class="section-title">Study Materials</h2>
+      <div id="materials" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- SEMESTERS & MARKS -->
+    <section class="card">
+      <h2 class="section-title">Semester Performance</h2>
+      <div id="semesters" class="space-y-6"></div>
+    </section>
+
+  </div>
+
+  <script src="dashboard.js"></script>
+
+</body>
+</html>
