@@ -3,33 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Admission Form</title>
+    <title>Register Existing Student</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Story+Script&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Vend+Sans:ital,wght@0,300..700;1,300..700&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <style>
       .lotus-title {
         background: linear-gradient(135deg, #8a1538, #f28c28, #e3c72f, #3ca66b);
         -webkit-background-clip: text;
         color: transparent;
-      }
-
-      @media print {
-        .no-print {
-          display: none !important;
-        }
-
-        body {
-          background: white !important;
-        }
-      }
-
-      .violet-gradient {
-        background: linear-gradient(135deg, #f2f1ff 0%, #e9ffef 100%);
       }
 
       body {
@@ -68,9 +53,9 @@
         }
       }
 
-      .fee-banner {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-left: 4px solid #fbbf24;
+      .info-banner {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-left: 4px solid #34d399;
       }
     </style>
   </head>
@@ -146,30 +131,27 @@
     <div
       class="max-w-3xl mx-auto bg-white shadow-xl p-4 md:p-8 my-6 md:my-10 rounded-xl mx-4"
     >
-      <!-- Admission Fee Banner -->
-      <div
-        id="feeBanner"
-        class="fee-banner text-white p-4 rounded-lg mb-6 hidden"
-      >
+      <!-- Info Banner -->
+      <div class="info-banner text-white p-4 rounded-lg mb-6">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="font-bold text-lg">Admission Fee Required</h3>
-            <p class="text-sm opacity-90" id="feeDetails">
-              Select a course to see the admission fee
+            <h3 class="font-bold text-lg">✓ Existing Student Registration</h3>
+            <p class="text-sm opacity-90">
+              No admission fee required - For previous students only
             </p>
           </div>
           <div class="text-right">
-            <p class="text-2xl font-bold" id="feeAmount">₹0</p>
-            <p class="text-xs opacity-80">One-time payment</p>
+            <p class="text-2xl font-bold">FREE</p>
+            <p class="text-xs opacity-80">Database Entry</p>
           </div>
         </div>
       </div>
 
-      <form id="admissionForm" class="space-y-4 md:space-y-6">
+      <form id="registerForm" class="space-y-4 md:space-y-6">
         <h1
-          class="w-full font-extrabold text-2xl md:text-4xl text-center rounded-md bg-violet-100 py-3 md:py-4 border border-2 border-violet-400"
+          class="w-full font-extrabold text-2xl md:text-4xl text-center rounded-md bg-green-100 py-3 md:py-4 border border-2 border-green-400"
         >
-          Admission Form
+          Register Existing Student
         </h1>
 
         <!-- Name -->
@@ -534,24 +516,25 @@
         <div class="text-center mt-6 md:mt-8">
           <button
             id="submitBtn"
-            type="button"
-            class="bg-violet-500 text-white px-8 md:px-10 py-3 rounded-lg shadow-lg hover:bg-violet-700 w-full md:w-auto text-sm md:text-base font-semibold"
+            type="submit"
+            class="bg-green-600 text-white px-8 md:px-10 py-3 rounded-lg shadow-lg hover:bg-green-700 w-full md:w-auto text-sm md:text-base font-semibold"
           >
-            Proceed to Pay Admission Fee
+            Register Student (No Payment Required)
           </button>
         </div>
       </form>
+
       <!-- Student ID Box (Hidden by Default) -->
       <div
         id="studentIdBox"
         class="hidden mt-10 p-6 bg-green-50 border border-green-400 rounded-lg shadow-lg text-center"
       >
         <h2 class="text-xl md:text-2xl font-bold text-green-800">
-          🎉 Admission Successful!
+          🎉 Registration Successful!
         </h2>
 
         <p class="mt-3 text-lg font-semibold text-green-700">
-          Your Student ID:
+          Student ID Generated:
         </p>
 
         <p
@@ -575,19 +558,16 @@
 
     <script>
       function goToDashboard() {
-        window.location.href = "studentcorner.html"; // change link if needed
+        window.location.href = "studentcorner.html";
       }
 
       let selectedCourseData = null;
-      let razorpayKey = "rzp_test_RnVTdYtOyolkhI"; // Replace with your Razorpay key
 
-      // Toggle password visibility
       function togglePassword() {
         const input = document.getElementById("passwordField");
         input.type = input.type === "password" ? "text" : "password";
       }
 
-      // Show/hide other relation input
       document
         .getElementById("relation")
         .addEventListener("change", function () {
@@ -604,7 +584,6 @@
           }
         });
 
-      // Same address checkbox
       document
         .getElementById("sameAddress")
         .addEventListener("change", function () {
@@ -614,7 +593,6 @@
           }
         });
 
-      // Same phone checkbox
       document
         .getElementById("samePhone")
         .addEventListener("change", function () {
@@ -624,7 +602,6 @@
           }
         });
 
-      // Load courses with admission fee info
       async function loadCourses() {
         try {
           const res = await fetch("http://localhost:5000/allcourse");
@@ -651,7 +628,6 @@
                 courseName: course.name || "",
                 courseType: course.courseType || course.type || "",
                 branchName: branch.name || "",
-                admissionFee: firstSemester?.admissionFee || 0,
                 semesterId: firstSemester?.id || null,
                 semesterName: firstSemester?.name || "",
               };
@@ -668,53 +644,30 @@
         }
       }
 
-      // Update fee banner when course is selected
       document
         .getElementById("courseSelect")
         .addEventListener("change", function () {
           const selectedValue = this.value;
-
-          if (!selectedValue) {
-            document.getElementById("feeBanner").classList.add("hidden");
-            selectedCourseData = null;
-            return;
-          }
-
-          selectedCourseData = JSON.parse(selectedValue);
-
-          if (selectedCourseData.admissionFee > 0) {
-            document.getElementById("feeBanner").classList.remove("hidden");
-            document.getElementById(
-              "feeAmount"
-            ).textContent = `₹${selectedCourseData.admissionFee}`;
-            document.getElementById("feeDetails").textContent = `${
-              selectedCourseData.semesterName || "First Semester"
-            } - Admission Fee (One-time)`;
+          if (selectedValue) {
+            selectedCourseData = JSON.parse(selectedValue);
           } else {
-            document.getElementById("feeBanner").classList.add("hidden");
-            alert(
-              "Admission fee not set for this course. Please contact admin."
-            );
+            selectedCourseData = null;
           }
         });
 
       loadCourses();
 
-      // Upload file
-      // Upload file with size restrictions
       async function uploadFile(file) {
         if (!file) return null;
 
         const isPDF = file.type === "application/pdf";
-
-        // Set max sizes
         const maxSize = isPDF ? 5 * 1024 * 1024 : 2 * 1024 * 1024;
 
         if (file.size > maxSize) {
           alert(
             `❌ ${file.name} is too large.\n\nPDF limit: 5MB\nImages limit: 2MB`
           );
-          return "FILE_TOO_LARGE"; // Prevent API call later
+          return "FILE_TOO_LARGE";
         }
 
         const fd = new FormData();
@@ -736,108 +689,8 @@
         }
       }
 
-      // Initialize Razorpay payment
-      function initializeRazorpay(formData, fileUrls) {
-        const options = {
-          key: razorpayKey,
-          amount: selectedCourseData.admissionFee * 100, // Amount in paise
-          currency: "INR",
-          name: "Modern Astrology Academy",
-          description: `Admission Fee - ${selectedCourseData.semesterName}`,
-          image: "academiclogo.png",
-          handler: function (response) {
-            // Payment successful
-            submitAdmission(formData, fileUrls, {
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpayOrderId: response.razorpay_order_id,
-              razorpaySignature: response.razorpay_signature,
-            });
-          },
-          prefill: {
-            name: formData.name,
-            email: formData.email,
-            contact: formData.mobileNumber,
-          },
-          theme: {
-            color: "#8B5CF6",
-          },
-          modal: {
-            ondismiss: function () {
-              const submitBtn = document.getElementById("submitBtn");
-              submitBtn.disabled = false;
-              submitBtn.textContent = "Proceed to Pay Admission Fee";
-              alert("Payment cancelled. Please try again.");
-            },
-          },
-        };
-
-        const rzp = new Razorpay(options);
-        rzp.open();
-      }
-
-      // Submit admission after successful payment
-      async function submitAdmission(formData, fileUrls, paymentDetails) {
-        event?.preventDefault();
-
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.textContent = "Creating admission...";
-
-        try {
-          const payload = {
-            ...formData,
-            ...fileUrls,
-            ...paymentDetails,
-          };
-
-          const admissionRes = await fetch(
-            "http://localhost:5000/api/v1/admission",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            }
-          );
-
-          const admissionJson = await admissionRes.json();
-
-          if (admissionJson && admissionJson.success) {
-            const studentIdBox = document.getElementById("studentIdBox");
-            const generatedId = document.getElementById("generatedStudentId");
-
-            // Show student ID box
-            studentIdBox.classList.remove("hidden");
-
-            // Fill student ID
-            generatedId.textContent =
-              admissionJson.data?.student?.studentId || "N/A";
-
-            // Scroll to view
-            studentIdBox.scrollIntoView({ behavior: "smooth" });
-
-            // Reset submit button
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Payment Completed";
-            submitBtn.classList.add("bg-green-600", "text-white");
-
-            location.reload();
-          } else {
-            alert(
-              "❌ Admission failed: " +
-                (admissionJson.message || "Unknown error")
-            );
-          }
-        } catch (err) {
-          console.error("Submit error:", err);
-          alert("Something went wrong: " + err.message);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Proceed to Pay Admission Fee";
-        }
-      }
-
-      // Form submission handler
       document
-        .getElementById("admissionForm")
+        .getElementById("registerForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
@@ -846,27 +699,13 @@
           submitBtn.textContent = "Processing...";
 
           try {
-            // Validate course selection
             if (!selectedCourseData) {
               alert("Please select a course.");
               submitBtn.disabled = false;
-              submitBtn.textContent = "Proceed to Pay Admission Fee";
+              submitBtn.textContent = "Register Student (No Payment Required)";
               return;
             }
 
-            if (
-              !selectedCourseData.admissionFee ||
-              selectedCourseData.admissionFee <= 0
-            ) {
-              alert(
-                "Admission fee not set for this course. Please contact administrator."
-              );
-              submitBtn.disabled = false;
-              submitBtn.textContent = "Proceed to Pay Admission Fee";
-              return;
-            }
-
-            // Upload files first
             submitBtn.textContent = "Uploading files...";
 
             const photoFile = document.getElementById("photo").files[0];
@@ -881,7 +720,7 @@
                 : null,
               idProofUrl: idProofFile ? await uploadFile(idProofFile) : null,
             };
-            // ❌ Stop if any PDF exceeded size limit
+
             if (
               fileUrls.photoUrl === "FILE_TOO_LARGE" ||
               fileUrls.certificateUrl === "FILE_TOO_LARGE" ||
@@ -889,11 +728,10 @@
             ) {
               alert("❌ File too large. Fix the file size before submitting.");
               submitBtn.disabled = false;
-              submitBtn.textContent = "Proceed to Pay Admission Fee";
-              return; // ⛔ Do NOT continue → No backend call, no payment
+              submitBtn.textContent = "Register Student (No Payment Required)";
+              return;
             }
 
-            // Get relation value
             let relationValue = document.getElementById("relation").value;
             if (relationValue === "Other") {
               relationValue = document
@@ -901,7 +739,6 @@
                 .value.trim();
             }
 
-            // Build form data
             const formData = {
               name: document.getElementById("name").value.trim(),
               email: document.getElementById("email").value.trim(),
@@ -934,16 +771,48 @@
                 document.getElementById("astroExp").value.trim() || null,
               occupation:
                 document.getElementById("occupation").value.trim() || null,
+              ...fileUrls,
             };
 
-            // Initialize Razorpay payment
-            submitBtn.textContent = "Opening payment gateway...";
-            initializeRazorpay(formData, fileUrls);
+            submitBtn.textContent = "Registering student...";
+
+            const admissionRes = await fetch(
+              "http://localhost:5000/api/v1/admission",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+              }
+            );
+
+            const admissionJson = await admissionRes.json();
+
+            if (admissionJson && admissionJson.success) {
+              const studentIdBox = document.getElementById("studentIdBox");
+              const generatedId = document.getElementById("generatedStudentId");
+
+              studentIdBox.classList.remove("hidden");
+              generatedId.textContent =
+                admissionJson.data?.student?.studentId || "N/A";
+
+              studentIdBox.scrollIntoView({ behavior: "smooth" });
+
+              submitBtn.textContent = "Registration Completed ✓";
+              submitBtn.classList.remove("bg-green-600", "hover:bg-green-700");
+              submitBtn.classList.add("bg-gray-400", "cursor-not-allowed");
+            } else {
+              alert(
+                "❌ Registration failed: " +
+                  (admissionJson.message || "Unknown error")
+              );
+              submitBtn.disabled = false;
+              submitBtn.textContent = "Register Student (No Payment Required)";
+            }
           } catch (err) {
-            console.error("Form submission error:", err);
+            console.error("Submit error:", err);
             alert("Something went wrong: " + err.message);
             submitBtn.disabled = false;
-            submitBtn.textContent = "Proceed to Pay Admission Fee";
+            submitBtn.textContent = "Register Student (No Payment Required)";
           }
         });
     </script>

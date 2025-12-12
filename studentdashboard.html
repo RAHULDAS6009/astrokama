@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Corner - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
+
   <body class="bg-gray-100">
     <!-- Header -->
     <header
@@ -18,10 +20,6 @@
       </h1>
       <p class="text-xs md:text-sm font-semibold tracking-wide">
         KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
-      </p>
-      <p class="text-xs mt-2 opacity-90">
-        Registered Under Government of West Bengal & Government of India • ISO
-        Certified Institute
       </p>
     </header>
 
@@ -40,22 +38,28 @@
       </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="flex flex-col lg:flex-row">
-      <!-- Sidebar - Study Materials -->
-      <aside
-        class="w-full lg:w-80 bg-white shadow-lg p-5 lg:min-h-screen overflow-y-auto"
-      >
-        <h3
-          class="text-lg font-bold text-[#523A35] mb-5 pb-3 border-b-2 border-[#D4A017]"
-        >
-          📚 Study Materials
-        </h3>
-        <div id="studyMaterials" class="space-y-3"></div>
-      </aside>
+    <!-- Loading Spinner -->
+    <div
+      id="loadingSpinner"
+      class="flex justify-center items-center min-h-screen"
+    >
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#523A35]"
+      ></div>
+    </div>
 
-      <!-- Main Content -->
-      <main class="flex-1 p-4 md:p-8 space-y-8">
+    <!-- Error Message -->
+    <div
+      id="errorMessage"
+      class="hidden p-4 m-8 bg-red-100 border border-red-400 text-red-700 rounded-lg"
+    >
+      <p class="font-bold">Error Loading Data</p>
+      <p id="errorText"></p>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+      <main class="p-4 md:p-8 space-y-8">
         <!-- Student Info -->
         <div class="bg-white rounded-xl shadow-lg p-6">
           <h3 class="text-xl font-bold text-[#523A35] mb-5">
@@ -65,22 +69,26 @@
             <div class="bg-gray-50 p-4 rounded-lg">
               <div class="text-xs text-gray-600 mb-1">Student Name</div>
               <div class="text-lg font-bold text-[#523A35]" id="studentName">
-                DKP
+                -
               </div>
             </div>
             <div class="bg-gray-50 p-4 rounded-lg">
               <div class="text-xs text-gray-600 mb-1">Enrollment ID</div>
               <div class="text-lg font-bold text-[#523A35]" id="enrollmentId">
-                KAMKASD-2024-001
+                -
               </div>
             </div>
             <div class="bg-gray-50 p-4 rounded-lg">
-              <div class="text-xs text-gray-600 mb-1">Total Semesters</div>
-              <div class="text-lg font-bold text-[#523A35]">4</div>
+              <div class="text-xs text-gray-600 mb-1">Course</div>
+              <div class="text-lg font-bold text-[#523A35]" id="courseName">
+                -
+              </div>
             </div>
             <div class="bg-gray-50 p-4 rounded-lg">
-              <div class="text-xs text-gray-600 mb-1">Current Status</div>
-              <div class="text-lg font-bold text-green-600">Active</div>
+              <div class="text-xs text-gray-600 mb-1">Branch</div>
+              <div class="text-lg font-bold text-[#523A35]" id="branchName">
+                -
+              </div>
             </div>
           </div>
         </div>
@@ -91,377 +99,379 @@
     </div>
 
     <script>
-      // Student Data
-      const studentData = {
-        name: "DKP",
-        enrollmentId: "KAMKASD-2024-001",
-        semesters: [
-          {
-            number: 1,
-            name: "DKP",
-            startMonth: "Jan-25",
-            endMonth: "Mar-25",
-            examDate: "29th March 2025",
-            marksObtained: 170,
-            grade: "1st Division",
-            status: "Completed",
-            payments: [
-              {
-                detail: "Admission",
-                date: "5th Dec 2024",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Jan 25",
-                date: "7th Jan 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Feb 25",
-                date: "10th Jan 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "cash manual",
-              },
-              {
-                detail: "Month Mar 25",
-                date: "15th March 2025",
-                fees: 1000,
-                lateFine: 50,
-                status: "Paid",
-                mode: "via website",
-              },
-            ],
-          },
-          {
-            number: 2,
-            name: "Advanced KP",
-            startMonth: "Apr-25",
-            endMonth: "Jun-25",
-            examDate: "28th June 2025",
-            marksObtained: 185,
-            grade: "1st Division",
-            status: "Completed",
-            payments: [
-              {
-                detail: "Month Apr 25",
-                date: "5th Apr 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month May 25",
-                date: "8th May 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Jun 25",
-                date: "12th Jun 2025",
-                fees: 1000,
-                lateFine: 100,
-                status: "Paid",
-                mode: "cash manual",
-              },
-            ],
-          },
-          {
-            number: 3,
-            name: "Predictive Techniques",
-            startMonth: "Jul-25",
-            endMonth: "Sep-25",
-            examDate: "30th September 2025",
-            marksObtained: 195,
-            grade: "1st Division",
-            status: "Completed",
-            payments: [
-              {
-                detail: "Month Jul 25",
-                date: "5th Jul 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Aug 25",
-                date: "10th Aug 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Sep 25",
-                date: "8th Sep 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-            ],
-          },
-          {
-            number: 4,
-            name: "Professional Astrology",
-            startMonth: "Oct-25",
-            endMonth: "Dec-25",
-            examDate: "20th December 2025",
-            marksObtained: null,
-            grade: null,
-            status: "In Progress",
-            payments: [
-              {
-                detail: "Month Oct 25",
-                date: "5th Oct 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Nov 25",
-                date: "8th Nov 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Paid",
-                mode: "via website",
-              },
-              {
-                detail: "Month Dec 25",
-                date: "Due: 5th Dec 2025",
-                fees: 1000,
-                lateFine: 0,
-                status: "Pending",
-                mode: "-",
-              },
-            ],
-          },
-        ],
-        studyMaterials: [
-          {
-            semester: 1,
-            title: "Semester 1 - DKP Notes",
-            type: "PDF",
-            url: "#",
-          },
-          { semester: 1, title: "KP Fundamentals", type: "PDF", url: "#" },
-          { semester: 1, title: "Practice Charts", type: "PDF", url: "#" },
-          {
-            semester: 2,
-            title: "Semester 2 - Advanced KP",
-            type: "PDF",
-            url: "#",
-          },
-          { semester: 2, title: "Sub Lord Theory", type: "PDF", url: "#" },
-          { semester: 2, title: "Timing of Events", type: "PDF", url: "#" },
-          {
-            semester: 3,
-            title: "Semester 3 - Predictions",
-            type: "PDF",
-            url: "#",
-          },
-          { semester: 3, title: "Horary Astrology", type: "PDF", url: "#" },
-          { semester: 3, title: "Case Studies", type: "PDF", url: "#" },
-          {
-            semester: 4,
-            title: "Semester 4 - Professional",
-            type: "PDF",
-            url: "#",
-          },
-          { semester: 4, title: "Consultation Guide", type: "PDF", url: "#" },
-          { semester: 4, title: "Ethics in Astrology", type: "PDF", url: "#" },
-        ],
-      };
+      const API_BASE_URL = "http://localhost:5000/api/v1";
+      let studentData = null;
 
-      // Render Study Materials
-      function renderStudyMaterials() {
-        const container = document.getElementById("studyMaterials");
-        container.innerHTML = studentData.studyMaterials
-          .map(
-            (material) => `
-        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-[#523A35] hover:bg-gray-100 hover:translate-x-1 transition-all">
-          <div class="font-semibold text-sm text-[#523A35] mb-2">📄 ${material.title}</div>
-          <span class="text-xs text-gray-600 bg-gray-200 px-2 py-1 rounded inline-block mb-3">
-            Semester ${material.semester} • ${material.type}
-          </span>
-          <button onclick="downloadMaterial('${material.title}')" 
-            class="w-full bg-[#523A35] text-white text-xs py-2 px-3 rounded hover:bg-[#3d2a27] transition">
-            ⬇ Download
-          </button>
-        </div>
-      `
-          )
-          .join("");
+      // Load student profile
+      async function fetchStudentProfile() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/student/profile`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+
+          if (!response.ok) throw new Error("Failed to fetch profile");
+
+          const result = await response.json();
+
+          console.log(result);
+          studentData = result.data;
+
+          populateStudentInfo();
+          renderSemesters();
+
+          document.getElementById("loadingSpinner").classList.add("hidden");
+          document.getElementById("mainContent").classList.remove("hidden");
+        } catch (error) {
+          showError(error.message);
+        }
+      }
+
+      function showError(msg) {
+        document.getElementById("loadingSpinner").classList.add("hidden");
+        document.getElementById("errorMessage").classList.remove("hidden");
+        document.getElementById("errorText").textContent = msg;
+      }
+
+      function populateStudentInfo() {
+        document.getElementById("studentName").textContent =
+          studentData.name || "-";
+        document.getElementById("enrollmentId").textContent =
+          studentData.studentId || "-";
+        document.getElementById("courseName").textContent =
+          studentData.course?.name || "-";
+        document.getElementById("branchName").textContent =
+          studentData.branch?.name || "-";
+      }
+
+      // Late Fine Calculation
+      function calculateLateFine(dueDate, semester) {
+        const today = new Date();
+        const due = new Date(dueDate);
+
+        if (today <= due) return 0;
+        const lateFeeDate = semester.lateFeeDate
+          ? new Date(semester.lateFeeDate)
+          : due;
+
+        return today > lateFeeDate ? semester.lateFeeFine || 0 : 0;
+      }
+
+      // Generate Payments
+      function generateMonthlyPayments(semester, semesterFees) {
+        const startDate = new Date(semester.startDate);
+        const endDate = new Date(semester.endDate);
+        const payments = [];
+
+        // Admission Payment
+        const admissionPayment = semesterFees.find(
+          (f) => f.description === "Admission Fee"
+        );
+
+        payments.push({
+          detail: "Admission",
+          date: admissionPayment
+            ? formatDate(admissionPayment.paymentDate)
+            : "Pending",
+          fees: semester.admissionFee || 0,
+          lateFine: admissionPayment?.lateFine || 0,
+          status: admissionPayment ? "Paid" : "Pending",
+          mode: admissionPayment?.paymentMode || "-",
+          isPending: !admissionPayment,
+          dueDate: formatDate(semester.startDate),
+        });
+
+        // Monthly Fees
+        const monthNames = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+
+        // Get all monthly fee payments sorted by payment date
+        const monthlyPayments = semesterFees
+          .filter((f) => f.description === "Monthly Fee" && f.paymentDate)
+          .sort((a, b) => new Date(a.paymentDate) - new Date(b.paymentDate));
+
+        let paymentIndex = 0;
+        const current = new Date(startDate);
+
+        while (current <= endDate) {
+          const dueDate = new Date(
+            current.getFullYear(),
+            current.getMonth(),
+            5
+          );
+
+          // Check if there's a payment available for this month slot
+          const monthPayment =
+            paymentIndex < monthlyPayments.length
+              ? monthlyPayments[paymentIndex]
+              : null;
+
+          payments.push({
+            detail: `Month ${monthNames[current.getMonth()]}-${current
+              .getFullYear()
+              .toString()
+              .slice(-2)}`,
+            date: monthPayment
+              ? formatDate(monthPayment.paymentDate)
+              : `Due: 5th ${
+                  monthNames[current.getMonth()]
+                } ${current.getFullYear()}`,
+            fees: semester.fees || 0,
+            lateFine: monthPayment
+              ? monthPayment.lateFine
+              : calculateLateFine(dueDate, semester),
+            status: monthPayment ? "Paid" : "Pending",
+            mode: monthPayment?.paymentMode || "-",
+            isPending: !monthPayment,
+            dueDate: formatDate(dueDate),
+          });
+
+          // If a payment was used for this month, move to next payment
+          if (monthPayment) {
+            paymentIndex++;
+          }
+
+          current.setMonth(current.getMonth() + 1);
+        }
+
+        return payments;
+      }
+
+      // Razorpay Payment
+      async function handlePayment(semesterId, amount, detail, lateFine = 0) {
+        const btn = event.target;
+        btn.disabled = true;
+        btn.textContent = "Processing...";
+
+        try {
+          // Fetch Razorpay Key
+          const keyRes = await fetch(`${API_BASE_URL}/student/razorpay-key`, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+          const keyData = await keyRes.json();
+
+          // Create Order
+          const orderRes = await fetch(
+            `${API_BASE_URL}/student/pay/create-order`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+              body: JSON.stringify({
+                semesterId,
+                amount,
+                description: detail.includes("Admission")
+                  ? "Admission Fee"
+                  : "Monthly Fee",
+              }),
+            }
+          );
+
+          const orderData = await orderRes.json();
+          const order = orderData.data;
+
+          // Razorpay Options
+          const options = {
+            key: keyData.key,
+            amount: order.amount,
+            currency: order.currency,
+            order_id: order.id,
+            name: "Modern Astrology",
+            description: detail,
+
+            handler: async function (response) {
+              await fetch(`${API_BASE_URL}/student/pay/verify`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  semesterId,
+                  amount,
+                  lateFine,
+                  description: detail.includes("Admission")
+                    ? "Admission Fee"
+                    : "Monthly Fee",
+                }),
+              });
+
+              alert("Payment Successful!");
+              window.location.reload();
+            },
+
+            prefill: {
+              name: studentData.name,
+              email: studentData.email,
+              contact: studentData.mobileNumber,
+            },
+
+            theme: { color: "#523A35" },
+
+            modal: {
+              ondismiss: function () {
+                btn.disabled = false;
+                btn.textContent = "Pay Now";
+              },
+            },
+          };
+
+          const rzp = new Razorpay(options);
+
+          rzp.on("payment.failed", function (response) {
+            alert("Payment Failed: " + response.error.description);
+            btn.disabled = false;
+            btn.textContent = "Pay Now";
+          });
+
+          rzp.open();
+        } catch (error) {
+          alert("Payment Error");
+          btn.disabled = false;
+          btn.textContent = "Pay Now";
+        }
       }
 
       // Render Semesters
       function renderSemesters() {
         const container = document.getElementById("semestersContainer");
-        container.innerHTML = studentData.semesters
-          .map((semester) => {
-            const totalFees = semester.payments.reduce(
+        const semesters = studentData.branch?.semsters || [];
+        const fees = studentData.fees || [];
+
+        container.innerHTML = semesters
+          .map((sem) => {
+            const semFees = fees.filter((f) => f.semesterId === sem.id);
+            const payments = generateMonthlyPayments(sem, semFees);
+
+            const total = payments.reduce(
               (sum, p) => sum + p.fees + p.lateFine,
               0
             );
 
             return `
-          <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <!-- Semester Header -->
-            <div class="bg-[#523A35] text-white px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <div class="text-xl font-bold">Semester ${semester.number}: ${
-              semester.name
-            }</div>
-              <div class="bg-[#D4A017] px-4 py-1 rounded-full text-sm font-semibold">
-                ${semester.status}
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+              <div class="bg-[#523A35] text-white px-6 py-4 text-xl font-bold">
+                Semester ${sem.number}: ${sem.name}
               </div>
-            </div>
 
-            <!-- Table Container -->
-            <div class="p-6 overflow-x-auto">
-              <table class="w-full border-collapse min-w-[900px]">
-                <thead>
-                  <tr class="bg-[#523A35] text-white text-sm">
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Starting Month</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Ending Month</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Details</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Date</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Fees</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Late Fine</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Total Amount</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Status</th>
-                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Payment Mode</th>
-                  </tr>
-                </thead>
-                <tbody class="text-sm">
-                  ${semester.payments
-                    .map(
-                      (payment, index) => `
-                    <tr class="hover:bg-gray-50 transition ${
-                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    }">
-                      ${
-                        index === 0
-                          ? `
-                        <td rowspan="${semester.payments.length}" class="border border-gray-300 px-4 py-3 font-medium text-[#523A35]">${semester.startMonth}</td>
-                        <td rowspan="${semester.payments.length}" class="border border-gray-300 px-4 py-3 font-medium text-[#523A35]">${semester.endMonth}</td>
-                      `
-                          : ""
-                      }
-                      <td class="border border-gray-300 px-4 py-3">${
-                        payment.detail
-                      }</td>
-                      <td class="border border-gray-300 px-4 py-3">${
-                        payment.date
-                      }</td>
-                      <td class="border border-gray-300 px-4 py-3">₹${
-                        payment.fees
-                      }</td>
-                      <td class="border border-gray-300 px-4 py-3 ${
-                        payment.lateFine > 0 ? "text-red-600 font-semibold" : ""
-                      }">
-                        ${payment.lateFine > 0 ? "₹" + payment.lateFine : "0"}
-                      </td>
-                      <td class="border border-gray-300 px-4 py-3 font-bold">₹${
-                        payment.fees + payment.lateFine
-                      }</td>
-                      <td class="border border-gray-300 px-4 py-3">
-                        <span class="${
-                          payment.status === "Paid"
-                            ? "bg-green-600"
-                            : "bg-red-600"
-                        } text-white px-3 py-1 rounded-full text-xs font-semibold inline-block">
-                          ${payment.status}
-                        </span>
-                      </td>
-                      <td class="border border-gray-300 px-4 py-3">${
-                        payment.mode
-                      }</td>
+              <div class="p-6 overflow-x-auto">
+                <table class="w-full border-collapse">
+                  <thead>
+                    <tr class="bg-[#523A35] text-white text-sm">
+                      <th class="border px-4 py-3">Details</th>
+                      <th class="border px-4 py-3">Date</th>
+                      <th class="border px-4 py-3">Fees</th>
+                      <th class="border px-4 py-3">Late Fine</th>
+                      <th class="border px-4 py-3">Total</th>
+                      <th class="border px-4 py-3">Status</th>
+                      <th class="border px-4 py-3">Action</th>
                     </tr>
-                  `
-                    )
-                    .join("")}
-                  <tr class="bg-gray-200 font-bold">
-                    <td colspan="6" class="border border-gray-300 px-4 py-3 text-right">Total</td>
-                    <td colspan="3" class="border border-gray-300 px-4 py-3 text-lg">₹${totalFees}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                  </thead>
 
-            <!-- Exam Results -->
-            ${
-              semester.marksObtained
-                ? `
-              <div class="p-6 bg-gray-50 border-t-2 border-[#D4A017]">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div class="text-center bg-white p-5 rounded-lg shadow">
-                    <div class="text-xs text-gray-600 mb-2">Exam Date</div>
-                    <div class="text-lg font-bold text-[#523A35]">${semester.examDate}</div>
-                  </div>
-                  <div class="text-center bg-white p-5 rounded-lg shadow">
-                    <div class="text-xs text-gray-600 mb-2">Marks Obtained</div>
-                    <div class="text-3xl font-bold text-[#523A35]">${semester.marksObtained}</div>
-                  </div>
-                  <div class="text-center bg-white p-5 rounded-lg shadow">
-                    <div class="text-xs text-gray-600 mb-2">Grade</div>
-                    <div class="text-3xl font-bold text-green-600">${semester.grade}</div>
-                  </div>
-                </div>
+                  <tbody class="text-sm">
+                    ${payments
+                      .map(
+                        (p) => `
+                      <tr class="hover:bg-gray-50">
+                        <td class="border px-4 py-3">${p.detail}</td>
+                        <td class="border px-4 py-3">${p.date}</td>
+                        <td class="border px-4 py-3">₹${p.fees}</td>
+                        <td class="border px-4 py-3 ${
+                          p.lateFine > 0 ? "text-red-600 font-bold" : ""
+                        }">
+                          ₹${p.lateFine}
+                        </td>
+                        <td class="border px-4 py-3 font-bold">₹${
+                          p.fees + p.lateFine
+                        }</td>
+
+                        <td class="border px-4 py-3">
+                          <span class="${
+                            p.status === "Paid" ? "bg-green-600" : "bg-red-600"
+                          } text-white px-3 py-1 rounded-full text-xs">
+                            ${p.status}
+                          </span>
+                        </td>
+
+                        <td class="border px-4 py-3">
+                          ${
+                            p.isPending
+                              ? `<button onclick="handlePayment('${sem.id}', ${
+                                  p.fees + p.lateFine
+                                }, '${p.detail}', ${p.lateFine})"
+                                          class="bg-[#523A35] hover:bg-[#3d2a27] text-white px-4 py-2 rounded-lg text-xs font-semibold">
+                                    Pay Now
+                                  </button>`
+                              : `<span class="text-green-600 text-xs font-bold">✓ Paid</span>`
+                          }
+                        </td>
+                      </tr>
+                    `
+                      )
+                      .join("")}
+
+                    <tr class="bg-gray-200 font-bold">
+                      <td colspan="4" class="border px-4 py-3 text-right">Total</td>
+                      <td colspan="3" class="border px-4 py-3 text-lg">₹${total}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
               </div>
-            `
-                : `
-              <div class="p-6 bg-gray-50 border-t-2 border-[#D4A017]">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="text-center bg-white p-5 rounded-lg shadow">
-                    <div class="text-xs text-gray-600 mb-2">Exam Date</div>
-                    <div class="text-lg font-bold text-[#523A35]">${semester.examDate}</div>
-                  </div>
-                  <div class="text-center bg-white p-5 rounded-lg shadow">
-                    <div class="text-xs text-red-600 mb-2">Status</div>
-                    <div class="text-xl font-bold text-red-600">Exam Pending</div>
-                  </div>
-                </div>
-              </div>
-            `
-            }
-          </div>
-        `;
+            </div>
+          `;
           })
           .join("");
       }
 
-      // Download Material Function
-      function downloadMaterial(title) {
-        alert(
-          `Downloading: ${title}\n\nIn production, this would download the actual file.`
-        );
+      function formatDate(d) {
+        if (!d) return "-";
+        const date = new Date(d);
+        const m = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        return `${date.getDate()} ${m[date.getMonth()]} ${date.getFullYear()}`;
       }
 
-      // Logout Function
       function logout() {
-        // if (confirm("Are you sure you want to logout?")) {
-        // alert("Logout successful! Redirecting to login page...");
+        localStorage.removeItem("token");
         window.location.href = "studentcorner.html";
-        // }
       }
 
-      // Initialize
-      document.addEventListener("DOMContentLoaded", () => {
-        renderStudyMaterials();
-        renderSemesters();
-      });
+      document.addEventListener("DOMContentLoaded", fetchStudentProfile);
     </script>
   </body>
 </html>
