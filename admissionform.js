@@ -49,7 +49,7 @@ document.getElementById("samePhone").addEventListener("change", function () {
 // ------------------------------
 async function loadCourses() {
   try {
-    const res = await fetch("http://api.astrokama.com/allcourse");
+    const res = await fetch("https://api.astrokama.com/allcourse");
     const data = await res.json();
 
     const courseSelect = document.getElementById("courseId");
@@ -72,7 +72,7 @@ loadCourses();
 // When course changes → load branches
 document.getElementById("courseId").addEventListener("change", async (e) => {
   const res = await fetch(
-    `http://api.astrokama.com/get-branches/${e.target.value}`
+    `https://api.astrokama.com/get-branches/${e.target.value}`
   );
 
   const data = await res.json();
@@ -94,7 +94,7 @@ async function uploadFile(file) {
   const fd = new FormData();
   fd.append("file", file);
 
-  const res = await fetch("http://api.astrokama.com/upload-file", {
+  const res = await fetch("https://api.astrokama.com/upload-file", {
     method: "POST",
     body: fd,
   });
@@ -173,7 +173,7 @@ async function submitAdmissionForm(event) {
     // Create Razorpay Order
     // ------------------------------
     const orderResponse = await fetch(
-      "http://api.astrokama.com/api/v1/student/fees/pay/create-order",
+      "https://api.astrokama.com/api/v1/student/fees/pay/create-order",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +204,7 @@ async function submitAdmissionForm(event) {
         formData.append("razorpay_signature", response.razorpay_signature);
 
         const saveResponse = await fetch(
-          "http://api.astrokama.com/api/v1/student/admission/create",
+          "https://api.astrokama.com/api/v1/student/admission/create",
           {
             method: "POST",
             body: formData,
