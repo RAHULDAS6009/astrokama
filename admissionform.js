@@ -191,7 +191,7 @@ async function submitAdmissionForm(event) {
     // Razorpay Checkout
     // ------------------------------
     const options = {
-      key: "rzp_test_your_key_here",
+      key: "rzp_live_RrRYZuibDhBXGt",
       amount: orderData.order.amount,
       currency: "INR",
       name: "Astrology Institute",
