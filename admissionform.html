@@ -764,7 +764,7 @@
           modal: {
             ondismiss: function () {
               const submitBtn = document.getElementById("submitBtn");
-              submitBtn.disabled = false;
+
               submitBtn.textContent = "Proceed to Pay Admission Fee";
               alert("Payment cancelled. Please try again.");
             },
@@ -815,7 +815,7 @@
             studentIdBox.scrollIntoView({ behavior: "smooth" });
 
             // Reset submit button
-            submitBtn.disabled = false;
+
             submitBtn.textContent = "Payment Completed";
             submitBtn.classList.add("bg-green-600", "text-white");
 
@@ -830,7 +830,6 @@
           console.error("Submit error:", err);
           alert("Something went wrong: " + err.message);
         } finally {
-          submitBtn.disabled = false;
           submitBtn.textContent = "Proceed to Pay Admission Fee";
         }
       }
@@ -849,7 +848,7 @@
             // Validate course selection
             if (!selectedCourseData) {
               alert("Please select a course.");
-              submitBtn.disabled = false;
+
               submitBtn.textContent = "Proceed to Pay Admission Fee";
               return;
             }
@@ -861,7 +860,7 @@
               alert(
                 "Admission fee not set for this course. Please contact administrator."
               );
-              submitBtn.disabled = false;
+
               submitBtn.textContent = "Proceed to Pay Admission Fee";
               return;
             }
@@ -888,7 +887,7 @@
               fileUrls.idProofUrl === "FILE_TOO_LARGE"
             ) {
               alert("❌ File too large. Fix the file size before submitting.");
-              submitBtn.disabled = false;
+
               submitBtn.textContent = "Proceed to Pay Admission Fee";
               return; // ⛔ Do NOT continue → No backend call, no payment
             }
@@ -942,7 +941,7 @@
           } catch (err) {
             console.error("Form submission error:", err);
             alert("Something went wrong: " + err.message);
-            submitBtn.disabled = false;
+
             submitBtn.textContent = "Proceed to Pay Admission Fee";
           }
         });
