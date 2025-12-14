@@ -627,7 +627,7 @@
       // Load courses with admission fee info
       async function loadCourses() {
         try {
-          const res = await fetch("https://api.astrokama.com/allcourse");
+          const res = await fetch("https://api.rahuldev.live/allcourse");
           const data = await res.json();
 
           if (!data.success) {
@@ -721,7 +721,7 @@
         fd.append("file", file);
 
         try {
-          const res = await fetch("https://api.astrokama.com/upload-file", {
+          const res = await fetch("https://api.rahuldev.live/upload-file", {
             method: "POST",
             body: fd,
           });
@@ -790,7 +790,7 @@
           };
 
           const admissionRes = await fetch(
-            "https://api.astrokama.com/api/v1/admission",
+            "https://api.rahuldev.live/api/v1/admission",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
