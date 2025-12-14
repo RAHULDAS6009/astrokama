@@ -604,7 +604,7 @@
 
       async function loadCourses() {
         try {
-          const res = await fetch("http://localhost:5000/allcourse");
+          const res = await fetch("http://api.astrokama.com/allcourse");
           const data = await res.json();
 
           if (!data.success) {
@@ -674,7 +674,7 @@
         fd.append("file", file);
 
         try {
-          const res = await fetch("http://localhost:5000/upload-file", {
+          const res = await fetch("http://api.astrokama.com/upload-file", {
             method: "POST",
             body: fd,
           });
@@ -777,7 +777,7 @@
             submitBtn.textContent = "Registering student...";
 
             const admissionRes = await fetch(
-              "http://localhost:5000/api/v1/admission",
+              "http://api.astrokama.com/api/v1/admission",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
