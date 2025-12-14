@@ -1,8 +1,8 @@
 // =============================
 // CONFIG
 // =============================
-const API_URL = "https://api.astrokama.com/api/v1/available-slots";
-const BackendUrl = "https://api.astrokama.com";
+const API_URL = "https://api.rahuldev.live/api/v1/available-slots";
+const BackendUrl = "https://api.rahuldev.live";
 
 // =============================
 // STATE MANAGEMENT
