@@ -49,7 +49,7 @@ document.getElementById("samePhone").addEventListener("change", function () {
 // ------------------------------
 async function loadCourses() {
   try {
-    const res = await fetch("http://localhost:5000/allcourse");
+    const res = await fetch("https://api.rahuldev.live/allcourse");
     const data = await res.json();
 
     const courseSelect = document.getElementById("courseId");
@@ -72,7 +72,7 @@ loadCourses();
 // When course changes → load branches
 document.getElementById("courseId").addEventListener("change", async (e) => {
   const res = await fetch(
-    `http://localhost:5000/get-branches/${e.target.value}`
+    `https://api.rahuldev.live/get-branches/${e.target.value}`
   );
 
   const data = await res.json();
@@ -94,7 +94,7 @@ async function uploadFile(file) {
   const fd = new FormData();
   fd.append("file", file);
 
-  const res = await fetch("http://localhost:5000/upload-file", {
+  const res = await fetch("https://api.rahuldev.live/upload-file", {
     method: "POST",
     body: fd,
   });
@@ -173,7 +173,7 @@ async function submitAdmissionForm(event) {
     // Create Razorpay Order
     // ------------------------------
     const orderResponse = await fetch(
-      "http://localhost:5000/api/v1/student/fees/pay/create-order",
+      "https://api.rahuldev.live/api/v1/student/fees/pay/create-order",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +204,7 @@ async function submitAdmissionForm(event) {
         formData.append("razorpay_signature", response.razorpay_signature);
 
         const saveResponse = await fetch(
-          "http://localhost:5000/api/v1/student/admission/create",
+          "https://api.rahuldev.live/api/v1/student/admission/create",
           {
             method: "POST",
             body: formData,

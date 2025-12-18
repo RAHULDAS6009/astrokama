@@ -1,8 +1,8 @@
 // =============================
 // CONFIG
 // =============================
-const API_URL = "http://localhost:5000/api/v1/available-slots";
-const BackendUrl = "http://localhost:5000";
+const API_URL = "https://api.rahuldev.live/api/v1/available-slots";
+const BackendUrl = "https://api.rahuldev.live";
 
 // =============================
 // STATE MANAGEMENT

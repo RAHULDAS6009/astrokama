@@ -603,7 +603,7 @@
         });
       async function loadCourses() {
         try {
-          const res = await fetch("http://localhost:5000/api/branches");
+          const res = await fetch("https://api.rahuldev.live/api/branches");
           const result = await res.json();
 
           console.log("API DATA:", result);
@@ -694,7 +694,7 @@
         fd.append("file", file);
 
         try {
-          const res = await fetch("http://localhost:5000/upload-file", {
+          const res = await fetch("https://api.rahuldev.live/upload-file", {
             method: "POST",
             body: fd,
           });
@@ -797,7 +797,7 @@
             submitBtn.textContent = "Registering student...";
 
             const admissionRes = await fetch(
-              "http://localhost:5000/api/v1/admission",
+              "https://api.rahuldev.live/api/v1/admission",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
