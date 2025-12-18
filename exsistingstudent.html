@@ -601,61 +601,81 @@
               document.getElementById("phone").value;
           }
         });
-
       async function loadCourses() {
         try {
-          const res = await fetch("https://api.rahuldev.live/allcourse");
-          const data = await res.json();
+          const res = await fetch("http://localhost:5000/api/branches");
+          const result = await res.json();
 
-          if (!data.success) {
-            console.error("Failed to load courses", data);
+          console.log("API DATA:", result);
+
+          if (!Array.isArray(result)) {
+            alert("Failed to load courses");
             return;
           }
 
           const select = document.getElementById("courseSelect");
           select.innerHTML = `<option value="">-- Select Course --</option>`;
 
-          data.data.forEach((course) => {
-            (course.branches || []).forEach((branch) => {
-              const firstSemester =
-                branch.semsters && branch.semsters.length > 0
-                  ? branch.semsters[0]
-                  : null;
+          result.forEach((branch) => {
+            const firstSemester =
+              Array.isArray(branch.semsters) && branch.semsters.length > 0
+                ? branch.semsters[0]
+                : null;
 
-              const payload = {
-                courseId: course.id,
-                branchId: branch.id,
-                courseName: course.name || "",
-                courseType: course.courseType || course.type || "",
-                branchName: branch.name || "",
-                semesterId: firstSemester?.id || null,
-                semesterName: firstSemester?.name || "",
-              };
+            const payload = {
+              branchId: branch.id,
+              branchName: branch.name,
+              courseType: branch.tabHeader1 || "Course",
+              days: branch.daysJSON || "",
+              semesterId: firstSemester?.id || null,
+              semesterName: firstSemester?.name || "First Semester",
+              admissionFee:
+                firstSemester?.admissionFee ?? branch.admissionfee ?? 0,
+            };
 
-              const opt = document.createElement("option");
-              opt.value = JSON.stringify(payload);
-              opt.textContent = `${payload.courseType} - ${payload.branchName}`;
-              select.appendChild(opt);
-            });
+            const option = document.createElement("option");
+            option.value = JSON.stringify(payload);
+            option.textContent = `${payload.branchName} - ${payload.days}`;
+
+            select.appendChild(option);
           });
         } catch (err) {
-          console.error("Error loading courses", err);
-          alert("Failed to load courses. Please refresh the page.");
+          console.error("Load courses error:", err);
+          alert("Error loading courses");
         }
       }
 
+      // Update fee banner when course is selected
       document
         .getElementById("courseSelect")
         .addEventListener("change", function () {
           const selectedValue = this.value;
-          if (selectedValue) {
-            selectedCourseData = JSON.parse(selectedValue);
-          } else {
+
+          if (!selectedValue) {
+            document.getElementById("feeBanner").classList.add("hidden");
             selectedCourseData = null;
+            return;
+          }
+
+          selectedCourseData = JSON.parse(selectedValue);
+
+          if (selectedCourseData.admissionFee > 0) {
+            document.getElementById("feeBanner").classList.remove("hidden");
+            document.getElementById(
+              "feeAmount"
+            ).textContent = `₹${selectedCourseData.admissionFee}`;
+            document.getElementById("feeDetails").textContent = `${
+              selectedCourseData.semesterName || "First Semester"
+            } - Admission Fee (One-time)`;
+          } else {
+            document.getElementById("feeBanner").classList.add("hidden");
+            alert(
+              "Admission fee not set for this course. Please contact admin."
+            );
           }
         });
 
-      loadCourses();
+      loadCours;
 
       async function uploadFile(file) {
         if (!file) return null;
@@ -674,7 +694,7 @@
         fd.append("file", file);
 
         try {
-          const res = await fetch("https://api.rahuldev.live/upload-file", {
+          const res = await fetch("http://localhost:5000/upload-file", {
             method: "POST",
             body: fd,
           });
@@ -777,7 +797,7 @@
             submitBtn.textContent = "Registering student...";
 
             const admissionRes = await fetch(
-              "https://api.rahuldev.live/api/v1/admission",
+              "http://localhost:5000/api/v1/admission",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
