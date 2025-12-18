@@ -135,9 +135,11 @@
     </nav>
 
     <!-- SECTION 1 -->
+    <!-- SECTION 1 -->
     <section
       class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 py-6 sm:py-10"
     >
+      <!-- CONTENT -->
       <div class="w-full md:w-[65%]">
         <div
           class="bg-red-100 text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-tr-2xl shadow w-fit"
@@ -145,53 +147,31 @@
           Modern Astrology Institute
         </div>
 
-        <p
-          class="my-3 sm:my-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          I am Suvendu, a devoted KP Astrologer who believes astrology is more
-          than charts and predictions—it is a way to guide people toward a
-          practical, purposeful, and fulfilling lifestyle. My faith rests above
-          all in the Supreme Lord, whose divine grace is greater than any
-          calculation or forecast.
-        </p>
-
-        <p
-          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          Across the world, many astrologers continue to rely on traditional
-          methods. While these ancient techniques hold wisdom, I have often felt
-          they can be limited or misunderstood. Too often, society dismisses
-          astrology, gossiping or speaking lightly of astrologers. This inspired
-          me to walk a different path—one that is both scientific in method and
-          spiritual in essence.
-        </p>
-
-        <p
-          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          The KP technique, with its remarkable precision in calculation, became
-          my foundation. Yet I realized that prediction alone needed refinement.
-          Out of this realization, I developed Modern Astrology—a unique blend
-          of KP methods and my own innovations, designed to meet the realities
-          of today's fast-paced world. For over 11 years, I have practiced this
-          system, offering guidance that is accurate, practical, and deeply
-          fulfilling.
-        </p>
+        <div
+          id="modern-astro-content-1"
+          class="text-sm sm:text-base text-gray-600 leading-relaxed space-y-4 mt-4"
+        ></div>
       </div>
 
+      <!-- IMAGE -->
       <div
-        class="border-green-400 bg-white border-4 rounded-tl-[30px] sm:rounded-tl-[50px] h-[200px] sm:h-[300px] md:h-[360px] w-full md:w-[35%]"
+        id="modern-astro-image-1"
+        class="border-green-400 bg-white border-4 rounded-tl-[30px] sm:rounded-tl-[50px] h-[200px] sm:h-[300px] md:h-[360px] w-full md:w-[35%] overflow-hidden"
       ></div>
     </section>
 
     <!-- SECTION 2 -->
+    <!-- SECTION 2 -->
     <section
       class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 pb-8 sm:pb-14"
     >
+      <!-- IMAGE -->
       <div
-        class="border-green-400 bg-white border-4 rounded-tr-[30px] sm:rounded-tr-[50px] h-[200px] sm:h-[260px] md:h-[290px] w-full md:w-[40%] order-2 md:order-1"
+        id="modern-astro-image-2"
+        class="border-green-400 bg-white border-4 rounded-tr-[30px] sm:rounded-tr-[50px] h-[200px] sm:h-[260px] md:h-[290px] w-full md:w-[40%] order-2 md:order-1 overflow-hidden"
       ></div>
 
+      <!-- CONTENT -->
       <div class="w-full md:w-[60%] order-1 md:order-2">
         <div
           class="text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 w-fit"
@@ -199,38 +179,57 @@
           A Different Kind of Learning
         </div>
 
-        <p
-          class="my-3 sm:my-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          I am Suvendu, a devoted KP Astrologer who believes astrology is more
-          than charts and predictions—it is a way to guide people toward a
-          practical, purposeful, and fulfilling lifestyle. My faith rests above
-          all in the Supreme Lord, whose divine grace is greater than any
-          calculation or forecast.
-        </p>
-
-        <p
-          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          Across the world, many astrologers continue to rely on traditional
-          methods. While these ancient techniques hold wisdom, I have often felt
-          they can be limited or misunderstood. Too often, society dismisses
-          astrology, gossiping or speaking lightly of astrologers. This inspired
-          me to walk a different path—one that is both scientific in method and
-          spiritual in essence.
-        </p>
-
-        <p
-          class="mb-3 sm:mb-4 text-sm sm:text-base text-gray-600 leading-relaxed"
-        >
-          The KP technique, with its remarkable precision in calculation, became
-          my foundation. Yet I realized that prediction alone needed refinement.
-          Out of this realization, I developed Modern Astrology—a unique blend
-          of KP methods and my own innovations, designed to meet the realities
-          of today's fast-paced world.
-        </p>
+        <div
+          id="modern-astro-content-2"
+          class="text-sm sm:text-base text-gray-600 leading-relaxed space-y-4 mt-4"
+        ></div>
       </div>
     </section>
+
+    <script>
+      async function loadCMS() {
+        try {
+          const res = await fetch("https://api.rahuldev.live/api/v1/cms");
+          const { data } = await res.json();
+
+          renderSection(
+            data,
+            "modern_astrology_para_about_me_1",
+            "modern-astro-content-1",
+            "modern-astro-image-1"
+          );
+
+          renderSection(
+            data,
+            "modern_astrology_para_about_me_2",
+            "modern-astro-content-2",
+            "modern-astro-image-2"
+          );
+        } catch (err) {
+          console.error("CMS load failed", err);
+        }
+      }
+
+      function renderSection(data, sectionKey, contentId, imageId) {
+        const section = data.find((item) => item.section === sectionKey);
+        if (!section) return;
+
+        const contentEl = document.getElementById(contentId);
+        const imageEl = document.getElementById(imageId);
+
+        if (contentEl) {
+          contentEl.innerHTML = section.content || "";
+        }
+
+        if (imageEl) {
+          imageEl.innerHTML = section.imageUrl
+            ? `<img src="${section.imageUrl}" alt="${sectionKey}" class="w-full h-full object-cover" />`
+            : "";
+        }
+      }
+
+      loadCMS();
+    </script>
 
     <!-- ================= COURSE STRUCTURE ================= -->
     <section
