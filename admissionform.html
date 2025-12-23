@@ -119,7 +119,7 @@
       <ul
         class="nav-menu flex justify-center space-x-4 md:space-x-16 font-bold text-purple-800 text-sm md:text-lg tracking-wide px-2"
       >
-        <li><a href="#" class="hover:text-purple-600">HOME</a></li>
+        <li><a href="/" class="hover:text-purple-600">HOME</a></li>
         <li>
           <a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a>
         </li>
@@ -260,26 +260,33 @@
         </div>
 
         <!-- Mode -->
+        <!-- Mode -->
         <div>
-          <label class="font-semibold text-sm md:text-base"
-            >Mode of Course <span class="text-red-500">*</span></label
-          >
-          <div
-            class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 mt-2"
-          >
+          <label class="font-semibold text-sm md:text-base">
+            Mode of Course <span class="text-red-500">*</span>
+          </label>
+
+          <div class="flex gap-6 mt-2">
             <label class="flex items-center gap-2">
               <input
                 type="radio"
                 name="mode"
                 value="Online"
+                id="modeOnline"
                 class="w-4 h-4"
-                checked
               />
-              <span class="text-sm md:text-base">Online</span>
+              <span>Online</span>
             </label>
+
             <label class="flex items-center gap-2">
-              <input type="radio" name="mode" value="Offline" class="w-4 h-4" />
-              <span class="text-sm md:text-base">Offline</span>
+              <input
+                type="radio"
+                name="mode"
+                value="Offline"
+                id="modeOffline"
+                class="w-4 h-4"
+              />
+              <span>Offline</span>
             </label>
           </div>
         </div>
@@ -287,14 +294,14 @@
         <!-- Course -->
         <div>
           <label class="font-semibold text-sm md:text-base"
-            >Course Details <span class="text-red-500">*</span></label
+            >Branch Details <span class="text-red-500">*</span></label
           >
           <select
             id="courseSelect"
             class="w-full border px-3 py-2 rounded mt-1 text-sm md:text-base"
             required
           >
-            <option value="">-- Select Course --</option>
+            <option value="">-- Select Branch --</option>
           </select>
         </div>
 
@@ -368,6 +375,7 @@
             required
             placeholder="example@email.com"
           />
+          <p id="emailStatus" class="text-sm mt-1 font-semibold hidden"></p>
         </div>
 
         <!-- Mobile & WhatsApp -->
@@ -500,7 +508,15 @@
               accept="image/*"
               class="w-full border p-2 rounded text-xs md:text-sm"
             />
-            <p class="text-xs text-gray-500 mt-1">Max 2MB</p>
+            <div class="mt-2">
+              <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div
+                  id="photoProgress"
+                  class="bg-green-500 h-2 w-0 transition-all"
+                ></div>
+              </div>
+              <p id="photoText" class="text-xs text-gray-600 mt-1"></p>
+            </div>
           </div>
 
           <div>
@@ -513,7 +529,15 @@
               accept=".pdf,image/*"
               class="w-full border p-2 rounded text-xs md:text-sm"
             />
-            <p class="text-xs text-gray-500 mt-1">PDF or Image</p>
+            <div class="mt-2">
+              <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div
+                  id="certificateProgress"
+                  class="bg-blue-500 h-2 w-0 transition-all"
+                ></div>
+              </div>
+              <p id="certificateText" class="text-xs text-gray-600 mt-1"></p>
+            </div>
           </div>
 
           <div>
@@ -526,7 +550,15 @@
               accept=".pdf,image/*"
               class="w-full border p-2 rounded text-xs md:text-sm"
             />
-            <p class="text-xs text-gray-500 mt-1">Aadhaar/PAN/Passport</p>
+            <div class="mt-2">
+              <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div
+                  id="idProofProgress"
+                  class="bg-purple-500 h-2 w-0 transition-all"
+                ></div>
+              </div>
+              <p id="idProofText" class="text-xs text-gray-600 mt-1"></p>
+            </div>
           </div>
         </div>
 
@@ -574,12 +606,22 @@
     </div>
 
     <script>
-      function goToDashboard() {
-        window.location.href = "studentcorner.html"; // change link if needed
-      }
-
-      let selectedCourseData = null;
       let razorpayKey = "rzp_test_RnVTdYtOyolkhI"; // Replace with your Razorpay key
+      let emailCheckTimer = null;
+      let emailAlreadyExists = false;
+      async function checkEmailExists(email) {
+        const res = await fetch(
+          "http://localhost:5000/api/v1/admission/check-email",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          }
+        );
+
+        const data = await res.json();
+        return data.exists === true;
+      }
 
       // Toggle password visibility
       function togglePassword() {
@@ -624,22 +666,25 @@
           }
         });
 
+      const selectedBranchCode = sessionStorage.getItem("selectedBranchCode");
+      let selectedCourseData = null;
+
       async function loadCourses() {
         try {
-          const res = await fetch("https://api.rahuldev.live/api/branches");
-          const result = await res.json();
+          const res = await fetch("http://localhost:5000/api/branches");
+          const branches = await res.json();
 
-          console.log("API DATA:", result);
-
-          if (!Array.isArray(result)) {
-            alert("Failed to load courses");
+          if (!Array.isArray(branches)) {
+            alert("Failed to load branches");
             return;
           }
 
           const select = document.getElementById("courseSelect");
-          select.innerHTML = `<option value="">-- Select Course --</option>`;
+          select.innerHTML = `<option value="">-- Select Branch --</option>`;
 
-          result.forEach((branch) => {
+          let autoSelectValue = null;
+
+          branches.forEach((branch) => {
             const firstSemester =
               Array.isArray(branch.semsters) && branch.semsters.length > 0
                 ? branch.semsters[0]
@@ -648,92 +693,141 @@
             const payload = {
               branchId: branch.id,
               branchName: branch.name,
+              branchCode: branch.branchCode,
               courseType: branch.tabHeader1 || "Course",
               days: branch.daysJSON || "",
               semesterId: firstSemester?.id || null,
               semesterName: firstSemester?.name || "First Semester",
               admissionFee:
                 firstSemester?.admissionFee ?? branch.admissionfee ?? 0,
+              isoffline: branch.isoffline === true,
             };
 
             const option = document.createElement("option");
             option.value = JSON.stringify(payload);
-            option.textContent = `${payload.branchName} - ${payload.days}`;
+            option.textContent = `[${payload.branchCode}] ${payload.branchName} - ${payload.days}`;
+
+            // 🔥 AUTO MATCH BY BRANCH CODE
+            if (
+              selectedBranchCode &&
+              String(branch.branchCode).trim() ===
+                String(selectedBranchCode).trim()
+            ) {
+              autoSelectValue = option.value;
+              selectedCourseData = payload;
+            }
 
             select.appendChild(option);
           });
+
+          // ✅ AUTO SELECT BRANCH
+          if (autoSelectValue) {
+            select.value = autoSelectValue;
+            handleBranchSelection(JSON.parse(autoSelectValue));
+          }
         } catch (err) {
-          console.error("Load courses error:", err);
-          alert("Error loading courses");
+          console.error("Load branches error:", err);
+          alert("Error loading branches");
         }
       }
 
-      // Update fee banner when course is selected
+      function lockCourseMode(isOffline) {
+        const onlineRadio = document.getElementById("modeOnline");
+        const offlineRadio = document.getElementById("modeOffline");
+
+        if (isOffline === true) {
+          // 🔒 OFFLINE COURSE
+          offlineRadio.checked = true;
+          offlineRadio.disabled = false;
+
+          onlineRadio.checked = false;
+          onlineRadio.disabled = true;
+        } else {
+          // 🔒 ONLINE COURSE
+          onlineRadio.checked = true;
+          onlineRadio.disabled = false;
+
+          offlineRadio.checked = false;
+          offlineRadio.disabled = true;
+        }
+      }
+      function handleBranchSelection(courseData) {
+        selectedCourseData = courseData;
+
+        // 🔐 LOCK MODE BASED ON COURSE
+        lockCourseMode(courseData.isoffline === true);
+
+        // SHOW FEE BANNER
+        if (courseData.admissionFee > 0) {
+          document.getElementById("feeBanner").classList.remove("hidden");
+          document.getElementById(
+            "feeAmount"
+          ).textContent = `₹${courseData.admissionFee}`;
+          document.getElementById(
+            "feeDetails"
+          ).textContent = `${courseData.semesterName} - Admission Fee (One-time)`;
+        } else {
+          document.getElementById("feeBanner").classList.add("hidden");
+        }
+      }
+
+      // MANUAL CHANGE HANDLER
       document
         .getElementById("courseSelect")
         .addEventListener("change", function () {
-          const selectedValue = this.value;
-
-          if (!selectedValue) {
-            document.getElementById("feeBanner").classList.add("hidden");
-            selectedCourseData = null;
-            return;
-          }
-
-          selectedCourseData = JSON.parse(selectedValue);
-
-          if (selectedCourseData.admissionFee > 0) {
-            document.getElementById("feeBanner").classList.remove("hidden");
-            document.getElementById(
-              "feeAmount"
-            ).textContent = `₹${selectedCourseData.admissionFee}`;
-            document.getElementById("feeDetails").textContent = `${
-              selectedCourseData.semesterName || "First Semester"
-            } - Admission Fee (One-time)`;
-          } else {
-            document.getElementById("feeBanner").classList.add("hidden");
-            alert(
-              "Admission fee not set for this course. Please contact admin."
-            );
-          }
+          if (!this.value) return;
+          handleBranchSelection(JSON.parse(this.value));
         });
 
+      // 🚀 LOAD ON PAGE LOAD
       loadCourses();
-
       // Upload file
       // Upload file with size restrictions
-      async function uploadFile(file) {
-        if (!file) return null;
 
-        const isPDF = file.type === "application/pdf";
+      function uploadFile(file) {
+        return new Promise((resolve, reject) => {
+          if (!file) return resolve(null);
 
-        // Set max sizes
-        const maxSize = isPDF ? 5 * 1024 * 1024 : 2 * 1024 * 1024;
+          const modal = document.getElementById("uploadModal");
+          const progressBar = document.getElementById("modalProgress");
+          const text = document.getElementById("modalText");
 
-        if (file.size > maxSize) {
-          alert(
-            `❌ ${file.name} is too large.\n\nPDF limit: 5MB\nImages limit: 2MB`
-          );
-          return "FILE_TOO_LARGE"; // Prevent API call later
-        }
+          modal.classList.remove("hidden");
+          progressBar.style.width = "0%";
+          text.textContent = `Uploading ${file.name}...`;
 
-        const fd = new FormData();
-        fd.append("file", file);
+          const xhr = new XMLHttpRequest();
+          const formData = new FormData();
+          formData.append("file", file);
 
-        try {
-          const res = await fetch("https://api.rahuldev.live/upload-file", {
-            method: "POST",
-            body: fd,
-          });
+          xhr.open("POST", "http://localhost:5000/upload-file", true);
 
-          const json = await res.json();
-          if (json && json.success && json.url) return json.url;
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              progressBar.style.width = percent + "%";
+              text.textContent = `Uploading ${file.name} (${percent}%)`;
+            }
+          };
 
-          return null;
-        } catch (err) {
-          console.error("Upload error", err);
-          return null;
-        }
+          xhr.onload = () => {
+            modal.classList.add("hidden");
+
+            if (xhr.status === 200) {
+              const res = JSON.parse(xhr.responseText);
+              resolve(res.url);
+            } else {
+              reject("Upload failed");
+            }
+          };
+
+          xhr.onerror = () => {
+            modal.classList.add("hidden");
+            reject("Network error");
+          };
+
+          xhr.send(formData);
+        });
       }
 
       // Initialize Razorpay payment
@@ -774,6 +868,43 @@
         const rzp = new Razorpay(options);
         rzp.open();
       }
+      document.getElementById("email").addEventListener("input", function () {
+        const email = this.value.trim();
+        const status = document.getElementById("emailStatus");
+
+        // Reset state
+        emailAlreadyExists = false;
+        status.classList.add("hidden");
+
+        // Basic email validation
+        if (!email || !email.includes("@")) return;
+
+        // ⏳ Debounce API call
+        clearTimeout(emailCheckTimer);
+
+        emailCheckTimer = setTimeout(async () => {
+          status.textContent = "Checking email...";
+          status.className = "text-sm mt-1 font-semibold text-gray-500";
+
+          try {
+            const exists = await checkEmailExists(email);
+
+            if (exists) {
+              emailAlreadyExists = true;
+              status.textContent = "❌ Email already registered. Please login.";
+              status.className = "text-sm mt-1 font-semibold text-red-600";
+            } else {
+              status.textContent = "✅ Please Proceed";
+              status.className = "text-sm mt-1 font-semibold text-green-600";
+            }
+          } catch (err) {
+            status.textContent = "⚠️ Unable to check email";
+            status.className = "text-sm mt-1 font-semibold text-orange-600";
+          }
+
+          status.classList.remove("hidden");
+        }, 500); // ⏱️ wait 500ms after typing stops
+      });
 
       // Submit admission after successful payment
       async function submitAdmission(formData, fileUrls, paymentDetails) {
@@ -790,7 +921,7 @@
           };
 
           const admissionRes = await fetch(
-            "https://api.rahuldev.live/api/v1/admission",
+            "http://localhost:5000/api/v1/admission",
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -836,10 +967,15 @@
       }
 
       // Form submission handler
+
       document
         .getElementById("admissionForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
+          if (emailAlreadyExists) {
+            alert("This email is already registered. Please login.");
+            return;
+          }
 
           const submitBtn = document.getElementById("submitBtn");
           submitBtn.disabled = true;
@@ -873,26 +1009,11 @@
             const certificateFile =
               document.getElementById("certificate").files[0];
             const idProofFile = document.getElementById("idproof").files[0];
-
             const fileUrls = {
-              photoUrl: photoFile ? await uploadFile(photoFile) : null,
-              certificateUrl: certificateFile
-                ? await uploadFile(certificateFile)
-                : null,
-              idProofUrl: idProofFile ? await uploadFile(idProofFile) : null,
+              photoUrl: await uploadFile(photoFile),
+              certificateUrl: await uploadFile(certificateFile),
+              idProofUrl: await uploadFile(idProofFile),
             };
-            // ❌ Stop if any PDF exceeded size limit
-            if (
-              fileUrls.photoUrl === "FILE_TOO_LARGE" ||
-              fileUrls.certificateUrl === "FILE_TOO_LARGE" ||
-              fileUrls.idProofUrl === "FILE_TOO_LARGE"
-            ) {
-              alert("❌ File too large. Fix the file size before submitting.");
-              submitBtn.disabled = false;
-              submitBtn.textContent = "Proceed to Pay Admission Fee";
-              return; // ⛔ Do NOT continue → No backend call, no payment
-            }
-
             // Get relation value
             let relationValue = document.getElementById("relation").value;
             if (relationValue === "Other") {
@@ -947,5 +1068,27 @@
           }
         });
     </script>
+    <!-- Upload Progress Modal -->
+    <div
+      id="uploadModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-xl shadow-xl w-80 p-6 text-center">
+        <h3 class="text-lg font-bold text-purple-700 mb-4">
+          Uploading Documents
+        </h3>
+
+        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            id="modalProgress"
+            class="bg-green-500 h-3 w-0 transition-all"
+          ></div>
+        </div>
+
+        <p id="modalText" class="text-sm mt-3 text-gray-700">
+          Starting upload...
+        </p>
+      </div>
+    </div>
   </body>
 </html>

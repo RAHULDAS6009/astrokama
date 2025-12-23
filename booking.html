@@ -314,8 +314,46 @@
           </div>
         </div>
 
+        <script>
+          function initAutocomplete() {
+            const input = document.getElementById("autocomplete");
+
+            const autocomplete = new google.maps.places.Autocomplete(input, {
+              types: ["geocode"],
+              componentRestrictions: { country: "in" }, // India only (optional)
+            });
+
+            autocomplete.addListener("place_changed", () => {
+              const place = autocomplete.getPlace();
+
+              let city = "";
+              let state = "";
+              let country = "";
+              let pincode = "";
+
+              place.address_components.forEach((component) => {
+                const types = component.types;
+
+                if (types.includes("locality")) city = component.long_name;
+                if (types.includes("administrative_area_level_1"))
+                  state = component.long_name;
+                if (types.includes("country")) country = component.long_name;
+                if (types.includes("postal_code"))
+                  pincode = component.long_name;
+              });
+
+              document.getElementById("city").value = city;
+              document.getElementById("state").value = state;
+              document.getElementById("country").value = country;
+              document.getElementById("pincode").value = pincode;
+            });
+          }
+        </script>
+
         <!-- Place of Birth -->
         <div class="space-y-3">
+          <!-- Place of Birth Autocomplete -->
+
           <label class="font-medium text-center caveat">Place of Birth</label>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -351,42 +389,70 @@
           <h2 class="text-lg font-semibold vend-sans">Contact Details</h2>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-          <div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- PHONE -->
+          <div class="col-span-2">
             <label class="font-medium caveat">Phone Number</label>
-            <div class="flex gap-2 mt-1">
+
+            <div class="flex gap-2 mt-1 items-center relative">
+              <!-- COUNTRY ISO -->
+              <!-- COUNTRY COMBINED UNIT -->
               <div
-                id="selectedCountry"
-                class="flex items-center gap-2 px-3 py-2 border rounded-md cursor-pointer bg-gray-50"
+                class="flex items-center border rounded-md overflow-hidden focus-within:ring-2 focus-within:ring-[#4A2F2B]"
               >
-                <img id="selectedFlag" class="w-5 h-4" src="" alt="flag" />
-                <span id="selectedDial"></span>
-                <svg
-                  class="w-3 h-3 ml-auto"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                <!-- ISO INPUT -->
+                <input
+                  type="text"
+                  id="countryIsoInput"
+                  maxlength="3"
+                  placeholder="IN"
+                  class="w-14 px-2 py-2 uppercase text-center outline-none border-r bg-white"
+                />
+
+                <!-- FLAG + DROPDOWN -->
+                <div
+                  id="selectedCountry"
+                  class="flex items-center gap-2 px-3 py-2 cursor-pointer bg-gray-50"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                  <img id="selectedFlag" class="w-5 h-4" src="" alt="flag" />
+                  <span
+                    id="selectedDial"
+                    class="text-sm font-medium hidden"
+                  ></span>
+                  <svg
+                    class="w-3 h-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
+
+              <!-- DROPDOWN -->
               <div
                 id="countryDropdown"
-                class="absolute z-10 mt-1 max-h-48 overflow-y-auto bg-white border rounded-md shadow-lg hidden"
+                class="absolute top-full left-0 z-20 mt-1 max-h-48 w-64 overflow-y-auto bg-white border rounded-md shadow-lg hidden"
               ></div>
+
+              <!-- PHONE NUMBER -->
               <input
-                type="number"
+                type="tel"
                 id="phoneNumber"
+                placeholder="Phone number"
                 class="flex-1 px-3 py-2 border rounded-md focus:ring-2 focus:ring-[#4A2F2B]"
               />
             </div>
           </div>
-          <div>
+
+          <!-- EMAIL -->
+          <div class="col-span-1">
             <label class="font-medium caveat">Email Address</label>
             <input
               type="email"
@@ -578,6 +644,12 @@
         </button>
       </form>
     </div>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AlzaSyAr4kEU0ZceRqv3sj56JYjQN579J08-LU&libraries=places"
+      async
+      defer
+    ></script>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="consultationform.js"></script>

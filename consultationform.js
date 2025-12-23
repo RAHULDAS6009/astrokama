@@ -1,8 +1,16 @@
+function toLocalISO(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
 // =============================
 // CONFIG
 // =============================
-const API_URL = "https://api.rahuldev.live/api/v1/available-slots";
-const BackendUrl = "https://api.rahuldev.live";
+const API_URL = "http://localhost:5000/api/v1/available-slots";
+const BackendUrl = "http://localhost:5000";
+let countryMapByISO = {};
+let countrySearchIndex = [];
 
 // =============================
 // STATE MANAGEMENT
@@ -63,29 +71,39 @@ function renderCalendar() {
 
   const firstDay = new Date(year, month, 1).getDay();
   const offset = firstDay === 0 ? 6 : firstDay - 1;
-  for (let i = 0; i < offset; i++) calendarDays.innerHTML += `<div></div>`;
+
+  // empty cells
+  for (let i = 0; i < offset; i++) {
+    calendarDays.appendChild(document.createElement("div"));
+  }
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   for (let d = 1; d <= daysInMonth; d++) {
     const dateObj = new Date(year, month, d);
-    const iso = dateObj.toISOString().split("T")[0];
+    const iso = toLocalISO(dateObj);
 
     const isPast = dateObj < today;
     const isBeyond = dateObj > maxDate;
     const hasSlots = availableSlotsByDate[iso]?.length;
 
-    let cls = "py-1 rounded text-xs ";
-    let click = "";
+    const div = document.createElement("div");
+    div.textContent = d;
+    div.dataset.iso = iso;
+    div.className = "py-1 rounded text-xs ";
 
     if (isPast || isBeyond || !hasSlots) {
-      cls += "text-gray-400 cursor-not-allowed";
+      div.classList.add("text-gray-400", "cursor-not-allowed");
     } else {
-      cls += "cursor-pointer hover:bg-green-100 font-semibold";
-      click = `onclick="selectDate('${iso}')"`;
+      div.classList.add(
+        "cursor-pointer",
+        "hover:bg-green-100",
+        "font-semibold"
+      );
+      div.onclick = () => selectDate(iso);
     }
 
-    calendarDays.innerHTML += `<div class="${cls}" ${click}>${d}</div>`;
+    calendarDays.appendChild(div);
   }
 }
 
@@ -97,12 +115,13 @@ window.selectDate = function (iso) {
     .querySelectorAll("#calendarDays div")
     .forEach((d) => d.classList.remove("ring-2", "ring-orange-500"));
 
-  // Extract day from ISO string directly to avoid timezone issues
-  const dayNumber = parseInt(iso.split("-")[2], 10);
+  const selectedCell = document.querySelector(
+    `#calendarDays div[data-iso="${iso}"]`
+  );
 
-  [...document.querySelectorAll("#calendarDays div")]
-    .find((d) => d.textContent == dayNumber)
-    ?.classList.add("ring-2", "ring-orange-500");
+  if (selectedCell) {
+    selectedCell.classList.add("ring-2", "ring-orange-500");
+  }
 
   renderSlots(availableSlotsByDate[iso] || []);
 };
@@ -178,6 +197,44 @@ function formatTime(t) {
 // =============================
 // LOCATION FUNCTIONS
 // =============================
+
+// =============================
+// GOOGLE PLACE AUTOCOMPLETE
+// =============================
+function initBirthPlaceAutocomplete() {
+  const input = document.getElementById("birthPlaceAutocomplete");
+  if (!input || !window.google) return;
+
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ["geocode"],
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+
+    let country = "";
+    let state = "";
+    let city = "";
+    let pincode = "";
+
+    place.address_components?.forEach((c) => {
+      if (c.types.includes("country")) country = c.long_name;
+      if (c.types.includes("administrative_area_level_1")) state = c.long_name;
+      if (c.types.includes("locality")) city = c.long_name;
+      if (c.types.includes("postal_code")) pincode = c.long_name;
+    });
+
+    if (country) {
+      document.getElementById("country").value = country;
+      updateStates(country, state, city);
+    }
+
+    if (pincode) {
+      document.getElementById("pincode").value = pincode;
+    }
+  });
+}
+
 async function loadCountries() {
   try {
     const res = await fetch(
@@ -281,97 +338,219 @@ function loadLocalCityDropdown() {
     citySelect.appendChild(option);
   });
 }
+function countryToISO(countryName) {
+  const map = {
+    India: "IN",
+    "United States": "US",
+    Canada: "CA",
+    Australia: "AU",
+    "United Kingdom": "GB",
+  };
+
+  return map[countryName] || countryName.slice(0, 2).toUpperCase();
+}
 
 async function handlePincodeInput() {
   const pin = document.getElementById("pincode").value.trim();
-  if (pin.length < 6) return;
+  const citySelect = document.getElementById("city");
+
+  // Reset city dropdown
+  citySelect.innerHTML = `<option value="">Select Area</option>`;
+
+  if (pin.length !== 6) return;
 
   try {
     const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
     const data = await res.json();
 
-    if (data[0].Status === "Success") {
-      const postOffice = data[0].PostOffice[0];
-      const city = postOffice.District;
-      const state = postOffice.State;
+    if (data[0].Status !== "Success") return;
 
-      document.getElementById(
-        "city"
-      ).innerHTML = `<option value="${city}">${city}</option>`;
-      document.getElementById("state").value = state;
-    } else {
-      const match = cityData.find((c) => c.pincode === pin);
-      if (match) {
-        document.getElementById("city").value = match.city;
-        document.getElementById("state").value = match.state;
-      } else {
-        document.getElementById(
-          "city"
-        ).innerHTML = `<option value="">City not found</option>`;
-      }
-    }
+    const postOffices = data[0].PostOffice;
+
+    postOffices.forEach((po) => {
+      const option = document.createElement("option");
+      option.value = po.Name;
+      option.textContent = `${po.Name}`;
+
+      // store extra info safely
+      option.dataset.city = po.District;
+      option.dataset.state = po.State;
+
+      citySelect.appendChild(option);
+    });
+
+    // Auto-select first result (optional)
+    citySelect.selectedIndex = 1;
+
+    // Fill state automatically
+    document.getElementById("state").value = postOffices[0].State;
   } catch (err) {
-    const match = cityData.find((c) => c.pincode === pin);
-    if (match) {
-      document.getElementById("city").value = match.city;
-      document.getElementById("state").value = match.state;
-    }
+    console.error("❌ Pincode lookup failed", err);
   }
 }
 
 // =============================
 // PHONE COUNTRY CODE
 // =============================
-async function loadPhoneFlags() {
-  const res = await fetch(
-    "https://countriesnow.space/api/v0.1/countries/codes"
-  );
-  const data = await res.json();
-  const countries = data.data;
+function initCountryIsoInput() {
+  const isoInput = document.getElementById("countryIsoInput");
+  const selectedFlag = document.getElementById("selectedFlag");
+  const selectedDial = document.getElementById("selectedDial");
+
+  isoInput.addEventListener("input", () => {
+    const iso = isoInput.value.trim().toUpperCase();
+    isoInput.value = iso.replace(/[^A-Z]/g, "");
+
+    if (iso.length < 2) return;
+
+    if (countryMapByISO[iso]) {
+      selectedFlag.src = countryMapByISO[iso].flag;
+      selectedDial.textContent = countryMapByISO[iso].dial;
+    }
+  });
+
+  isoInput.addEventListener("blur", () => {
+    if (!countryMapByISO[isoInput.value]) {
+      isoInput.value = "";
+    }
+  });
+}
+function capitalize(str) {
+  return str.replace(/\b\w/g, (l) => l.toUpperCase());
+}
+
+function initCountryAutoSearch() {
+  const isoInput = document.getElementById("countryIsoInput");
   const dropdown = document.getElementById("countryDropdown");
   const selectedFlag = document.getElementById("selectedFlag");
   const selectedDial = document.getElementById("selectedDial");
-  const selectedCountry = document.getElementById("selectedCountry");
 
-  const userCountryCode =
-    (Intl.DateTimeFormat().resolvedOptions().locale || "IN").split("-")[1] ||
-    "IN";
+  isoInput.addEventListener("input", () => {
+    const query = isoInput.value.trim().toLowerCase();
+    dropdown.innerHTML = "";
 
-  countries.sort((a, b) => a.name.localeCompare(b.name));
-
-  countries.forEach((c) => {
-    const iso = c.code.toLowerCase();
-    const option = document.createElement("div");
-    option.className =
-      "flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-100";
-    option.innerHTML = `<img class="w-5 h-4" src="https://flagcdn.com/32x24/${iso}.png" alt="${c.name} flag" />
-    <span>${c.dial_code}</span>`;
-    option.dataset.dial = c.dial_code;
-    option.dataset.flag = `https://flagcdn.com/32x24/${iso}.png`;
-
-    if (iso === userCountryCode.toLowerCase()) {
-      selectedFlag.src = option.dataset.flag;
-      selectedDial.textContent = option.dataset.dial;
+    if (!query) {
+      dropdown.classList.add("hidden");
+      return;
     }
 
-    option.addEventListener("click", () => {
-      selectedFlag.src = option.dataset.flag;
-      selectedDial.textContent = option.dataset.dial;
+    const results = countrySearchIndex.filter(
+      (c) =>
+        c.iso.toLowerCase().includes(query) ||
+        c.name.includes(query) ||
+        (query === "usa" && c.iso === "US") ||
+        (query === "uk" && c.iso === "GB")
+    );
+
+    if (results.length === 0) {
       dropdown.classList.add("hidden");
+      return;
+    }
+
+    results.forEach((c) => {
+      const item = document.createElement("div");
+      item.className =
+        "flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-100";
+
+      item.innerHTML = `
+        <img src="${c.flag}" class="w-5 h-4" />
+        <span class="font-medium">${c.dial}</span>
+        <span class="text-sm text-gray-600">${capitalize(c.name)}</span>
+      `;
+
+      item.onclick = () => {
+        isoInput.value = c.iso;
+        selectedFlag.src = c.flag;
+        selectedDial.textContent = c.dial;
+        dropdown.classList.add("hidden");
+      };
+
+      dropdown.appendChild(item);
     });
 
-    dropdown.appendChild(option);
+    dropdown.classList.remove("hidden");
   });
+}
 
-  selectedCountry.addEventListener("click", () => {
-    dropdown.classList.toggle("hidden");
-  });
+async function loadPhoneFlags() {
+  try {
+    const res = await fetch(
+      "https://countriesnow.space/api/v0.1/countries/codes"
+    );
+    const data = await res.json();
+    const countries = data.data;
 
-  document.addEventListener("click", (e) => {
-    if (!selectedCountry.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.classList.add("hidden");
-    }
-  });
+    const dropdown = document.getElementById("countryDropdown");
+    const selectedFlag = document.getElementById("selectedFlag");
+    const selectedDial = document.getElementById("selectedDial");
+    const selectedCountry = document.getElementById("selectedCountry");
+
+    dropdown.innerHTML = "";
+
+    const userCountryCode =
+      (Intl.DateTimeFormat().resolvedOptions().locale || "IN")
+        .split("-")[1]
+        ?.toUpperCase() || "IN";
+
+    countries.sort((a, b) => a.name.localeCompare(b.name));
+
+    countries.forEach((c) => {
+      const iso = c.code.toUpperCase();
+      const name = c.name.toLowerCase();
+      const dial = c.dial_code;
+
+      const flagUrl = `https://flagcdn.com/32x24/${iso.toLowerCase()}.png`;
+
+      // ✅ STORE FOR ISO INPUT (IN / US)
+      countryMapByISO[iso] = {
+        dial: c.dial_code,
+        flag: flagUrl,
+      };
+
+      countrySearchIndex.push({
+        iso,
+        name,
+        dial,
+        flag: flagUrl,
+      });
+
+      const option = document.createElement("div");
+      option.className =
+        "flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-gray-100";
+
+      option.innerHTML = `
+        <img class="w-5 h-4" src="${flagUrl}" />
+        <span class="font-medium">${c.dial_code}</span>
+        <span class="text-sm text-gray-600">${c.name}</span>
+      `;
+
+      option.addEventListener("click", () => {
+        selectedFlag.src = flagUrl;
+        selectedDial.textContent = c.dial_code;
+        dropdown.classList.add("hidden");
+      });
+
+      dropdown.appendChild(option);
+
+      // ✅ DEFAULT COUNTRY
+      if (iso === userCountryCode) {
+        selectedFlag.src = flagUrl;
+        selectedDial.textContent = c.dial_code;
+      }
+    });
+
+    selectedCountry.addEventListener("click", () => {
+      dropdown.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!selectedCountry.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+  } catch (err) {
+    console.error("❌ Failed to load phone flags:", err);
+  }
 }
 
 // =============================
@@ -399,11 +578,21 @@ function getSchedule() {
 }
 
 function getPersonalDetails() {
+  const hh = document.getElementById("tobHour")?.value;
+  const mm = document.getElementById("tobMinute")?.value;
+  const ss = document.getElementById("tobSecond")?.value || "00";
+  const ampm = document.getElementById("tobAmPm")?.value;
+
+  let tob = "";
+  if (hh && mm && ampm) {
+    tob = `${hh}:${mm}:${ss} ${ampm}`;
+  }
+
   return {
     fullName: document.getElementById("fullName")?.value || "",
     gender: document.querySelector('input[name="gender"]:checked')?.value || "",
     dob: document.getElementById("dob")?.value || "",
-    tob: document.getElementById("tob")?.value || "",
+    tob, // ✅ now exists
   };
 }
 
@@ -617,20 +806,46 @@ async function handlePay(amount) {
 
 // =============================
 // INITIALIZE
+
 // =============================
 document.addEventListener("DOMContentLoaded", () => {
   // Auto-fill today's date
   document.getElementById("dateInput").value = new Date()
     .toISOString()
     .split("T")[0];
+  const emailInput = document.getElementById("email");
+
+  const consultTypeRadios = document.querySelectorAll(
+    'input[name="consultType"]'
+  );
+  emailInput.addEventListener("blur", () => {
+    if (isFollowUpSelected()) {
+      checkFollowUpEligibility();
+    }
+  });
+
+  // Trigger when consultation type changes
+  consultTypeRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (isFollowUpSelected()) {
+        checkFollowUpEligibility();
+      } else {
+        resetFees();
+      }
+    });
+  });
 
   // Fetch available slots
   fetchAvailableSlots();
 
   // Load countries and local cities
+  initBirthPlaceAutocomplete();
   loadCountries();
   loadLocalCityDropdown();
   loadPhoneFlags();
+  initCountryAutoSearch();
+
+  initCountryIsoInput();
 
   // Event listeners for location
   document.getElementById("country").addEventListener("change", (e) => {
@@ -666,6 +881,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currentDate.setMonth(currentDate.getMonth() - 1);
       renderCalendar();
     }
+    selectedSlot = null;
+    document.getElementById("selectedDate").value = "";
+    document.getElementById("afternoonSlots").innerHTML = "";
+    document.getElementById("eveningSlots").innerHTML = "";
   });
 
   document.getElementById("nextMonth").addEventListener("click", (e) => {
@@ -679,6 +898,10 @@ document.addEventListener("DOMContentLoaded", () => {
       currentDate.setMonth(currentDate.getMonth() + 1);
       renderCalendar();
     }
+    selectedSlot = null;
+    document.getElementById("selectedDate").value = "";
+    document.getElementById("afternoonSlots").innerHTML = "";
+    document.getElementById("eveningSlots").innerHTML = "";
   });
 
   // Payment button toggle
@@ -711,12 +934,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Payment handlers
   payBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    handlePay(500);
+    handlePay(currentFees.bookingAmount);
   });
 
   payBtn1.addEventListener("click", (e) => {
     e.preventDefault();
-    handlePay(1800);
+    handlePay(currentFees.online);
   });
 });
 
@@ -727,3 +950,67 @@ window.debugSlots = function () {
   console.log("Selected slot:", selectedSlot);
   console.log("Form data:", buildConsultationPayload(0));
 };
+
+let currentFees = {
+  offline: 1500,
+  online: 1800,
+  bookingAmount: 500,
+};
+
+function isFollowUpSelected() {
+  return (
+    document.querySelector('input[name="consultType"]:checked')?.value ===
+    "follow"
+  );
+}
+
+function showDiscountUI(fees) {
+  document.querySelector("#payButton").previousElementSibling.innerHTML = `
+    <p class="text-gray-800 font-semibold mb-1">
+      For Offline Visit Fees : ₹<span class="line-through text-gray-400">1500</span>
+      <span class="text-green-600"> ${fees.offline}</span>
+    </p>
+    <p class="text-green-700 text-sm">🎉 Follow-up discount applied</p>
+  `;
+
+  document.querySelector("#payButton1").previousElementSibling.innerHTML = `
+    <p class="text-gray-800 font-semibold mb-1">
+      For Online Fees : ₹<span class="line-through text-gray-400">1800</span>
+      <span class="text-green-600"> ${fees.online}</span>
+    </p>
+    <p class="text-green-700 text-sm">🎉 Follow-up discount applied</p>
+  `;
+}
+
+function resetFees() {
+  currentFees = {
+    offline: 1500,
+    online: 1800,
+    bookingAmount: 500,
+  };
+}
+
+async function checkFollowUpEligibility() {
+  const email = document.getElementById("email")?.value.trim();
+
+  if (!email || !isFollowUpSelected()) return;
+
+  try {
+    const res = await fetch(`${BackendUrl}/api/v1/check-followup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+
+    if (data.eligible) {
+      currentFees = data.fees;
+      showDiscountUI(data.fees);
+    } else {
+      resetFees();
+    }
+  } catch (err) {
+    console.error("Follow-up check failed", err);
+  }
+}

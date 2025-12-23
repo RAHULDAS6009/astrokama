@@ -194,48 +194,22 @@
       </h2>
 
       <!-- 2-Column Layout -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- LEFT — ALUMNI LISTING -->
-        <div>
-          <h3 class="text-2xl font-bold text-purple-700 mb-4 text-center">
-            Alumni
-          </h3>
-
-          <!-- SEARCH -->
-          <input
-            type="text"
-            id="alumniSearch"
-            class="w-full border border-gray-400 px-4 py-2 rounded mb-4"
-            placeholder="Search alumni by name"
-          />
-
-          <!-- ALUMNI CARDS -->
-          <div id="alumniList" class="space-y-4"></div>
-        </div>
-
-        <!-- RIGHT — ONGOING STUDENTS LIST -->
-        <div>
-          <h3 class="text-2xl font-bold text-purple-700 mb-4 text-center">
-            Ongoing Students
-          </h3>
-
-          <!-- SEARCH -->
-          <input
-            type="text"
-            id="ongoingSearch"
-            class="w-full border border-gray-400 px-4 py-2 rounded mb-4"
-            placeholder="Search student by name"
-          />
-
-          <ul id="ongoingList" class="space-y-4"></ul>
-        </div>
-      </div>
+      <!-- ALUMNI SECTION -->
+      <section
+        class="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border"
+      >
+        <!-- COMBINED GRID -->
+        <div
+          id="peopleGrid"
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"
+        ></div>
+      </section>
     </section>
 
     <br /><br />
 
     <script>
-      const API_BASE_URL = "https://api.rahuldev.live/api/v1";
+      const API_BASE_URL = "http://localhost:5000/api/v1";
 
       // Pad roll number to 3 digits
       function padRoll(roll) {
@@ -317,6 +291,98 @@
           alert("Server error");
         }
       }
+    </script>
+
+    <script>
+      const alumniApiUrl = "http://localhost:5000/api/v1/alumnis";
+      const studentsApiUrl = "http://localhost:5000/api/v1/all-students";
+
+      const grid = document.getElementById("peopleGrid");
+
+      async function fetchAll() {
+        try {
+          const [alumniRes, studentRes] = await Promise.all([
+            fetch(alumniApiUrl),
+            fetch(studentsApiUrl),
+          ]);
+
+          const alumni = await alumniRes.json();
+          const students = await studentRes.json();
+
+          const alumniCards = Array.isArray(alumni)
+            ? alumni.map((a) => ({
+                name: a.name,
+                image: a.imageUrl,
+                type: "alumni",
+                regNo: a.RegistrationNumber || "REGISTERED",
+              }))
+            : [];
+
+          const studentCards = Array.isArray(students)
+            ? students.map((s) => ({
+                name: s.name,
+                image: s.photoUrl,
+                type: "student",
+                regNo: "STUDENT",
+              }))
+            : [];
+
+          // MIX BOTH
+          const combined = [...alumniCards, ...studentCards];
+
+          renderGrid(combined);
+        } catch (err) {
+          console.error("Fetch error", err);
+        }
+      }
+
+      function renderGrid(list) {
+        grid.innerHTML = "";
+
+        if (!list.length) {
+          grid.innerHTML = `<p class="col-span-full text-center text-gray-500">No data found</p>`;
+          return;
+        }
+
+        list.forEach((item) => {
+          grid.innerHTML += createCard(item);
+        });
+      }
+
+      function createCard({ name, image, type, regNo }) {
+        const barColor = type === "alumni" ? "bg-pink-500" : "bg-blue-500";
+
+        const img = image
+          ? `<img src="${image}" class="w-full h-full object-cover" />`
+          : `<div class="w-full h-full bg-gray-300 flex items-center justify-center text-xs text-gray-600">
+         No Image
+       </div>`;
+
+        return `
+    <div class="aspect-square border rounded-2xl shadow-sm bg-white overflow-hidden">
+      <div class="relative w-full h-full flex flex-col justify-between">
+        
+        <!-- IMAGE -->
+        <div class="flex-1">
+          ${img}
+        </div>
+
+        <!-- NAME -->
+        <div class="text-center font-semibold text-sm py-1">
+          ${name}
+        </div>
+
+        <!-- REGISTRATION BAR -->
+        <div class="${barColor} mx-4 mb-4 rounded-full py-1 text-center text-xs font-bold text-white tracking-wide">
+          ${regNo}
+        </div>
+      </div>
+    </div>
+  `;
+      }
+
+      // INIT
+      fetchAll();
     </script>
   </body>
 </html>

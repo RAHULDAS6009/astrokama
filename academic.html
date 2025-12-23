@@ -56,6 +56,33 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+
+      /* Loading spinner */
+      .banner-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
@@ -134,54 +161,171 @@
       </ul>
     </nav>
 
-    <!-- SECTION 1 -->
+    <!-- BANNER CAROUSEL -->
+    <div class="relative w-full overflow-hidden shadow-lg">
+      <!-- Loading State -->
+      <div id="bannerLoading" class="banner-loading">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Slides Container -->
+      <div
+        id="carousel"
+        class="flex transition-transform duration-700 ease-in-out"
+        style="display: none"
+      >
+        <!-- Images will be injected here by JavaScript -->
+      </div>
+
+      <!-- Dots Container -->
+      <div
+        id="dotsContainer"
+        class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+        style="display: none"
+      >
+        <!-- Dots will be injected here by JavaScript -->
+      </div>
+    </div>
+
+    <script>
+      // ======================
+      // LOAD BANNER IMAGES FOR ACADEMIC PAGE
+      // ======================
+      let carouselInterval;
+
+      async function loadBannerImages() {
+        const carousel = document.getElementById("carousel");
+        const dotsContainer = document.getElementById("dotsContainer");
+        const loading = document.getElementById("bannerLoading");
+
+        try {
+          const res = await fetch("http://localhost:5000/api/v1/cms");
+          const { data } = await res.json();
+
+          // Find academic_banner_section
+          const bannerSection = data.find(
+            (item) => item.section === "academic_banner_section"
+          );
+
+          if (!bannerSection || !bannerSection.content) {
+            throw new Error("No banner data found");
+          }
+
+          // Parse the JSON array of image URLs
+          const imageUrls = JSON.parse(bannerSection.content);
+
+          if (!imageUrls || imageUrls.length === 0) {
+            throw new Error("No images in banner data");
+          }
+
+          // Clear existing content
+          carousel.innerHTML = "";
+          dotsContainer.innerHTML = "";
+
+          // Add images to carousel
+          imageUrls.forEach((url, index) => {
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = `Banner ${index + 1}`;
+            img.className =
+              "w-full h-[220px] md:h-[320px] lg:h-[400px] object-cover flex-shrink-0";
+            carousel.appendChild(img);
+
+            // Create dot for each image
+            const dot = document.createElement("button");
+            dot.className = "dot w-3 h-3 bg-white/50 rounded-full";
+            dot.setAttribute("data-index", index);
+            dotsContainer.appendChild(dot);
+          });
+
+          // Hide loading, show carousel
+          loading.style.display = "none";
+          carousel.style.display = "flex";
+          dotsContainer.style.display = "flex";
+
+          // Initialize carousel
+          initializeCarousel(imageUrls.length);
+        } catch (error) {
+          console.error("Failed to load banner images:", error);
+          loading.innerHTML =
+            '<p class="text-white text-center">Failed to load banner images</p>';
+        }
+      }
+
+      // ======================
+      // CAROUSEL CONTROLS
+      // ======================
+      function initializeCarousel(slideCount) {
+        const carousel = document.getElementById("carousel");
+        const dots = document.querySelectorAll(".dot");
+        let index = 0;
+
+        function updateCarousel() {
+          carousel.style.transform = `translateX(-${index * 100}%)`;
+
+          dots.forEach((dot) => dot.classList.remove("bg-white"));
+          dots[index].classList.add("bg-white");
+        }
+
+        function autoSlide() {
+          index = (index + 1) % slideCount;
+          updateCarousel();
+        }
+
+        // Dot click handlers
+        dots.forEach((dot, i) => {
+          dot.addEventListener("click", () => {
+            index = i;
+            updateCarousel();
+
+            // Reset auto-slide timer
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(autoSlide, 3000);
+          });
+        });
+
+        updateCarousel();
+        carouselInterval = setInterval(autoSlide, 3000);
+      }
+
+      // Load banner on page load
+      loadBannerImages();
+    </script>
+
     <!-- SECTION 1 -->
     <section
       class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 py-6 sm:py-10"
     >
       <!-- CONTENT -->
-      <div class="w-full md:w-[65%]">
+      <div class="w-full">
         <div
-          class="bg-red-100 text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-tr-2xl shadow w-fit"
+          class="bg-red-100 text-pink-800 text-lg sm:text-xl font-bold px-2 py-2 sm:py-3 rounded-tr-2xl shadow w-full"
         >
           Modern Astrology Institute
         </div>
 
         <div
           id="modern-astro-content-1"
-          class="text-sm sm:text-base text-gray-600 leading-relaxed space-y-4 mt-4"
+          class="text-sm px-2 sm:text-base text-gray-600 leading-relaxed space-y-4 mt-4"
         ></div>
       </div>
-
-      <!-- IMAGE -->
-      <div
-        id="modern-astro-image-1"
-        class="border-green-400 bg-white border-4 rounded-tl-[30px] sm:rounded-tl-[50px] h-[200px] sm:h-[300px] md:h-[360px] w-full md:w-[35%] overflow-hidden"
-      ></div>
     </section>
 
-    <!-- SECTION 2 -->
     <!-- SECTION 2 -->
     <section
       class="max-w-7xl mx-auto flex flex-col md:flex-row w-full items-start gap-5 px-4 sm:px-6 md:px-10 pb-8 sm:pb-14"
     >
-      <!-- IMAGE -->
-      <div
-        id="modern-astro-image-2"
-        class="border-green-400 bg-white border-4 rounded-tr-[30px] sm:rounded-tr-[50px] h-[200px] sm:h-[260px] md:h-[290px] w-full md:w-[40%] order-2 md:order-1 overflow-hidden"
-      ></div>
-
       <!-- CONTENT -->
-      <div class="w-full md:w-[60%] order-1 md:order-2">
+      <div class="w-full order-1 md:order-2">
         <div
-          class="text-pink-800 text-lg sm:text-xl font-bold px-4 sm:px-6 py-2 sm:py-3 w-fit"
+          class="text-pink-800 text-lg sm:text-xl font-bold px-2 py-2 sm:py-3 w-fit"
         >
           A Different Kind of Learning
         </div>
 
         <div
           id="modern-astro-content-2"
-          class="text-sm sm:text-base text-gray-600 leading-relaxed space-y-4 mt-4"
+          class="text-sm sm:text-base text-gray-600 px-2 leading-relaxed space-y-4 mt-4"
         ></div>
       </div>
     </section>
@@ -189,7 +333,7 @@
     <script>
       async function loadCMS() {
         try {
-          const res = await fetch("https://api.rahuldev.live/api/v1/cms");
+          const res = await fetch("http://localhost:5000/api/v1/cms");
           const { data } = await res.json();
 
           renderSection(
@@ -231,7 +375,7 @@
       loadCMS();
     </script>
 
-    <!-- ================= COURSE STRUCTURE ================= -->
+    <!-- COURSE STRUCTURE -->
     <section
       class="w-full max-w-6xl mx-auto bg-violet-100 rounded-2xl shadow-lg relative overflow-hidden p-4 sm:p-6 mb-8 sm:mb-10"
     >
@@ -253,7 +397,7 @@
       ></div>
     </section>
 
-    <!-- ================= PDF MODAL ================= -->
+    <!-- PDF MODAL -->
     <div
       id="pdfModal"
       class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4"
@@ -278,9 +422,7 @@
     </div>
 
     <script>
-      const COURSE_API = "https://api.rahuldev.live/api/v1/admin/allcourse";
-
-      /* ================= FETCH COURSES ================= */
+      const COURSE_API = "http://localhost:5000/api/v1/admin/allcourse";
 
       async function fetchCourses() {
         try {
@@ -294,8 +436,6 @@
           console.error("Failed to load courses", err);
         }
       }
-
-      /* ================= RENDER COURSES ================= */
 
       function renderCourses(courses) {
         const grid = document.getElementById("courseGrid");
@@ -367,8 +507,6 @@
         });
       }
 
-      /* ================= PDF HANDLER (EVENT DELEGATION) ================= */
-
       function initPdfViewer() {
         const modal = document.getElementById("pdfModal");
         const frame = document.getElementById("pdfFrame");
@@ -394,8 +532,6 @@
           }
         });
       }
-
-      /* ================= INIT ================= */
 
       initPdfViewer();
       fetchCourses();
@@ -439,12 +575,9 @@
 
       async function fetchBranches() {
         try {
-          const response = await fetch(
-            "https://api.rahuldev.live/api/branches"
-          );
+          const response = await fetch("http://localhost:5000/api/branches");
           branchesData = await response.json();
 
-          // ✅ SAFETY NORMALIZATION (NO LOGIC CHANGE)
           branchesData = branchesData.map((b) => ({
             ...b,
             tabHeader1: b.tabHeader1 || "OTHER",
@@ -460,17 +593,16 @@
           console.error(error);
         }
       }
+
       function handleDayClick(branchCode) {
         console.log("Selected Branch Code:", branchCode);
 
         sessionStorage.setItem("selectedBranchCode", branchCode);
 
-        // hide all hints
         document
           .querySelectorAll("[id^='admissionHint-']")
           .forEach((el) => el.classList.add("hidden"));
 
-        // show current hint
         const hint = document.getElementById(`admissionHint-${branchCode}`);
         if (hint) hint.classList.remove("hidden");
       }
@@ -491,7 +623,7 @@
 
           if (!groupedTabs[normalizedKey]) {
             groupedTabs[normalizedKey] = {
-              displayHeader1: b.tabHeader1, // keep original for UI
+              displayHeader1: b.tabHeader1,
               displayHeader2: b.tabHeader2,
               branches: [],
             };
@@ -506,23 +638,22 @@
           .map((key) => {
             const tab = groupedTabs[key];
             return `
-        <button
-          onclick="switchTab('${key}')"
-          class="px-4 py-2 font-semibold border-b-4 ${
-            key === currentTabId
-              ? "text-purple-700 border-purple-700"
-              : "text-gray-600 border-transparent"
-          }"
-        >
-          ${tab.displayHeader1} ${tab.displayHeader2}
-        </button>
-      `;
+      <button
+    onclick="switchTab('${key}')"
+    class="px-4 py-2 font-semibold border-b-4 flex flex-col ${
+      key === currentTabId
+        ? "text-purple-700 border-purple-700"
+        : "text-gray-600 border-transparent"
+    }">
+   <span> ${tab.displayHeader1}</span>
+   <span> ${tab.displayHeader2}</span>
+  </button>`;
           })
           .join("");
       }
 
       function renderMergedBranch(branches) {
-        const base = branches[0]; // ✅ FIRST ONE ONLY
+        const base = branches[0];
 
         return `
     <div class="bg-[#f8f4ff] rounded-xl p-6 space-y-6">
@@ -558,9 +689,7 @@ ${
     ${
       base.text
         ? `
-      <p class="mt-3 text-sm text-gray-700 leading-relaxed bg-white text-center">
         ${base.text}
-      </p>
       `
         : ""
     }
@@ -577,7 +706,7 @@ ${
 
       <hr />
 
-      <h3 class="font-semibold">Available Days:</h3>
+      <h3 class="font-semibold">Select Your Available Days:</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
   ${branches
     .map((b) => {
@@ -612,17 +741,15 @@ ${
 
           <p 
             id="admissionHint-${b.branchCode}" 
-            class="hidden mt-2 text-purple-700 font-semibold cursor-pointer underline"
-            onclick="goToAdmission()"
+            class="hidden mt-2 text-purple-700 font-semibold cursor-pointer"
           >
-            👉 Click here to take admission
+          Click On Take Admission Button
           </p>
         </div>
       `;
     })
     .join("")}
 </div>
-
 
       <h3 class="font-semibold text-purple-800">Fees Structure:</h3>
       <div class="bg-white border rounded-lg p-4">

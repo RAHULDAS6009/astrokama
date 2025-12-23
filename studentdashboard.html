@@ -99,7 +99,7 @@
     </div>
 
     <script>
-      const API_BASE_URL = "https://api.rahuldev.live/api/v1";
+      const API_BASE_URL = "http://localhost:5000/api/v1";
       let studentData = null;
 
       // Load student profile
@@ -147,20 +147,47 @@
           studentData.branch?.name || "-";
       }
 
-      // Late Fine Calculation
-      function calculateLateFine(dueDate, semester) {
+      // Updated Late Fine Calculation
+      // Replace the calculateLateFine function in your student dashboard with this:
+
+      function calculateLateFine(monthIndex, year, semester) {
+        if (!semester.lateFeeDate || !semester.lateFeeFine) return 0;
+
+        const lateFeeDay = new Date(semester.lateFeeDate).getDate();
         const today = new Date();
-        const due = new Date(dueDate);
 
-        if (today <= due) return 0;
-        const lateFeeDate = semester.lateFeeDate
-          ? new Date(semester.lateFeeDate)
-          : due;
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+        const todayDate = today.getDate();
 
-        return today > lateFeeDate ? semester.lateFeeFine || 0 : 0;
+        // Future month → no fine
+        if (
+          year > currentYear ||
+          (year === currentYear && monthIndex > currentMonth)
+        ) {
+          return 0;
+        }
+
+        let lateDays = 0;
+
+        // Past month
+        if (
+          year < currentYear ||
+          (year === currentYear && monthIndex < currentMonth)
+        ) {
+          const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+          lateDays = Math.max(0, daysInMonth - lateFeeDay);
+        }
+
+        // Current month
+        if (year === currentYear && monthIndex === currentMonth) {
+          lateDays = Math.max(0, todayDate - lateFeeDay);
+        }
+
+        return lateDays * semester.lateFeeFine;
       }
 
-      // Generate Payments
+      // Update the generateMonthlyPayments function to use monthIndex and year
       function generateMonthlyPayments(semester, semesterFees) {
         const startDate = new Date(semester.startDate);
         const endDate = new Date(semester.endDate);
@@ -215,30 +242,40 @@
             5
           );
 
+          const monthKey = `Month ${monthNames[current.getMonth()]}-${current
+            .getFullYear()
+            .toString()
+            .slice(-2)}`;
+
           // Check if there's a payment available for this month slot
           const monthPayment =
             paymentIndex < monthlyPayments.length
               ? monthlyPayments[paymentIndex]
               : null;
 
+          const monthIndex = current.getMonth(); // 0–11
+          const year = current.getFullYear();
+
+          // Calculate late fine using the new logic
+          const lateFine = monthPayment
+            ? monthPayment.lateFine
+            : calculateLateFine(monthIndex, year, semester);
+
           payments.push({
-            detail: `Month ${monthNames[current.getMonth()]}-${current
-              .getFullYear()
-              .toString()
-              .slice(-2)}`,
+            detail: monthKey,
             date: monthPayment
               ? formatDate(monthPayment.paymentDate)
               : `Due: 5th ${
                   monthNames[current.getMonth()]
                 } ${current.getFullYear()}`,
             fees: semester.fees || 0,
-            lateFine: monthPayment
-              ? monthPayment.lateFine
-              : calculateLateFine(dueDate, semester),
+            lateFine: lateFine,
             status: monthPayment ? "Paid" : "Pending",
             mode: monthPayment?.paymentMode || "-",
             isPending: !monthPayment,
             dueDate: formatDate(dueDate),
+            monthIndex: monthIndex,
+            year: year,
           });
 
           // If a payment was used for this month, move to next payment
@@ -251,7 +288,6 @@
 
         return payments;
       }
-
       // Razorpay Payment
       async function handlePayment(semesterId, amount, detail, lateFine = 0) {
         const btn = event.target;

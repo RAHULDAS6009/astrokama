@@ -104,13 +104,13 @@
       <ul
         class="nav-menu flex justify-center space-x-4 md:space-x-16 font-bold text-purple-800 text-sm md:text-lg tracking-wide px-2"
       >
-        <li><a href="#" class="hover:text-purple-600">HOME</a></li>
+        <li><a href="/" class="hover:text-purple-600">HOME</a></li>
         <li>
-          <a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a>
+          <a href="/booking.html" class="hover:text-purple-600">CONSULTANCY</a>
         </li>
         <li>
           <a
-            href="academic.html"
+            href="/academic.html"
             class="bg-purple-800 text-white px-3 md:px-4 py-2 rounded-full shadow-lg hover:bg-purple-900"
           >
             ACADEMIC / COURSES
@@ -118,12 +118,12 @@
         </li>
 
         <li>
-          <a href="studentcorner.html" class="hover:text-purple-600"
+          <a href="/studentcorner.html" class="hover:text-purple-600"
             >STUDENT CORNER</a
           >
         </li>
         <li>
-          <a href="contact.html" class="hover:text-purple-600">CONTACT</a>
+          <a href="/contact.html" class="hover:text-purple-600">CONTACT</a>
         </li>
       </ul>
     </nav>
@@ -254,13 +254,19 @@
                 type="radio"
                 name="mode"
                 value="Online"
+                id="modeOnline"
                 class="w-4 h-4"
-                checked
               />
               <span class="text-sm md:text-base">Online</span>
             </label>
             <label class="flex items-center gap-2">
-              <input type="radio" name="mode" value="Offline" class="w-4 h-4" />
+              <input
+                type="radio"
+                name="mode"
+                value="Offline"
+                id="modeOffline"
+                class="w-4 h-4"
+              />
               <span class="text-sm md:text-base">Offline</span>
             </label>
           </div>
@@ -269,14 +275,14 @@
         <!-- Course -->
         <div>
           <label class="font-semibold text-sm md:text-base"
-            >Course Details <span class="text-red-500">*</span></label
+            >Branch Details <span class="text-red-500">*</span></label
           >
           <select
             id="courseSelect"
             class="w-full border px-3 py-2 rounded mt-1 text-sm md:text-base"
             required
           >
-            <option value="">-- Select Course --</option>
+            <option value="">-- Select Branch --</option>
           </select>
         </div>
 
@@ -350,6 +356,7 @@
             required
             placeholder="example@email.com"
           />
+          <p id="emailStatus" class="text-sm mt-1 font-semibold hidden"></p>
         </div>
 
         <!-- Mobile & WhatsApp -->
@@ -495,7 +502,7 @@
               accept=".pdf,image/*"
               class="w-full border p-2 rounded text-xs md:text-sm"
             />
-            <p class="text-xs text-gray-500 mt-1">PDF or Image</p>
+            <p class="text-xs text-gray-500 mt-1">PDF or Image (Max 5MB)</p>
           </div>
 
           <div>
@@ -508,7 +515,9 @@
               accept=".pdf,image/*"
               class="w-full border p-2 rounded text-xs md:text-sm"
             />
-            <p class="text-xs text-gray-500 mt-1">Aadhaar/PAN/Passport</p>
+            <p class="text-xs text-gray-500 mt-1">
+              Aadhaar/PAN/Passport (Max 5MB)
+            </p>
           </div>
         </div>
 
@@ -556,17 +565,92 @@
       </div>
     </div>
 
+    <!-- Upload Progress Modal -->
+    <div
+      id="uploadModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-xl shadow-xl w-80 p-6 text-center">
+        <h3 class="text-lg font-bold text-green-700 mb-4">
+          Uploading Documents
+        </h3>
+
+        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div
+            id="modalProgress"
+            class="bg-green-500 h-3 w-0 transition-all"
+          ></div>
+        </div>
+
+        <p id="modalText" class="text-sm mt-3 text-gray-700">
+          Starting upload...
+        </p>
+      </div>
+    </div>
+
     <script>
       function goToDashboard() {
         window.location.href = "studentcorner.html";
       }
 
       let selectedCourseData = null;
+      let emailCheckTimer = null;
+      let emailAlreadyExists = false;
 
       function togglePassword() {
         const input = document.getElementById("passwordField");
         input.type = input.type === "password" ? "text" : "password";
       }
+
+      // Email checking function
+      async function checkEmailExists(email) {
+        const res = await fetch(
+          "http://localhost:5000/api/v1/admission/check-email",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          }
+        );
+        const data = await res.json();
+        return data.exists === true;
+      }
+
+      // Email validation with debounce
+      document.getElementById("email").addEventListener("input", function () {
+        const email = this.value.trim();
+        const status = document.getElementById("emailStatus");
+
+        emailAlreadyExists = false;
+        status.classList.add("hidden");
+
+        if (!email || !email.includes("@")) return;
+
+        clearTimeout(emailCheckTimer);
+
+        emailCheckTimer = setTimeout(async () => {
+          status.textContent = "Checking email...";
+          status.className = "text-sm mt-1 font-semibold text-gray-500";
+
+          try {
+            const exists = await checkEmailExists(email);
+
+            if (exists) {
+              emailAlreadyExists = true;
+              status.textContent = "❌ Email already registered. Please login.";
+              status.className = "text-sm mt-1 font-semibold text-red-600";
+            } else {
+              status.textContent = "✅ Please Proceed";
+              status.className = "text-sm mt-1 font-semibold text-green-600";
+            }
+          } catch (err) {
+            status.textContent = "⚠️ Unable to check email";
+            status.className = "text-sm mt-1 font-semibold text-orange-600";
+          }
+
+          status.classList.remove("hidden");
+        }, 500);
+      });
 
       document
         .getElementById("relation")
@@ -601,22 +685,25 @@
               document.getElementById("phone").value;
           }
         });
+
+      const selectedBranchCode = sessionStorage.getItem("selectedBranchCode");
+
       async function loadCourses() {
         try {
-          const res = await fetch("https://api.rahuldev.live/api/branches");
-          const result = await res.json();
+          const res = await fetch("http://localhost:5000/api/branches");
+          const branches = await res.json();
 
-          console.log("API DATA:", result);
-
-          if (!Array.isArray(result)) {
-            alert("Failed to load courses");
+          if (!Array.isArray(branches)) {
+            alert("Failed to load branches");
             return;
           }
 
           const select = document.getElementById("courseSelect");
-          select.innerHTML = `<option value="">-- Select Course --</option>`;
+          select.innerHTML = `<option value="">-- Select Branch --</option>`;
 
-          result.forEach((branch) => {
+          let autoSelectValue = null;
+
+          branches.forEach((branch) => {
             const firstSemester =
               Array.isArray(branch.semsters) && branch.semsters.length > 0
                 ? branch.semsters[0]
@@ -625,94 +712,147 @@
             const payload = {
               branchId: branch.id,
               branchName: branch.name,
+              branchCode: branch.branchCode,
               courseType: branch.tabHeader1 || "Course",
               days: branch.daysJSON || "",
               semesterId: firstSemester?.id || null,
               semesterName: firstSemester?.name || "First Semester",
               admissionFee:
                 firstSemester?.admissionFee ?? branch.admissionfee ?? 0,
+              isoffline: branch.isoffline === true,
             };
 
             const option = document.createElement("option");
             option.value = JSON.stringify(payload);
-            option.textContent = `${payload.branchName} - ${payload.days}`;
+            option.textContent = `[${payload.branchCode}] ${payload.branchName} - ${payload.days}`;
+
+            // Auto-match by branch code
+            if (
+              selectedBranchCode &&
+              String(branch.branchCode).trim() ===
+                String(selectedBranchCode).trim()
+            ) {
+              autoSelectValue = option.value;
+              selectedCourseData = payload;
+            }
 
             select.appendChild(option);
           });
+
+          // Auto-select branch
+          if (autoSelectValue) {
+            select.value = autoSelectValue;
+            handleBranchSelection(JSON.parse(autoSelectValue));
+          }
         } catch (err) {
-          console.error("Load courses error:", err);
-          alert("Error loading courses");
+          console.error("Load branches error:", err);
+          alert("Error loading branches");
         }
       }
 
-      // Update fee banner when course is selected
+      function lockCourseMode(isOffline) {
+        const onlineRadio = document.getElementById("modeOnline");
+        const offlineRadio = document.getElementById("modeOffline");
+
+        if (isOffline === true) {
+          offlineRadio.checked = true;
+          offlineRadio.disabled = false;
+          onlineRadio.checked = false;
+          onlineRadio.disabled = true;
+        } else {
+          onlineRadio.checked = true;
+          onlineRadio.disabled = false;
+          offlineRadio.checked = false;
+          offlineRadio.disabled = true;
+        }
+      }
+
+      function handleBranchSelection(courseData) {
+        selectedCourseData = courseData;
+        lockCourseMode(courseData.isoffline === true);
+      }
+
       document
         .getElementById("courseSelect")
         .addEventListener("change", function () {
-          const selectedValue = this.value;
-
-          if (!selectedValue) {
-            document.getElementById("feeBanner").classList.add("hidden");
-            selectedCourseData = null;
-            return;
-          }
-
-          selectedCourseData = JSON.parse(selectedValue);
-
-          if (selectedCourseData.admissionFee > 0) {
-            document.getElementById("feeBanner").classList.remove("hidden");
-            document.getElementById(
-              "feeAmount"
-            ).textContent = `₹${selectedCourseData.admissionFee}`;
-            document.getElementById("feeDetails").textContent = `${
-              selectedCourseData.semesterName || "First Semester"
-            } - Admission Fee (One-time)`;
-          } else {
-            document.getElementById("feeBanner").classList.add("hidden");
-            alert(
-              "Admission fee not set for this course. Please contact admin."
-            );
-          }
+          if (!this.value) return;
+          handleBranchSelection(JSON.parse(this.value));
         });
 
-      loadCours;
+      loadCourses();
 
-      async function uploadFile(file) {
-        if (!file) return null;
+      function uploadFile(file) {
+        return new Promise((resolve, reject) => {
+          if (!file) return resolve(null);
 
-        const isPDF = file.type === "application/pdf";
-        const maxSize = isPDF ? 5 * 1024 * 1024 : 2 * 1024 * 1024;
+          const isPDF = file.type === "application/pdf";
+          const maxSize = isPDF ? 5 * 1024 * 1024 : 2 * 1024 * 1024;
 
-        if (file.size > maxSize) {
-          alert(
-            `❌ ${file.name} is too large.\n\nPDF limit: 5MB\nImages limit: 2MB`
-          );
-          return "FILE_TOO_LARGE";
-        }
+          if (file.size > maxSize) {
+            alert(
+              `❌ ${file.name} is too large.\n\nPDF limit: 5MB\nImages limit: 2MB`
+            );
+            return reject("FILE_TOO_LARGE");
+          }
 
-        const fd = new FormData();
-        fd.append("file", file);
+          const modal = document.getElementById("uploadModal");
+          const progressBar = document.getElementById("modalProgress");
+          const text = document.getElementById("modalText");
 
-        try {
-          const res = await fetch("https://api.rahuldev.live/upload-file", {
-            method: "POST",
-            body: fd,
-          });
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+          progressBar.style.width = "0%";
+          text.textContent = `Uploading ${file.name}...`;
 
-          const json = await res.json();
-          if (json && json.success && json.url) return json.url;
+          const xhr = new XMLHttpRequest();
+          const formData = new FormData();
+          formData.append("file", file);
 
-          return null;
-        } catch (err) {
-          console.error("Upload error", err);
-          return null;
-        }
+          xhr.open("POST", "http://localhost:5000/upload-file", true);
+
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              progressBar.style.width = percent + "%";
+              text.textContent = `Uploading ${file.name} (${percent}%)`;
+            }
+          };
+
+          xhr.onload = () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+
+            if (xhr.status === 200) {
+              const res = JSON.parse(xhr.responseText);
+              if (res.success && res.url) {
+                resolve(res.url);
+              } else {
+                reject("Upload failed");
+              }
+            } else {
+              reject("Upload failed");
+            }
+          };
+
+          xhr.onerror = () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            reject("Network error");
+          };
+
+          xhr.send(formData);
+        });
       }
 
       document
         .getElementById("registerForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
+
+          if (emailAlreadyExists) {
+            alert("This email is already registered. Please login.");
+            return;
+          }
 
           const submitBtn = document.getElementById("submitBtn");
           submitBtn.disabled = true;
@@ -740,17 +880,6 @@
                 : null,
               idProofUrl: idProofFile ? await uploadFile(idProofFile) : null,
             };
-
-            if (
-              fileUrls.photoUrl === "FILE_TOO_LARGE" ||
-              fileUrls.certificateUrl === "FILE_TOO_LARGE" ||
-              fileUrls.idProofUrl === "FILE_TOO_LARGE"
-            ) {
-              alert("❌ File too large. Fix the file size before submitting.");
-              submitBtn.disabled = false;
-              submitBtn.textContent = "Register Student (No Payment Required)";
-              return;
-            }
 
             let relationValue = document.getElementById("relation").value;
             if (relationValue === "Other") {
@@ -797,7 +926,7 @@
             submitBtn.textContent = "Registering student...";
 
             const admissionRes = await fetch(
-              "https://api.rahuldev.live/api/v1/admission",
+              "http://localhost:5000/api/v1/admission",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

@@ -44,35 +44,114 @@ document.getElementById("samePhone").addEventListener("change", function () {
   }
 });
 
-// ------------------------------
-// Load Courses & Branches
-// ------------------------------
+const selectedBranchCode = sessionStorage.getItem("selectedBranchCode");
+let selectedCourseData = null;
+
 async function loadCourses() {
   try {
-    const res = await fetch("https://api.rahuldev.live/allcourse");
-    const data = await res.json();
+    const res = await fetch("http://localhost:5000/api/branches");
+    const branches = await res.json();
 
-    const courseSelect = document.getElementById("courseId");
-    courseSelect.innerHTML = `<option value="">Select Course</option>`;
+    if (!Array.isArray(branches)) {
+      alert("Failed to load branches");
+      return;
+    }
 
-    data.data.forEach((course) => {
-      (course.branches || []).forEach((branch) => {
-        const opt = document.createElement("option");
-        opt.value = branch.id;
-        opt.textContent = `${course.name} - ${branch.name}`;
-        courseSelect.appendChild(opt);
-      });
+    const select = document.getElementById("courseSelect");
+    select.innerHTML = `<option value="">-- Select Branch --</option>`;
+
+    let autoSelectValue = null;
+
+    branches.forEach((branch) => {
+      const firstSemester =
+        Array.isArray(branch.semsters) && branch.semsters.length > 0
+          ? branch.semsters[0]
+          : null;
+
+      const payload = {
+        branchId: branch.id,
+        branchName: branch.name,
+        branchCode: branch.branchCode,
+        courseType: branch.tabHeader1 || "Course",
+        days: branch.daysJSON || "",
+        semesterId: firstSemester?.id || null,
+        semesterName: firstSemester?.name || "First Semester",
+        admissionFee: firstSemester?.admissionFee ?? branch.admissionfee ?? 0,
+        isoffline: branch.isoffline === true,
+      };
+
+      const option = document.createElement("option");
+      option.value = JSON.stringify(payload);
+      option.textContent = `[${payload.branchCode}] ${payload.branchName} - ${payload.days}`;
+
+      // 🔥 AUTO MATCH BY BRANCH CODE
+      if (
+        selectedBranchCode &&
+        String(branch.branchCode).trim() === String(selectedBranchCode).trim()
+      ) {
+        autoSelectValue = option.value;
+        selectedCourseData = payload;
+      }
+
+      select.appendChild(option);
     });
+
+    // ✅ AUTO SELECT BRANCH
+    if (autoSelectValue) {
+      select.value = autoSelectValue;
+      handleBranchSelection(JSON.parse(autoSelectValue));
+    }
   } catch (err) {
-    console.error("Error loading courses", err);
+    console.error("Load branches error:", err);
+    alert("Error loading branches");
   }
 }
+
+// ✅ HANDLE BRANCH SELECTION
+function handleBranchSelection(courseData) {
+  selectedCourseData = courseData;
+
+  // AUTO SET MODE
+  const onlineRadio = document.querySelector(
+    "input[name='mode'][value='Online']"
+  );
+  const offlineRadio = document.querySelector(
+    "input[name='mode'][value='Offline']"
+  );
+
+  if (courseData.isoffline) {
+    offlineRadio.checked = true;
+  } else {
+    onlineRadio.checked = true;
+  }
+
+  // SHOW FEE BANNER
+  if (courseData.admissionFee > 0) {
+    document.getElementById("feeBanner").classList.remove("hidden");
+    document.getElementById(
+      "feeAmount"
+    ).textContent = `₹${courseData.admissionFee}`;
+    document.getElementById(
+      "feeDetails"
+    ).textContent = `${courseData.semesterName} - Admission Fee (One-time)`;
+  } else {
+    document.getElementById("feeBanner").classList.add("hidden");
+  }
+}
+
+// MANUAL CHANGE HANDLER
+document.getElementById("courseSelect").addEventListener("change", function () {
+  if (!this.value) return;
+  handleBranchSelection(JSON.parse(this.value));
+});
+
+// 🚀 LOAD ON PAGE LOAD
 loadCourses();
 
 // When course changes → load branches
 document.getElementById("courseId").addEventListener("change", async (e) => {
   const res = await fetch(
-    `https://api.rahuldev.live/get-branches/${e.target.value}`
+    `http://localhost:5000/get-branches/${e.target.value}`
   );
 
   const data = await res.json();
@@ -94,7 +173,7 @@ async function uploadFile(file) {
   const fd = new FormData();
   fd.append("file", file);
 
-  const res = await fetch("https://api.rahuldev.live/upload-file", {
+  const res = await fetch("http://localhost:5000/upload-file", {
     method: "POST",
     body: fd,
   });
@@ -173,7 +252,7 @@ async function submitAdmissionForm(event) {
     // Create Razorpay Order
     // ------------------------------
     const orderResponse = await fetch(
-      "https://api.rahuldev.live/api/v1/student/fees/pay/create-order",
+      "http://localhost:5000/api/v1/student/fees/pay/create-order",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -204,7 +283,7 @@ async function submitAdmissionForm(event) {
         formData.append("razorpay_signature", response.razorpay_signature);
 
         const saveResponse = await fetch(
-          "https://api.rahuldev.live/api/v1/student/admission/create",
+          "http://localhost:5000/api/v1/student/admission/create",
           {
             method: "POST",
             body: formData,
