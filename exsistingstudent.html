@@ -605,7 +605,7 @@
       // Email checking function
       async function checkEmailExists(email) {
         const res = await fetch(
-          "http://localhost:5000/api/v1/admission/check-email",
+          "https://api.rahuldev.live/api/v1/admission/check-email",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -690,7 +690,7 @@
 
       async function loadCourses() {
         try {
-          const res = await fetch("http://localhost:5000/api/branches");
+          const res = await fetch("https://api.rahuldev.live/api/branches");
           const branches = await res.json();
 
           if (!Array.isArray(branches)) {
@@ -808,7 +808,7 @@
           const formData = new FormData();
           formData.append("file", file);
 
-          xhr.open("POST", "http://localhost:5000/upload-file", true);
+          xhr.open("POST", "https://api.rahuldev.live/upload-file", true);
 
           xhr.upload.onprogress = (e) => {
             if (e.lengthComputable) {
@@ -926,7 +926,7 @@
             submitBtn.textContent = "Registering student...";
 
             const admissionRes = await fetch(
-              "http://localhost:5000/api/v1/admission",
+              "https://api.rahuldev.live/api/v1/admission",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

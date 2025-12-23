@@ -79,36 +79,169 @@
       </p>
     </header>
 
-    <!-- NAVBAR -->
-    <nav class="w-full bg-[#FDECC2] py-4">
-      <ul
-        class="flex flex-wrap justify-center gap-6 md:space-x-16 font-bold text-purple-800 text-lg tracking-wide"
-      >
-        <li><a href="index.html" class="hover:text-purple-600">HOME</a></li>
-        <li>
-          <a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a>
-        </li>
+    <style>
+      @keyframes bounceRepeat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
 
-        <li style="animation: bounceRepeat 3s infinite">
-          <a
-            href="academic.html"
-            class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
-            style="animation: purpleBlink 1s infinite ease-in-out"
-          >
-            ACADEMIC / COURSES
-          </a>
-        </li>
+      @keyframes purpleBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
 
-        <li>
-          <a href="studentcorner.html" class="hover:text-purple-600"
-            >STUDENT CORNER</a
+      #mobileMenu {
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+
+      #mobileMenu.menu-open {
+        max-height: 500px;
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Replace your existing <nav> with this complete navbar -->
+    <nav class="w-full bg-[#FDECC2] py-3 sm:py-4">
+      <div class="container mx-auto px-4">
+        <!-- Mobile Menu Button (visible only on mobile) -->
+        <div class="flex justify-between items-center md:hidden">
+          <span class="font-bold text-purple-800 text-lg">MENU</span>
+          <button
+            id="menuBtn"
+            class="text-purple-800 focus:outline-none"
+            aria-label="Toggle menu"
           >
-        </li>
-        <li>
-          <a href="contact.html" class="hover:text-purple-600">CONTACT</a>
-        </li>
-      </ul>
+            <svg
+              id="hamburger"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+            <svg
+              id="close"
+              class="w-6 h-6 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Menu (visible on medium screens and up) -->
+        <ul
+          class="hidden md:flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 lg:space-x-16 font-bold text-purple-800 text-sm sm:text-base md:text-lg tracking-wide"
+        >
+          <li><a href="/" class="hover:text-purple-600">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="hover:text-purple-600"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li style="animation: bounceRepeat 3s infinite">
+            <a
+              href="/academic.html"
+              class="bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-full shadow-lg text-xs sm:text-base"
+              style="animation: purpleBlink 1s infinite ease-in-out"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a href="/studentcorner.html" class="hover:text-purple-600"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="hover:text-purple-600">CONTACT</a>
+          </li>
+          <li>
+            <a href="/gallery.html" class="hover:text-purple-600">GALLERY</a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu (toggleable on mobile) -->
+        <ul
+          id="mobileMenu"
+          class="md:hidden mt-4 space-y-3 font-bold text-purple-800 text-base tracking-wide"
+        >
+          <li><a href="/" class="block hover:text-purple-600 py-2">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="block hover:text-purple-600 py-2"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li>
+            <a
+              href="/academic.html"
+              class="block bg-purple-800 animate-bounce text-white px-4 py-2 rounded-full shadow-lg text-center"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a
+              href="/studentcorner.html"
+              class="block hover:text-purple-600 py-2"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="block hover:text-purple-600 py-2"
+              >CONTACT</a
+            >
+          </li>
+          <li>
+            <a href="/gallery.html" class="block hover:text-purple-600 py-2"
+              >GALLERY</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
+
+    <!-- Add this SCRIPT section before </body> -->
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const hamburger = document.getElementById("hamburger");
+      const close = document.getElementById("close");
+
+      if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+          mobileMenu.classList.toggle("menu-open");
+          hamburger.classList.toggle("hidden");
+          close.classList.toggle("hidden");
+        });
+      }
+    </script>
 
     <!-- FEES PAYMENT SECTION -->
     <section
@@ -209,7 +342,7 @@
     <br /><br />
 
     <script>
-      const API_BASE_URL = "http://localhost:5000/api/v1";
+      const API_BASE_URL = "https://api.rahuldev.live/api/v1";
 
       // Pad roll number to 3 digits
       function padRoll(roll) {
@@ -294,8 +427,8 @@
     </script>
 
     <script>
-      const alumniApiUrl = "http://localhost:5000/api/v1/alumnis";
-      const studentsApiUrl = "http://localhost:5000/api/v1/all-students";
+      const alumniApiUrl = "https://api.rahuldev.live/api/v1/alumnis";
+      const studentsApiUrl = "https://api.rahuldev.live/api/v1/all-students";
 
       const grid = document.getElementById("peopleGrid");
 

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <header
+      class="bg-[#523A35] border-b-4 border-[#D4A017] flex flex-col items-center px-4 md:px-6 py-4 shadow-md"
+    >
+      <div class="flex justify-center items-center space-x-2 md:space-x-4">
+        <img
+          src="academiclogo.png"
+          alt="Logo"
+          class="h-12 md:h-20 w-auto drop-shadow-md"
+        />
+
+        <div class="flex flex-col leading-tight text-center">
+          <h1
+            class="header-title text-2xl md:text-4xl font-extrabold text-[#f4d37d] tracking-wide drop-shadow"
+          >
+            MODERN ASTROLOGY
+          </h1>
+
+          <p
+            class="header-subtitle text-white font-semibold text-xs md:text-sm tracking-wide"
+          >
+            KRISHNAMURTI ACADEMY OF MODERN ASTROLOGY & SPIRITUAL DEVELOPMENT
+          </p>
+        </div>
+      </div>
+
+      <p
+        class="mt-3 text-white text-xs md:text-sm font-semibold tracking-wide text-center px-2 md:px-4"
+      >
+        Registered Under
+        <span class="underline">Government of West Bengal</span> &
+        <span class="underline">Government of India</span> • ISO Certified
+        Institute •
+        <span class="text-yellow-300 font-bold"
+          >Registration Number Provided After Course Completion</span
+        >
+        • Official Certificate Every Semester
+      </p>
+    </header>
+
+    <style>
+      @keyframes bounceRepeat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes purpleBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      #mobileMenu {
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+
+      #mobileMenu.menu-open {
+        max-height: 500px;
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Replace your existing <nav> with this complete navbar -->
+    <nav class="w-full bg-[#FDECC2] py-3 sm:py-4">
+      <div class="container mx-auto px-4">
+        <!-- Mobile Menu Button (visible only on mobile) -->
+        <div class="flex justify-between items-center md:hidden">
+          <span class="font-bold text-purple-800 text-lg">MENU</span>
+          <button
+            id="menuBtn"
+            class="text-purple-800 focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            <svg
+              id="hamburger"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+            <svg
+              id="close"
+              class="w-6 h-6 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Menu (visible on medium screens and up) -->
+        <ul
+          class="hidden md:flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 lg:space-x-16 font-bold text-purple-800 text-sm sm:text-base md:text-lg tracking-wide"
+        >
+          <li><a href="/" class="hover:text-purple-600">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="hover:text-purple-600"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li style="animation: bounceRepeat 3s infinite">
+            <a
+              href="/academic.html"
+              class="bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-full shadow-lg text-xs sm:text-base"
+              style="animation: purpleBlink 1s infinite ease-in-out"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a href="/studentcorner.html" class="hover:text-purple-600"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="hover:text-purple-600">CONTACT</a>
+          </li>
+          <li>
+            <a href="/gallery.html" class="hover:text-purple-600">GALLERY</a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu (toggleable on mobile) -->
+        <ul
+          id="mobileMenu"
+          class="md:hidden mt-4 space-y-3 font-bold text-purple-800 text-base tracking-wide"
+        >
+          <li><a href="/" class="block hover:text-purple-600 py-2">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="block hover:text-purple-600 py-2"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li>
+            <a
+              href="/academic.html"
+              class="block bg-purple-800 animate-bounce text-white px-4 py-2 rounded-full shadow-lg text-center"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a
+              href="/studentcorner.html"
+              class="block hover:text-purple-600 py-2"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="block hover:text-purple-600 py-2"
+              >CONTACT</a
+            >
+          </li>
+          <li>
+            <a href="/gallery.html" class="block hover:text-purple-600 py-2"
+              >GALLERY</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Add this SCRIPT section before </body> -->
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const hamburger = document.getElementById("hamburger");
+      const close = document.getElementById("close");
+
+      if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+          mobileMenu.classList.toggle("menu-open");
+          hamburger.classList.toggle("hidden");
+          close.classList.toggle("hidden");
+        });
+      }
+    </script>
+
+    <!-- Filter Tabs -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-wrap gap-2" id="filterTabs">
+        <button
+          data-filter="all"
+          class="filter-btn active px-4 py-2 rounded-full text-sm font-medium transition-colors bg-blue-600 text-white"
+        >
+          All
+        </button>
+        <button
+          data-filter="image"
+          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+        >
+          🖼 Images
+        </button>
+        <button
+          data-filter="video"
+          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+        >
+          📹 Videos
+        </button>
+        <button
+          data-filter="youtube"
+          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+        >
+          🎥 YouTube
+        </button>
+        <button
+          data-filter="article"
+          class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300"
+        >
+          📰 Articles
+        </button>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <!-- Loading State -->
+      <div id="loadingState" class="text-center py-20">
+        <div
+          class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"
+        ></div>
+        <p class="mt-4 text-gray-600">Loading gallery...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden text-center py-20">
+        <svg
+          class="mx-auto h-24 w-24 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+          ></path>
+        </svg>
+        <p class="mt-4 text-xl text-gray-600">No items found</p>
+        <p class="text-gray-500">Try selecting a different filter</p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div
+        id="galleryGrid"
+        class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        <!-- Cards will be inserted here -->
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+      <div
+        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0"
+      >
+        <!-- Backdrop -->
+        <div
+          class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
+          onclick="closeModal()"
+        ></div>
+
+        <!-- Modal Content -->
+        <div
+          class="relative inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-4xl sm:w-full"
+        >
+          <!-- Close Button -->
+          <button
+            onclick="closeModal()"
+            class="absolute top-4 right-4 z-10 text-gray-400 hover:text-gray-600 bg-white rounded-full p-2 shadow-lg"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+
+          <!-- Modal Body -->
+          <div id="modalContent" class="p-6">
+            <!-- Content will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sample gallery data (simulating API response)
+      const mockGalleryData = [
+        {
+          id: 1,
+          type: "image",
+          title: "Mountain Sunset",
+          description: "Beautiful sunset view from mountain peak",
+          thumbnail:
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500",
+          fullImage:
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+        },
+        {
+          id: 2,
+          type: "youtube",
+          title: "Nature Documentary",
+          description: "Exploring wildlife in their natural habitat",
+          thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+          videoId: "dQw4w9WgXcQ",
+        },
+        {
+          id: 3,
+          type: "article",
+          title: "The Future of Web Development",
+          description:
+            "Exploring emerging trends and technologies shaping the future of web development",
+          thumbnail:
+            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500",
+          link: "https://example.com/article",
+          content:
+            "This is a comprehensive article about web development trends. Modern web development continues to evolve with new frameworks, tools, and best practices emerging regularly...",
+        },
+        {
+          id: 4,
+          type: "video",
+          title: "Product Demo",
+          description: "Demonstration of our latest product features",
+          thumbnail:
+            "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500",
+          videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
+        },
+        {
+          id: 5,
+          type: "image",
+          title: "Ocean Waves",
+          description: "Crystal clear ocean waves on a sunny day",
+          thumbnail:
+            "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=500",
+          fullImage:
+            "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200",
+        },
+        {
+          id: 6,
+          type: "article",
+          title: "Design Principles for Modern UI",
+          description: "Essential principles every designer should know",
+          thumbnail:
+            "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500",
+          link: "https://example.com/design",
+          content:
+            "Great design is about more than just aesthetics. It encompasses usability, accessibility, and user experience...",
+        },
+        {
+          id: 7,
+          type: "image",
+          title: "City Skyline",
+          description: "Urban cityscape at twilight",
+          thumbnail:
+            "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=500",
+          fullImage:
+            "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1200",
+        },
+        {
+          id: 8,
+          type: "youtube",
+          title: "Cooking Tutorial",
+          description: "Learn to cook authentic Italian pasta",
+          thumbnail: "https://img.youtube.com/vi/jNQXAC9IVRw/maxresdefault.jpg",
+          videoId: "jNQXAC9IVRw",
+        },
+      ];
+
+      let galleryData = [];
+      let currentFilter = "all";
+
+      // Simulate API call
+      async function fetchGalleryData() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(mockGalleryData);
+          }, 1000);
+        });
+      }
+
+      // Initialize gallery
+      async function initGallery() {
+        showLoading();
+        galleryData = await fetchGalleryData();
+        hideLoading();
+        renderGallery();
+      }
+
+      // Show loading state
+      function showLoading() {
+        document.getElementById("loadingState").classList.remove("hidden");
+        document.getElementById("galleryGrid").classList.add("hidden");
+        document.getElementById("emptyState").classList.add("hidden");
+      }
+
+      // Hide loading state
+      function hideLoading() {
+        document.getElementById("loadingState").classList.add("hidden");
+      }
+
+      // Render gallery
+      function renderGallery() {
+        const grid = document.getElementById("galleryGrid");
+        const emptyState = document.getElementById("emptyState");
+
+        const filteredData =
+          currentFilter === "all"
+            ? galleryData
+            : galleryData.filter((item) => item.type === currentFilter);
+
+        if (filteredData.length === 0) {
+          grid.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+          return;
+        }
+
+        emptyState.classList.add("hidden");
+        grid.classList.remove("hidden");
+        grid.innerHTML = filteredData.map((item) => createCard(item)).join("");
+      }
+
+      // Create gallery card
+      function createCard(item) {
+        const badges = {
+          image: "🖼 Image",
+          video: "📹 Video",
+          youtube: "🎥 YouTube",
+          article: "📰 Article",
+        };
+
+        return `
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group" onclick="openItem(${
+          item.id
+        })">
+          <div class="relative overflow-hidden aspect-video bg-gray-200">
+            <img src="${item.thumbnail}" alt="${
+          item.title
+        }" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <div class="absolute top-2 right-2">
+              <span class="bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded-full">
+                ${badges[item.type]}
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">${
+              item.title
+            }</h3>
+            <p class="text-gray-600 text-sm line-clamp-2">${
+              item.description
+            }</p>
+          </div>
+        </div>
+      `;
+      }
+
+      // Open item in modal
+      function openItem(id) {
+        const item = galleryData.find((i) => i.id === id);
+        if (!item) return;
+
+        const modal = document.getElementById("modal");
+        const content = document.getElementById("modalContent");
+
+        let modalHTML = "";
+
+        switch (item.type) {
+          case "image":
+            modalHTML = `
+            <img src="${item.fullImage}" alt="${item.title}" class="w-full rounded-lg">
+            <h2 class="text-2xl font-bold mt-4 text-gray-900">${item.title}</h2>
+            <p class="text-gray-600 mt-2">${item.description}</p>
+          `;
+            break;
+
+          case "video":
+            modalHTML = `
+            <video controls class="w-full rounded-lg" autoplay>
+              <source src="${item.videoUrl}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <h2 class="text-2xl font-bold mt-4 text-gray-900">${item.title}</h2>
+            <p class="text-gray-600 mt-2">${item.description}</p>
+          `;
+            break;
+
+          case "youtube":
+            modalHTML = `
+            <div class="aspect-video">
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${item.videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg"></iframe>
+            </div>
+            <h2 class="text-2xl font-bold mt-4 text-gray-900">${item.title}</h2>
+            <p class="text-gray-600 mt-2">${item.description}</p>
+          `;
+            break;
+
+          case "article":
+            modalHTML = `
+            <img src="${item.thumbnail}" alt="${item.title}" class="w-full rounded-lg mb-4">
+            <h2 class="text-2xl font-bold text-gray-900">${item.title}</h2>
+            <p class="text-gray-600 mt-4 leading-relaxed">${item.content}</p>
+            <a href="${item.link}" target="_blank" class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+              Read Full Article →
+            </a>
+          `;
+            break;
+        }
+
+        content.innerHTML = modalHTML;
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close modal
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.add("hidden");
+        document.body.style.overflow = "auto";
+
+        // Stop any playing videos
+        const content = document.getElementById("modalContent");
+        const videos = content.querySelectorAll("video, iframe");
+        videos.forEach((v) => {
+          if (v.tagName === "VIDEO") {
+            v.pause();
+          } else if (v.tagName === "IFRAME") {
+            v.src = v.src;
+          }
+        });
+      }
+
+      // Handle filter tabs
+      document.getElementById("filterTabs").addEventListener("click", (e) => {
+        if (e.target.classList.contains("filter-btn")) {
+          // Update active state
+          document.querySelectorAll(".filter-btn").forEach((btn) => {
+            btn.classList.remove("active", "bg-blue-600", "text-white");
+            btn.classList.add("bg-gray-200", "text-gray-700");
+          });
+
+          e.target.classList.add("active", "bg-blue-600", "text-white");
+          e.target.classList.remove("bg-gray-200", "text-gray-700");
+
+          // Update filter and render
+          currentFilter = e.target.dataset.filter;
+          renderGallery();
+        }
+      });
+
+      // Close modal on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+
+      // Initialize on page load
+      initGallery();
+    </script>
+  </body>
+</html>

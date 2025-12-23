@@ -77,32 +77,169 @@
     </div>
 
     <!-- NavBar -->
-    <nav class="w-full bg-[#FDECC2] py-4">
-      <ul
-        class="flex flex-wrap justify-center gap-6 md:space-x-16 font-bold text-purple-800 text-lg tracking-wide"
-      >
-        <li><a href="index.html" class="hover:text-purple-600">HOME</a></li>
-        <li>
-          <a href="booking.html" class="hover:text-purple-600">CONSULTANCY</a>
-        </li>
-        <li style="animation: bounceRepeat 3s infinite">
-          <a
-            href="academic.html"
-            class="bg-purple-800 text-white px-4 py-2 rounded-full shadow-lg"
-            style="animation: purpleBlink 1s infinite ease-in-out"
-            >ACADEMIC / COURSES</a
+    <style>
+      @keyframes bounceRepeat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes purpleBlink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      #mobileMenu {
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+
+      #mobileMenu.menu-open {
+        max-height: 500px;
+        opacity: 1;
+      }
+    </style>
+
+    <!-- Replace your existing <nav> with this complete navbar -->
+    <nav class="w-full bg-[#FDECC2] py-3 sm:py-4">
+      <div class="container mx-auto px-4">
+        <!-- Mobile Menu Button (visible only on mobile) -->
+        <div class="flex justify-between items-center md:hidden">
+          <span class="font-bold text-purple-800 text-lg">MENU</span>
+          <button
+            id="menuBtn"
+            class="text-purple-800 focus:outline-none"
+            aria-label="Toggle menu"
           >
-        </li>
-        <li>
-          <a href="studentcorner.html" class="hover:text-purple-600"
-            >STUDENT CORNER</a
-          >
-        </li>
-        <li>
-          <a href="contact.html" class="hover:text-purple-600">CONTACT</a>
-        </li>
-      </ul>
+            <svg
+              id="hamburger"
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+            <svg
+              id="close"
+              class="w-6 h-6 hidden"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Menu (visible on medium screens and up) -->
+        <ul
+          class="hidden md:flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 lg:space-x-16 font-bold text-purple-800 text-sm sm:text-base md:text-lg tracking-wide"
+        >
+          <li><a href="/" class="hover:text-purple-600">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="hover:text-purple-600"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li style="animation: bounceRepeat 3s infinite">
+            <a
+              href="/academic.html"
+              class="bg-purple-800 text-white px-3 sm:px-4 py-2 rounded-full shadow-lg text-xs sm:text-base"
+              style="animation: purpleBlink 1s infinite ease-in-out"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a href="/studentcorner.html" class="hover:text-purple-600"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="hover:text-purple-600">CONTACT</a>
+          </li>
+          <li>
+            <a href="/gallery.html" class="hover:text-purple-600">GALLERY</a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu (toggleable on mobile) -->
+        <ul
+          id="mobileMenu"
+          class="md:hidden mt-4 space-y-3 font-bold text-purple-800 text-base tracking-wide"
+        >
+          <li><a href="/" class="block hover:text-purple-600 py-2">HOME</a></li>
+          <li>
+            <a href="/booking.html" class="block hover:text-purple-600 py-2"
+              >CONSULTANCY</a
+            >
+          </li>
+          <li>
+            <a
+              href="/academic.html"
+              class="block bg-purple-800 animate-bounce text-white px-4 py-2 rounded-full shadow-lg text-center"
+            >
+              ACADEMIC / COURSES
+            </a>
+          </li>
+          <li>
+            <a
+              href="/studentcorner.html"
+              class="block hover:text-purple-600 py-2"
+              >STUDENT CORNER</a
+            >
+          </li>
+          <li>
+            <a href="/contact.html" class="block hover:text-purple-600 py-2"
+              >CONTACT</a
+            >
+          </li>
+          <li>
+            <a href="/gallery.html" class="block hover:text-purple-600 py-2"
+              >GALLERY</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
+
+    <!-- Add this SCRIPT section before </body> -->
+    <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const hamburger = document.getElementById("hamburger");
+      const close = document.getElementById("close");
+
+      if (menuBtn) {
+        menuBtn.addEventListener("click", function () {
+          mobileMenu.classList.toggle("menu-open");
+          hamburger.classList.toggle("hidden");
+          close.classList.toggle("hidden");
+        });
+      }
+    </script>
 
     <div
       class="w-full max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-xl p-8"
@@ -381,6 +518,1222 @@
             </select>
           </div>
         </div>
+
+        <script>
+          const countries = [
+            {
+              name: "Afghanistan",
+              iso: "AF",
+              dial: "+93",
+              flag: "https://flagcdn.com/w20/af.png",
+            },
+            {
+              name: "Albania",
+              iso: "AL",
+              dial: "+355",
+              flag: "https://flagcdn.com/w20/al.png",
+            },
+            {
+              name: "Algeria",
+              iso: "DZ",
+              dial: "+213",
+              flag: "https://flagcdn.com/w20/dz.png",
+            },
+            {
+              name: "Andorra",
+              iso: "AD",
+              dial: "+376",
+              flag: "https://flagcdn.com/w20/ad.png",
+            },
+            {
+              name: "Angola",
+              iso: "AO",
+              dial: "+244",
+              flag: "https://flagcdn.com/w20/ao.png",
+            },
+            {
+              name: "Argentina",
+              iso: "AR",
+              dial: "+54",
+              flag: "https://flagcdn.com/w20/ar.png",
+            },
+            {
+              name: "Armenia",
+              iso: "AM",
+              dial: "+374",
+              flag: "https://flagcdn.com/w20/am.png",
+            },
+            {
+              name: "Australia",
+              iso: "AU",
+              dial: "+61",
+              flag: "https://flagcdn.com/w20/au.png",
+            },
+            {
+              name: "Austria",
+              iso: "AT",
+              dial: "+43",
+              flag: "https://flagcdn.com/w20/at.png",
+            },
+            {
+              name: "Azerbaijan",
+              iso: "AZ",
+              dial: "+994",
+              flag: "https://flagcdn.com/w20/az.png",
+            },
+            {
+              name: "Bahamas",
+              iso: "BS",
+              dial: "+1-242",
+              flag: "https://flagcdn.com/w20/bs.png",
+            },
+            {
+              name: "Bahrain",
+              iso: "BH",
+              dial: "+973",
+              flag: "https://flagcdn.com/w20/bh.png",
+            },
+            {
+              name: "Bangladesh",
+              iso: "BD",
+              dial: "+880",
+              flag: "https://flagcdn.com/w20/bd.png",
+            },
+            {
+              name: "Barbados",
+              iso: "BB",
+              dial: "+1-246",
+              flag: "https://flagcdn.com/w20/bb.png",
+            },
+            {
+              name: "Belarus",
+              iso: "BY",
+              dial: "+375",
+              flag: "https://flagcdn.com/w20/by.png",
+            },
+            {
+              name: "Belgium",
+              iso: "BE",
+              dial: "+32",
+              flag: "https://flagcdn.com/w20/be.png",
+            },
+            {
+              name: "Belize",
+              iso: "BZ",
+              dial: "+501",
+              flag: "https://flagcdn.com/w20/bz.png",
+            },
+            {
+              name: "Benin",
+              iso: "BJ",
+              dial: "+229",
+              flag: "https://flagcdn.com/w20/bj.png",
+            },
+            {
+              name: "Bhutan",
+              iso: "BT",
+              dial: "+975",
+              flag: "https://flagcdn.com/w20/bt.png",
+            },
+            {
+              name: "Bolivia",
+              iso: "BO",
+              dial: "+591",
+              flag: "https://flagcdn.com/w20/bo.png",
+            },
+            {
+              name: "Bosnia and Herzegovina",
+              iso: "BA",
+              dial: "+387",
+              flag: "https://flagcdn.com/w20/ba.png",
+            },
+            {
+              name: "Botswana",
+              iso: "BW",
+              dial: "+267",
+              flag: "https://flagcdn.com/w20/bw.png",
+            },
+            {
+              name: "Brazil",
+              iso: "BR",
+              dial: "+55",
+              flag: "https://flagcdn.com/w20/br.png",
+            },
+            {
+              name: "Brunei",
+              iso: "BN",
+              dial: "+673",
+              flag: "https://flagcdn.com/w20/bn.png",
+            },
+            {
+              name: "Bulgaria",
+              iso: "BG",
+              dial: "+359",
+              flag: "https://flagcdn.com/w20/bg.png",
+            },
+            {
+              name: "Burkina Faso",
+              iso: "BF",
+              dial: "+226",
+              flag: "https://flagcdn.com/w20/bf.png",
+            },
+            {
+              name: "Burundi",
+              iso: "BI",
+              dial: "+257",
+              flag: "https://flagcdn.com/w20/bi.png",
+            },
+            {
+              name: "Cambodia",
+              iso: "KH",
+              dial: "+855",
+              flag: "https://flagcdn.com/w20/kh.png",
+            },
+            {
+              name: "Cameroon",
+              iso: "CM",
+              dial: "+237",
+              flag: "https://flagcdn.com/w20/cm.png",
+            },
+            {
+              name: "Canada",
+              iso: "CA",
+              dial: "+1",
+              flag: "https://flagcdn.com/w20/ca.png",
+            },
+            {
+              name: "Cape Verde",
+              iso: "CV",
+              dial: "+238",
+              flag: "https://flagcdn.com/w20/cv.png",
+            },
+            {
+              name: "Central African Republic",
+              iso: "CF",
+              dial: "+236",
+              flag: "https://flagcdn.com/w20/cf.png",
+            },
+            {
+              name: "Chad",
+              iso: "TD",
+              dial: "+235",
+              flag: "https://flagcdn.com/w20/td.png",
+            },
+            {
+              name: "Chile",
+              iso: "CL",
+              dial: "+56",
+              flag: "https://flagcdn.com/w20/cl.png",
+            },
+            {
+              name: "China",
+              iso: "CN",
+              dial: "+86",
+              flag: "https://flagcdn.com/w20/cn.png",
+            },
+            {
+              name: "Colombia",
+              iso: "CO",
+              dial: "+57",
+              flag: "https://flagcdn.com/w20/co.png",
+            },
+            {
+              name: "Comoros",
+              iso: "KM",
+              dial: "+269",
+              flag: "https://flagcdn.com/w20/km.png",
+            },
+            {
+              name: "Costa Rica",
+              iso: "CR",
+              dial: "+506",
+              flag: "https://flagcdn.com/w20/cr.png",
+            },
+            {
+              name: "Croatia",
+              iso: "HR",
+              dial: "+385",
+              flag: "https://flagcdn.com/w20/hr.png",
+            },
+            {
+              name: "Cuba",
+              iso: "CU",
+              dial: "+53",
+              flag: "https://flagcdn.com/w20/cu.png",
+            },
+            {
+              name: "Cyprus",
+              iso: "CY",
+              dial: "+357",
+              flag: "https://flagcdn.com/w20/cy.png",
+            },
+            {
+              name: "Czechia",
+              iso: "CZ",
+              dial: "+420",
+              flag: "https://flagcdn.com/w20/cz.png",
+            },
+            {
+              name: "Denmark",
+              iso: "DK",
+              dial: "+45",
+              flag: "https://flagcdn.com/w20/dk.png",
+            },
+            {
+              name: "Djibouti",
+              iso: "DJ",
+              dial: "+253",
+              flag: "https://flagcdn.com/w20/dj.png",
+            },
+            {
+              name: "Dominica",
+              iso: "DM",
+              dial: "+1-767",
+              flag: "https://flagcdn.com/w20/dm.png",
+            },
+            {
+              name: "Dominican Republic",
+              iso: "DO",
+              dial: "+1-809",
+              flag: "https://flagcdn.com/w20/do.png",
+            },
+            {
+              name: "Ecuador",
+              iso: "EC",
+              dial: "+593",
+              flag: "https://flagcdn.com/w20/ec.png",
+            },
+            {
+              name: "Egypt",
+              iso: "EG",
+              dial: "+20",
+              flag: "https://flagcdn.com/w20/eg.png",
+            },
+            {
+              name: "El Salvador",
+              iso: "SV",
+              dial: "+503",
+              flag: "https://flagcdn.com/w20/sv.png",
+            },
+            {
+              name: "Equatorial Guinea",
+              iso: "GQ",
+              dial: "+240",
+              flag: "https://flagcdn.com/w20/gq.png",
+            },
+            {
+              name: "Eritrea",
+              iso: "ER",
+              dial: "+291",
+              flag: "https://flagcdn.com/w20/er.png",
+            },
+            {
+              name: "Estonia",
+              iso: "EE",
+              dial: "+372",
+              flag: "https://flagcdn.com/w20/ee.png",
+            },
+            {
+              name: "Eswatini",
+              iso: "SZ",
+              dial: "+268",
+              flag: "https://flagcdn.com/w20/sz.png",
+            },
+            {
+              name: "Ethiopia",
+              iso: "ET",
+              dial: "+251",
+              flag: "https://flagcdn.com/w20/et.png",
+            },
+            {
+              name: "Fiji",
+              iso: "FJ",
+              dial: "+679",
+              flag: "https://flagcdn.com/w20/fj.png",
+            },
+            {
+              name: "Finland",
+              iso: "FI",
+              dial: "+358",
+              flag: "https://flagcdn.com/w20/fi.png",
+            },
+            {
+              name: "France",
+              iso: "FR",
+              dial: "+33",
+              flag: "https://flagcdn.com/w20/fr.png",
+            },
+            {
+              name: "Gabon",
+              iso: "GA",
+              dial: "+241",
+              flag: "https://flagcdn.com/w20/ga.png",
+            },
+            {
+              name: "Gambia",
+              iso: "GM",
+              dial: "+220",
+              flag: "https://flagcdn.com/w20/gm.png",
+            },
+            {
+              name: "Georgia",
+              iso: "GE",
+              dial: "+995",
+              flag: "https://flagcdn.com/w20/ge.png",
+            },
+            {
+              name: "Germany",
+              iso: "DE",
+              dial: "+49",
+              flag: "https://flagcdn.com/w20/de.png",
+            },
+            {
+              name: "Ghana",
+              iso: "GH",
+              dial: "+233",
+              flag: "https://flagcdn.com/w20/gh.png",
+            },
+            {
+              name: "Greece",
+              iso: "GR",
+              dial: "+30",
+              flag: "https://flagcdn.com/w20/gr.png",
+            },
+            {
+              name: "Grenada",
+              iso: "GD",
+              dial: "+1-473",
+              flag: "https://flagcdn.com/w20/gd.png",
+            },
+            {
+              name: "Guatemala",
+              iso: "GT",
+              dial: "+502",
+              flag: "https://flagcdn.com/w20/gt.png",
+            },
+            {
+              name: "Guinea",
+              iso: "GN",
+              dial: "+224",
+              flag: "https://flagcdn.com/w20/gn.png",
+            },
+            {
+              name: "Guinea-Bissau",
+              iso: "GW",
+              dial: "+245",
+              flag: "https://flagcdn.com/w20/gw.png",
+            },
+            {
+              name: "Guyana",
+              iso: "GY",
+              dial: "+592",
+              flag: "https://flagcdn.com/w20/gy.png",
+            },
+            {
+              name: "Haiti",
+              iso: "HT",
+              dial: "+509",
+              flag: "https://flagcdn.com/w20/ht.png",
+            },
+            {
+              name: "Honduras",
+              iso: "HN",
+              dial: "+504",
+              flag: "https://flagcdn.com/w20/hn.png",
+            },
+            {
+              name: "Hungary",
+              iso: "HU",
+              dial: "+36",
+              flag: "https://flagcdn.com/w20/hu.png",
+            },
+            {
+              name: "Iceland",
+              iso: "IS",
+              dial: "+354",
+              flag: "https://flagcdn.com/w20/is.png",
+            },
+            {
+              name: "India",
+              iso: "IN",
+              dial: "+91",
+              flag: "https://flagcdn.com/w20/in.png",
+            },
+            {
+              name: "Indonesia",
+              iso: "ID",
+              dial: "+62",
+              flag: "https://flagcdn.com/w20/id.png",
+            },
+            {
+              name: "Iran",
+              iso: "IR",
+              dial: "+98",
+              flag: "https://flagcdn.com/w20/ir.png",
+            },
+            {
+              name: "Iraq",
+              iso: "IQ",
+              dial: "+964",
+              flag: "https://flagcdn.com/w20/iq.png",
+            },
+            {
+              name: "Ireland",
+              iso: "IE",
+              dial: "+353",
+              flag: "https://flagcdn.com/w20/ie.png",
+            },
+            {
+              name: "Israel",
+              iso: "IL",
+              dial: "+972",
+              flag: "https://flagcdn.com/w20/il.png",
+            },
+            {
+              name: "Italy",
+              iso: "IT",
+              dial: "+39",
+              flag: "https://flagcdn.com/w20/it.png",
+            },
+            {
+              name: "Jamaica",
+              iso: "JM",
+              dial: "+1-876",
+              flag: "https://flagcdn.com/w20/jm.png",
+            },
+            {
+              name: "Japan",
+              iso: "JP",
+              dial: "+81",
+              flag: "https://flagcdn.com/w20/jp.png",
+            },
+            {
+              name: "Jordan",
+              iso: "JO",
+              dial: "+962",
+              flag: "https://flagcdn.com/w20/jo.png",
+            },
+            {
+              name: "Kazakhstan",
+              iso: "KZ",
+              dial: "+7",
+              flag: "https://flagcdn.com/w20/kz.png",
+            },
+            {
+              name: "Kenya",
+              iso: "KE",
+              dial: "+254",
+              flag: "https://flagcdn.com/w20/ke.png",
+            },
+            {
+              name: "Kiribati",
+              iso: "KI",
+              dial: "+686",
+              flag: "https://flagcdn.com/w20/ki.png",
+            },
+            {
+              name: "Kuwait",
+              iso: "KW",
+              dial: "+965",
+              flag: "https://flagcdn.com/w20/kw.png",
+            },
+            {
+              name: "Kyrgyzstan",
+              iso: "KG",
+              dial: "+996",
+              flag: "https://flagcdn.com/w20/kg.png",
+            },
+            {
+              name: "Laos",
+              iso: "LA",
+              dial: "+856",
+              flag: "https://flagcdn.com/w20/la.png",
+            },
+            {
+              name: "Latvia",
+              iso: "LV",
+              dial: "+371",
+              flag: "https://flagcdn.com/w20/lv.png",
+            },
+            {
+              name: "Lebanon",
+              iso: "LB",
+              dial: "+961",
+              flag: "https://flagcdn.com/w20/lb.png",
+            },
+            {
+              name: "Lesotho",
+              iso: "LS",
+              dial: "+266",
+              flag: "https://flagcdn.com/w20/ls.png",
+            },
+            {
+              name: "Liberia",
+              iso: "LR",
+              dial: "+231",
+              flag: "https://flagcdn.com/w20/lr.png",
+            },
+            {
+              name: "Libya",
+              iso: "LY",
+              dial: "+218",
+              flag: "https://flagcdn.com/w20/ly.png",
+            },
+            {
+              name: "Liechtenstein",
+              iso: "LI",
+              dial: "+423",
+              flag: "https://flagcdn.com/w20/li.png",
+            },
+            {
+              name: "Lithuania",
+              iso: "LT",
+              dial: "+370",
+              flag: "https://flagcdn.com/w20/lt.png",
+            },
+            {
+              name: "Luxembourg",
+              iso: "LU",
+              dial: "+352",
+              flag: "https://flagcdn.com/w20/lu.png",
+            },
+            {
+              name: "Madagascar",
+              iso: "MG",
+              dial: "+261",
+              flag: "https://flagcdn.com/w20/mg.png",
+            },
+            {
+              name: "Malawi",
+              iso: "MW",
+              dial: "+265",
+              flag: "https://flagcdn.com/w20/mw.png",
+            },
+            {
+              name: "Malaysia",
+              iso: "MY",
+              dial: "+60",
+              flag: "https://flagcdn.com/w20/my.png",
+            },
+            {
+              name: "Maldives",
+              iso: "MV",
+              dial: "+960",
+              flag: "https://flagcdn.com/w20/mv.png",
+            },
+            {
+              name: "Mali",
+              iso: "ML",
+              dial: "+223",
+              flag: "https://flagcdn.com/w20/ml.png",
+            },
+            {
+              name: "Malta",
+              iso: "MT",
+              dial: "+356",
+              flag: "https://flagcdn.com/w20/mt.png",
+            },
+            {
+              name: "Marshall Islands",
+              iso: "MH",
+              dial: "+692",
+              flag: "https://flagcdn.com/w20/mh.png",
+            },
+            {
+              name: "Mauritania",
+              iso: "MR",
+              dial: "+222",
+              flag: "https://flagcdn.com/w20/mr.png",
+            },
+            {
+              name: "Mauritius",
+              iso: "MU",
+              dial: "+230",
+              flag: "https://flagcdn.com/w20/mu.png",
+            },
+            {
+              name: "Mexico",
+              iso: "MX",
+              dial: "+52",
+              flag: "https://flagcdn.com/w20/mx.png",
+            },
+            {
+              name: "Micronesia",
+              iso: "FM",
+              dial: "+691",
+              flag: "https://flagcdn.com/w20/fm.png",
+            },
+            {
+              name: "Moldova",
+              iso: "MD",
+              dial: "+373",
+              flag: "https://flagcdn.com/w20/md.png",
+            },
+            {
+              name: "Monaco",
+              iso: "MC",
+              dial: "+377",
+              flag: "https://flagcdn.com/w20/mc.png",
+            },
+            {
+              name: "Mongolia",
+              iso: "MN",
+              dial: "+976",
+              flag: "https://flagcdn.com/w20/mn.png",
+            },
+            {
+              name: "Montenegro",
+              iso: "ME",
+              dial: "+382",
+              flag: "https://flagcdn.com/w20/me.png",
+            },
+            {
+              name: "Morocco",
+              iso: "MA",
+              dial: "+212",
+              flag: "https://flagcdn.com/w20/ma.png",
+            },
+            {
+              name: "Mozambique",
+              iso: "MZ",
+              dial: "+258",
+              flag: "https://flagcdn.com/w20/mz.png",
+            },
+            {
+              name: "Myanmar",
+              iso: "MM",
+              dial: "+95",
+              flag: "https://flagcdn.com/w20/mm.png",
+            },
+            {
+              name: "Namibia",
+              iso: "NA",
+              dial: "+264",
+              flag: "https://flagcdn.com/w20/na.png",
+            },
+            {
+              name: "Nauru",
+              iso: "NR",
+              dial: "+674",
+              flag: "https://flagcdn.com/w20/nr.png",
+            },
+            {
+              name: "Nepal",
+              iso: "NP",
+              dial: "+977",
+              flag: "https://flagcdn.com/w20/np.png",
+            },
+            {
+              name: "Netherlands",
+              iso: "NL",
+              dial: "+31",
+              flag: "https://flagcdn.com/w20/nl.png",
+            },
+            {
+              name: "New Zealand",
+              iso: "NZ",
+              dial: "+64",
+              flag: "https://flagcdn.com/w20/nz.png",
+            },
+            {
+              name: "Nicaragua",
+              iso: "NI",
+              dial: "+505",
+              flag: "https://flagcdn.com/w20/ni.png",
+            },
+            {
+              name: "Niger",
+              iso: "NE",
+              dial: "+227",
+              flag: "https://flagcdn.com/w20/ne.png",
+            },
+            {
+              name: "Nigeria",
+              iso: "NG",
+              dial: "+234",
+              flag: "https://flagcdn.com/w20/ng.png",
+            },
+            {
+              name: "North Korea",
+              iso: "KP",
+              dial: "+850",
+              flag: "https://flagcdn.com/w20/kp.png",
+            },
+            {
+              name: "North Macedonia",
+              iso: "MK",
+              dial: "+389",
+              flag: "https://flagcdn.com/w20/mk.png",
+            },
+            {
+              name: "Norway",
+              iso: "NO",
+              dial: "+47",
+              flag: "https://flagcdn.com/w20/no.png",
+            },
+            {
+              name: "Oman",
+              iso: "OM",
+              dial: "+968",
+              flag: "https://flagcdn.com/w20/om.png",
+            },
+            {
+              name: "Pakistan",
+              iso: "PK",
+              dial: "+92",
+              flag: "https://flagcdn.com/w20/pk.png",
+            },
+            {
+              name: "Palau",
+              iso: "PW",
+              dial: "+680",
+              flag: "https://flagcdn.com/w20/pw.png",
+            },
+            {
+              name: "Palestine",
+              iso: "PS",
+              dial: "+970",
+              flag: "https://flagcdn.com/w20/ps.png",
+            },
+            {
+              name: "Panama",
+              iso: "PA",
+              dial: "+507",
+              flag: "https://flagcdn.com/w20/pa.png",
+            },
+            {
+              name: "Papua New Guinea",
+              iso: "PG",
+              dial: "+675",
+              flag: "https://flagcdn.com/w20/pg.png",
+            },
+            {
+              name: "Paraguay",
+              iso: "PY",
+              dial: "+595",
+              flag: "https://flagcdn.com/w20/py.png",
+            },
+            {
+              name: "Peru",
+              iso: "PE",
+              dial: "+51",
+              flag: "https://flagcdn.com/w20/pe.png",
+            },
+            {
+              name: "Philippines",
+              iso: "PH",
+              dial: "+63",
+              flag: "https://flagcdn.com/w20/ph.png",
+            },
+            {
+              name: "Poland",
+              iso: "PL",
+              dial: "+48",
+              flag: "https://flagcdn.com/w20/pl.png",
+            },
+            {
+              name: "Portugal",
+              iso: "PT",
+              dial: "+351",
+              flag: "https://flagcdn.com/w20/pt.png",
+            },
+            {
+              name: "Qatar",
+              iso: "QA",
+              dial: "+974",
+              flag: "https://flagcdn.com/w20/qa.png",
+            },
+            {
+              name: "Romania",
+              iso: "RO",
+              dial: "+40",
+              flag: "https://flagcdn.com/w20/ro.png",
+            },
+            {
+              name: "Russia",
+              iso: "RU",
+              dial: "+7",
+              flag: "https://flagcdn.com/w20/ru.png",
+            },
+            {
+              name: "Rwanda",
+              iso: "RW",
+              dial: "+250",
+              flag: "https://flagcdn.com/w20/rw.png",
+            },
+            {
+              name: "Saint Kitts and Nevis",
+              iso: "KN",
+              dial: "+1-869",
+              flag: "https://flagcdn.com/w20/kn.png",
+            },
+            {
+              name: "Saint Lucia",
+              iso: "LC",
+              dial: "+1-758",
+              flag: "https://flagcdn.com/w20/lc.png",
+            },
+            {
+              name: "Saint Vincent and the Grenadines",
+              iso: "VC",
+              dial: "+1-784",
+              flag: "https://flagcdn.com/w20/vc.png",
+            },
+            {
+              name: "Samoa",
+              iso: "WS",
+              dial: "+685",
+              flag: "https://flagcdn.com/w20/ws.png",
+            },
+            {
+              name: "San Marino",
+              iso: "SM",
+              dial: "+378",
+              flag: "https://flagcdn.com/w20/sm.png",
+            },
+            {
+              name: "Sao Tome and Principe",
+              iso: "ST",
+              dial: "+239",
+              flag: "https://flagcdn.com/w20/st.png",
+            },
+            {
+              name: "Saudi Arabia",
+              iso: "SA",
+              dial: "+966",
+              flag: "https://flagcdn.com/w20/sa.png",
+            },
+            {
+              name: "Senegal",
+              iso: "SN",
+              dial: "+221",
+              flag: "https://flagcdn.com/w20/sn.png",
+            },
+            {
+              name: "Serbia",
+              iso: "RS",
+              dial: "+381",
+              flag: "https://flagcdn.com/w20/rs.png",
+            },
+            {
+              name: "Seychelles",
+              iso: "SC",
+              dial: "+248",
+              flag: "https://flagcdn.com/w20/sc.png",
+            },
+            {
+              name: "Sierra Leone",
+              iso: "SL",
+              dial: "+232",
+              flag: "https://flagcdn.com/w20/sl.png",
+            },
+            {
+              name: "Singapore",
+              iso: "SG",
+              dial: "+65",
+              flag: "https://flagcdn.com/w20/sg.png",
+            },
+            {
+              name: "Slovakia",
+              iso: "SK",
+              dial: "+421",
+              flag: "https://flagcdn.com/w20/sk.png",
+            },
+            {
+              name: "Slovenia",
+              iso: "SI",
+              dial: "+386",
+              flag: "https://flagcdn.com/w20/si.png",
+            },
+            {
+              name: "Solomon Islands",
+              iso: "SB",
+              dial: "+677",
+              flag: "https://flagcdn.com/w20/sb.png",
+            },
+            {
+              name: "Somalia",
+              iso: "SO",
+              dial: "+252",
+              flag: "https://flagcdn.com/w20/so.png",
+            },
+            {
+              name: "South Africa",
+              iso: "ZA",
+              dial: "+27",
+              flag: "https://flagcdn.com/w20/za.png",
+            },
+            {
+              name: "South Korea",
+              iso: "KR",
+              dial: "+82",
+              flag: "https://flagcdn.com/w20/kr.png",
+            },
+            {
+              name: "South Sudan",
+              iso: "SS",
+              dial: "+211",
+              flag: "https://flagcdn.com/w20/ss.png",
+            },
+            {
+              name: "Spain",
+              iso: "ES",
+              dial: "+34",
+              flag: "https://flagcdn.com/w20/es.png",
+            },
+            {
+              name: "Sri Lanka",
+              iso: "LK",
+              dial: "+94",
+              flag: "https://flagcdn.com/w20/lk.png",
+            },
+            {
+              name: "Sudan",
+              iso: "SD",
+              dial: "+249",
+              flag: "https://flagcdn.com/w20/sd.png",
+            },
+            {
+              name: "Suriname",
+              iso: "SR",
+              dial: "+597",
+              flag: "https://flagcdn.com/w20/sr.png",
+            },
+            {
+              name: "Sweden",
+              iso: "SE",
+              dial: "+46",
+              flag: "https://flagcdn.com/w20/se.png",
+            },
+            {
+              name: "Switzerland",
+              iso: "CH",
+              dial: "+41",
+              flag: "https://flagcdn.com/w20/ch.png",
+            },
+            {
+              name: "Syria",
+              iso: "SY",
+              dial: "+963",
+              flag: "https://flagcdn.com/w20/sy.png",
+            },
+            {
+              name: "Taiwan",
+              iso: "TW",
+              dial: "+886",
+              flag: "https://flagcdn.com/w20/tw.png",
+            },
+            {
+              name: "Tajikistan",
+              iso: "TJ",
+              dial: "+992",
+              flag: "https://flagcdn.com/w20/tj.png",
+            },
+            {
+              name: "Tanzania",
+              iso: "TZ",
+              dial: "+255",
+              flag: "https://flagcdn.com/w20/tz.png",
+            },
+            {
+              name: "Thailand",
+              iso: "TH",
+              dial: "+66",
+              flag: "https://flagcdn.com/w20/th.png",
+            },
+            {
+              name: "Timor-Leste",
+              iso: "TL",
+              dial: "+670",
+              flag: "https://flagcdn.com/w20/tl.png",
+            },
+            {
+              name: "Togo",
+              iso: "TG",
+              dial: "+228",
+              flag: "https://flagcdn.com/w20/tg.png",
+            },
+            {
+              name: "Tonga",
+              iso: "TO",
+              dial: "+676",
+              flag: "https://flagcdn.com/w20/to.png",
+            },
+            {
+              name: "Trinidad and Tobago",
+              iso: "TT",
+              dial: "+1-868",
+              flag: "https://flagcdn.com/w20/tt.png",
+            },
+            {
+              name: "Tunisia",
+              iso: "TN",
+              dial: "+216",
+              flag: "https://flagcdn.com/w20/tn.png",
+            },
+            {
+              name: "Turkey",
+              iso: "TR",
+              dial: "+90",
+              flag: "https://flagcdn.com/w20/tr.png",
+            },
+            {
+              name: "Turkmenistan",
+              iso: "TM",
+              dial: "+993",
+              flag: "https://flagcdn.com/w20/tm.png",
+            },
+            {
+              name: "Tuvalu",
+              iso: "TV",
+              dial: "+688",
+              flag: "https://flagcdn.com/w20/tv.png",
+            },
+            {
+              name: "Uganda",
+              iso: "UG",
+              dial: "+256",
+              flag: "https://flagcdn.com/w20/ug.png",
+            },
+            {
+              name: "Ukraine",
+              iso: "UA",
+              dial: "+380",
+              flag: "https://flagcdn.com/w20/ua.png",
+            },
+            {
+              name: "United Arab Emirates",
+              iso: "AE",
+              dial: "+971",
+              flag: "https://flagcdn.com/w20/ae.png",
+            },
+            {
+              name: "United Kingdom",
+              iso: "GB",
+              dial: "+44",
+              flag: "https://flagcdn.com/w20/gb.png",
+            },
+            {
+              name: "United States",
+              iso: "US",
+              dial: "+1",
+              flag: "https://flagcdn.com/w20/us.png",
+            },
+            {
+              name: "Uruguay",
+              iso: "UY",
+              dial: "+598",
+              flag: "https://flagcdn.com/w20/uy.png",
+            },
+            {
+              name: "Uzbekistan",
+              iso: "UZ",
+              dial: "+998",
+              flag: "https://flagcdn.com/w20/uz.png",
+            },
+            {
+              name: "Vanuatu",
+              iso: "VU",
+              dial: "+678",
+              flag: "https://flagcdn.com/w20/vu.png",
+            },
+            {
+              name: "Vatican City",
+              iso: "VA",
+              dial: "+379",
+              flag: "https://flagcdn.com/w20/va.png",
+            },
+            {
+              name: "Venezuela",
+              iso: "VE",
+              dial: "+58",
+              flag: "https://flagcdn.com/w20/ve.png",
+            },
+            {
+              name: "Vietnam",
+              iso: "VN",
+              dial: "+84",
+              flag: "https://flagcdn.com/w20/vn.png",
+            },
+            {
+              name: "Yemen",
+              iso: "YE",
+              dial: "+967",
+              flag: "https://flagcdn.com/w20/ye.png",
+            },
+            {
+              name: "Zambia",
+              iso: "ZM",
+              dial: "+260",
+              flag: "https://flagcdn.com/w20/zm.png",
+            },
+            {
+              name: "Zimbabwe",
+              iso: "ZW",
+              dial: "+263",
+              flag: "https://flagcdn.com/w20/zw.png",
+            },
+          ];
+
+          const isoInput = document.getElementById("countryIsoInput");
+          const dropdown = document.getElementById("countryDropdown");
+          const selectedFlag = document.getElementById("selectedFlag");
+          const selectedDial = document.getElementById("selectedDial");
+          const selectedCountry = document.getElementById("selectedCountry");
+
+          function renderDropdown(filter = "") {
+            dropdown.innerHTML = "";
+            const filtered = countries.filter(
+              (c) =>
+                c.name.toLowerCase().includes(filter) ||
+                c.iso.toLowerCase().includes(filter) ||
+                c.dial.includes(filter)
+            );
+
+            filtered.forEach((country) => {
+              const div = document.createElement("div");
+              div.className =
+                "flex items-center gap-3 px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm";
+              div.innerHTML = `
+                <img src="${country.flag}" class="w-5 h-4" />
+                <span class="flex-1">${country.name}</span>
+                <span class="text-gray-500">${country.dial}</span>
+              `;
+              div.onclick = () => selectCountry(country);
+              dropdown.appendChild(div);
+            });
+
+            dropdown.classList.toggle("hidden", filtered.length === 0);
+          }
+
+          function selectCountry(country) {
+            isoInput.value = country.iso;
+            selectedFlag.src = country.flag;
+            selectedDial.textContent = country.dial;
+            selectedDial.classList.remove("hidden");
+            dropdown.classList.add("hidden");
+          }
+
+          // Default India
+          selectCountry(countries[0]);
+
+          // Toggle dropdown
+          selectedCountry.addEventListener("click", () => {
+            renderDropdown("");
+            dropdown.classList.toggle("hidden");
+          });
+
+          // Auto search while typing ISO
+          isoInput.addEventListener("input", (e) => {
+            renderDropdown(e.target.value.toLowerCase());
+          });
+
+          // Close on outside click
+          document.addEventListener("click", (e) => {
+            if (!e.target.closest(".relative"))
+              dropdown.classList.add("hidden");
+          });
+        </script>
 
         <!-- Contact Details -->
         <div
